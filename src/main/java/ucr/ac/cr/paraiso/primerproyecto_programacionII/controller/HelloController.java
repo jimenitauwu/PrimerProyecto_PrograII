@@ -1,4 +1,4 @@
-package ucr.ac.cr.paraiso.xml.primerproyecto_programacionii;
+package ucr.ac.cr.paraiso.primerproyecto_programacionII.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

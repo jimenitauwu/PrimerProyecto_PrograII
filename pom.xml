@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                ucr.ac.cr.paraiso.xml.primerproyecto_programacionii/ucr.ac.cr.paraiso.xml.primerproyecto_programacionii.HelloApplication
+                                ucr.ac.cr.paraiso.xml.primerproyecto_programacionii/ucr.ac.cr.paraiso.primerproyecto_programacionII.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
