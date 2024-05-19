@@ -1,16 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ucr.ac.cr.paraiso.primerproyecto_programacionII.controller.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<BorderPane fx:id="bp" prefHeight="887.0" prefWidth="971.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucr.ac.cr.paraiso.primerproyecto_programacionII.controller.HelloController">
+   <center>
+      <AnchorPane fx:id="ap" prefHeight="781.0" prefWidth="715.0">
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </AnchorPane>
+   </center>
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="781.0" prefWidth="275.0" style="-fx-background-color: #100C36;" BorderPane.alignment="CENTER">
+         <children>
+            <Button onAction="#creacionales" prefHeight="81.0" prefWidth="301.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Creacionales" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </Button>
+            <Button onAction="#estructurales" prefHeight="81.0" prefWidth="301.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Estructurales" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </Button>
+            <Button onAction="#comportamiento" prefHeight="81.0" prefWidth="301.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Comportamiento" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </Button>
+            <Button onAction="#salir" prefHeight="71.0" prefWidth="275.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Salir" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="420.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </left>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" onAction="#anadirMenuBar" text="Añadir" />
+            <Menu mnemonicParsing="false" onAction="#modificarMenuBar" text="Modificar" />
+            <Menu mnemonicParsing="false" onAction="#eliminarMenuBar" text="Eliminar" />
+            <Menu mnemonicParsing="false" onAction="#buscarMenuBar" text="Buscar" />
+            <Menu mnemonicParsing="false" text="Créditos">
+               <items>
+                  <MenuItem disable="true" mnemonicParsing="false" text="Alexander Fallas Sanabria" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Jimena Guevara Chaves" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Valentina Rojas Consuegra" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </top>
+</BorderPane>

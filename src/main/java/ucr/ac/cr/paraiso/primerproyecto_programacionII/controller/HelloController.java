@@ -1,14 +1,70 @@
 package ucr.ac.cr.paraiso.primerproyecto_programacionII.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import ucr.ac.cr.paraiso.primerproyecto_programacionII.HelloApplication;
+
+import java.io.IOException;
 
 public class HelloController {
-    @FXML
-    private Label welcomeText;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    private BorderPane bp;
+    @FXML
+    private AnchorPane ap;
+
+    private void loadPage(String page){
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(page));
+        try {
+            this.bp.setCenter(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void creacionales(ActionEvent actionEvent) {
+        loadPage("creacionales.fxml");
+    }
+
+
+    @FXML
+    public void comportamiento(ActionEvent actionEvent) {
+        loadPage("comportamiento.fxml");
+    }
+
+    @FXML
+    public void estructurales(ActionEvent actionEvent) {
+        loadPage("estructurales.fxml");
+    }
+
+    @FXML
+    public void salir(ActionEvent actionEvent) {
+        System.exit(0);
+
+    }
+
+    @FXML
+    public void eliminarMenuBar(ActionEvent actionEvent) {
+//        loadPage("messengerService.fxml");
+    }
+
+    @FXML
+    public void modificarMenuBar(ActionEvent actionEvent) {
+        loadPage("modificar.fxml");
+    }
+
+    @FXML
+    public void anadirMenuBar(ActionEvent actionEvent) {
+        loadPage("anadir.fxml");
+    }
+
+    @FXML
+    public void buscarMenuBar(ActionEvent actionEvent) {
+//        loadPage("messengerService.fxml");
     }
 }
