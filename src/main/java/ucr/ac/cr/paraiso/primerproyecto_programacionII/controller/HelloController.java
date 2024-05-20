@@ -79,4 +79,14 @@ public class HelloController {
         bp.setCenter(ap);
         menuBar.setVisible(false);
     }
+
+    @FXML
+    public void modificarPatronMenuBar(ActionEvent actionEvent) {
+        loadPage("modificarPatron.fxml");
+    }
+
+    @FXML
+    public void anadirPatronMenuBar(ActionEvent actionEvent) {
+        loadPage("anadirPatron.fxml");
+    }
 }

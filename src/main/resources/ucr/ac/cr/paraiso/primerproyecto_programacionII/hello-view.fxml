@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -16,7 +15,6 @@
       <AnchorPane fx:id="ap" prefHeight="781.0" prefWidth="715.0">
          <children>
             <BorderPane prefHeight="200.0" prefWidth="200.0" />
-            <Label layoutX="207.0" layoutY="356.0" text="HOLA" />
          </children>
       </AnchorPane>
    </center>
@@ -80,17 +78,20 @@
          <menus>
             <Menu text="Añadir">
                <items>
-                  <MenuItem onAction="#anadirMenuBar" text="Anadir" />
+                  <MenuItem onAction="#anadirMenuBar" text="Anadir clasificación" />
+                  <MenuItem onAction="#anadirPatronMenuBar" text="Anadir patrón" />
                </items>
             </Menu>
             <Menu text="Modificar">
                <items>
-                  <MenuItem onAction="#modificarMenuBar" text="Modificar" />
+                  <MenuItem onAction="#modificarMenuBar" text="Modificar clasificación" />
+                  <MenuItem onAction="#modificarPatronMenuBar" text="Modificar patrón" />
                </items>
             </Menu>
             <Menu text="Eliminar">
                <items>
-                  <MenuItem onAction="#eliminarMenuBar" text="Eliminar" />
+                  <MenuItem onAction="#eliminarMenuBar" text="Eliminar clasificación" />
+                  <MenuItem text="Eliminar patrón" />
                </items>
             </Menu>
             <Menu text="Buscar">
@@ -100,9 +101,9 @@
             </Menu>
             <Menu text="Créditos">
                <items>
-                  <MenuItem disable="true" text="Alexander Fallas Sanabria" />
-                  <MenuItem disable="true" text="Jimena Guevara Chaves" />
-                  <MenuItem disable="true" text="Valentina Rojas Consuegra" />
+                  <MenuItem text="Alexander Fallas Sanabria" />
+                  <MenuItem text="Jimena Guevara Chaves" />
+                  <MenuItem text="Valentina Rojas Consuegra" />
                </items>
             </Menu>
          </menus>

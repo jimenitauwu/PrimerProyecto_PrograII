@@ -37,7 +37,7 @@ public class PatronXMLData {
     private void guardar() throws IOException {
         XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
         xmlOutputter.output(this.documento, new PrintWriter(this.rutaDocumento));
-        xmlOutputter.output(this.documento, System.out);
+        xmlOutputter.output(this.documento, System.out);//Imprime el xml en consola
     }
 
     public void insertarPatron(Patron patron) throws IOException {
