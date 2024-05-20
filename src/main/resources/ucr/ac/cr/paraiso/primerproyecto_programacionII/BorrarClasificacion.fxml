@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucr.ac.cr.paraiso.primerproyecto_programacionII.controller.BorrarClasificacionController">
+    <center>
+        <AnchorPane prefHeight="421.0" prefWidth="640.0">
+            <children>
+                <Label layoutX="7.0" layoutY="133.0" prefHeight="37.0" prefWidth="432.0" text="Ingrese el nombre de la clasificación que desea eliminar:">
+                    <font>
+                        <Font name="Elephant" size="15.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="textField_Eliminar" layoutX="327.0" layoutY="183.0" prefHeight="37.0" prefWidth="306.0" />
+                <Button fx:id="btn_Borrar" layoutX="270.0" layoutY="283.0" mnemonicParsing="false" onAction="#EliminarOnAction" prefHeight="37.0" prefWidth="114.0" text="Borrar">
+                    <font>
+                        <Font name="Elephant" size="18.0" />
+                    </font>
+                </Button>
+                <Pane layoutY="-1.0" prefHeight="93.0" prefWidth="647.0">
+                    <children>
+                        <Label alignment="CENTER" layoutX="8.0" layoutY="14.0" prefHeight="63.0" prefWidth="647.0" text="Borrar clasificación del Patrón ">
+                            <font>
+                                <Font name="Forte" size="47.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+                <Label fx:id="message_Eliminado" alignment="CENTER" layoutX="143.0" layoutY="338.0" prefHeight="44.0" prefWidth="361.0" text="¡Se ha borrado exitosamente la clasificación!" textFill="#ee0000">
+                    <font>
+                        <Font name="System Italic" size="14.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

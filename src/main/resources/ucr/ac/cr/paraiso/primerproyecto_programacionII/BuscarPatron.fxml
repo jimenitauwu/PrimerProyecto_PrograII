@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucr.ac.cr.paraiso.primerproyecto_programacionII.controller.BuscarPatronController">
+   <center>
+      <AnchorPane prefHeight="414.0" prefWidth="625.0">
+         <children>
+            <Pane prefHeight="73.0" prefWidth="625.0">
+               <children>
+                  <Label layoutX="3.0" prefHeight="73.0" prefWidth="619.0" text="Buscar patrón de diseño">
+                     <font>
+                        <Font name="Forte" size="60.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutY="73.0" prefHeight="341.0" prefWidth="625.0">
+               <children>
+                  <Label layoutX="9.0" layoutY="69.0" prefHeight="47.0" prefWidth="458.0" text="Ingrese el patrón de diseño que desea buscar:">
+                     <font>
+                        <Font name="Elephant" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textField_Buscar" layoutX="263.0" layoutY="124.0" prefHeight="47.0" prefWidth="348.0" />
+                  <Button fx:id="btn_Buscar" layoutX="238.0" layoutY="245.0" mnemonicParsing="false" onAction="#BuscarOnAction" prefHeight="36.0" prefWidth="131.0" text="Buscar">
+                     <font>
+                        <Font name="Elephant" size="21.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
