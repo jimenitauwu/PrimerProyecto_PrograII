@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.HelloApplication;
@@ -16,6 +17,8 @@ public class HelloController {
     private BorderPane bp;
     @FXML
     private AnchorPane ap;
+    @FXML
+    private MenuBar menuBar;
 
     private void loadPage(String page){
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(page));
@@ -29,17 +32,20 @@ public class HelloController {
     @FXML
     public void creacionales(ActionEvent actionEvent) {
         loadPage("creacionales.fxml");
+        menuBar.setVisible(true);
     }
 
 
     @FXML
     public void comportamiento(ActionEvent actionEvent) {
         loadPage("comportamiento.fxml");
+        menuBar.setVisible(true);
     }
 
     @FXML
     public void estructurales(ActionEvent actionEvent) {
         loadPage("estructurales.fxml");
+        menuBar.setVisible(true);
     }
 
     @FXML
@@ -66,5 +72,11 @@ public class HelloController {
     @FXML
     public void buscarMenuBar(ActionEvent actionEvent) {
 //        loadPage("messengerService.fxml");
+    }
+
+    @FXML
+    public void inicio(ActionEvent actionEvent) {
+        bp.setCenter(ap);
+        menuBar.setVisible(false);
     }
 }

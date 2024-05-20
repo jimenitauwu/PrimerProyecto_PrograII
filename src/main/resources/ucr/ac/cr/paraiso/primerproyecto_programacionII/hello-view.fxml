@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -15,12 +16,21 @@
       <AnchorPane fx:id="ap" prefHeight="781.0" prefWidth="715.0">
          <children>
             <BorderPane prefHeight="200.0" prefWidth="200.0" />
+            <Label layoutX="207.0" layoutY="356.0" text="HOLA" />
          </children>
       </AnchorPane>
    </center>
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="781.0" prefWidth="275.0" style="-fx-background-color: #100C36;" BorderPane.alignment="CENTER">
          <children>
+            <Button onAction="#inicio" prefHeight="81.0" prefWidth="301.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Inicio" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </Button>
             <Button onAction="#creacionales" prefHeight="81.0" prefWidth="301.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Creacionales" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="20.0" />
@@ -66,17 +76,33 @@
       </VBox>
    </left>
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar fx:id="menuBar" visible="false" BorderPane.alignment="CENTER">
          <menus>
-            <Menu mnemonicParsing="false" onAction="#anadirMenuBar" text="Añadir" />
-            <Menu mnemonicParsing="false" onAction="#modificarMenuBar" text="Modificar" />
-            <Menu mnemonicParsing="false" onAction="#eliminarMenuBar" text="Eliminar" />
-            <Menu mnemonicParsing="false" onAction="#buscarMenuBar" text="Buscar" />
-            <Menu mnemonicParsing="false" text="Créditos">
+            <Menu text="Añadir">
                <items>
-                  <MenuItem disable="true" mnemonicParsing="false" text="Alexander Fallas Sanabria" />
-                  <MenuItem disable="true" mnemonicParsing="false" text="Jimena Guevara Chaves" />
-                  <MenuItem disable="true" mnemonicParsing="false" text="Valentina Rojas Consuegra" />
+                  <MenuItem onAction="#anadirMenuBar" text="Anadir" />
+               </items>
+            </Menu>
+            <Menu text="Modificar">
+               <items>
+                  <MenuItem onAction="#modificarMenuBar" text="Modificar" />
+               </items>
+            </Menu>
+            <Menu text="Eliminar">
+               <items>
+                  <MenuItem onAction="#eliminarMenuBar" text="Eliminar" />
+               </items>
+            </Menu>
+            <Menu text="Buscar">
+               <items>
+                  <MenuItem onAction="#buscarMenuBar" text="Buscar" />
+               </items>
+            </Menu>
+            <Menu text="Créditos">
+               <items>
+                  <MenuItem disable="true" text="Alexander Fallas Sanabria" />
+                  <MenuItem disable="true" text="Jimena Guevara Chaves" />
+                  <MenuItem disable="true" text="Valentina Rojas Consuegra" />
                </items>
             </Menu>
          </menus>
