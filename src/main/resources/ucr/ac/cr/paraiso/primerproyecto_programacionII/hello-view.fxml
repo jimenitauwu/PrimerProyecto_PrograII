@@ -90,13 +90,14 @@
             </Menu>
             <Menu text="Eliminar">
                <items>
-                  <MenuItem onAction="#eliminarMenuBar" text="Eliminar clasificación" />
-                  <MenuItem text="Eliminar patrón" />
+                  <MenuItem onAction="#eliminarClasificacion" text="Eliminar clasificación" />
+                  <MenuItem onAction="#eliminarPatron" text="Eliminar patrón" />
                </items>
             </Menu>
             <Menu text="Buscar">
                <items>
-                  <MenuItem onAction="#buscarMenuBar" text="Buscar" />
+                  <MenuItem onAction="#buscarClasificacion" text="Buscar clasificación" />
+                  <MenuItem onAction="#buscarPatron" text="Buscar patrón" />
                </items>
             </Menu>
             <Menu text="Créditos">

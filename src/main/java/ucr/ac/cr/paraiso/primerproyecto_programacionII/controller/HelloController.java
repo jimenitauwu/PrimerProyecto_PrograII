@@ -55,11 +55,6 @@ public class HelloController {
     }
 
     @FXML
-    public void eliminarMenuBar(ActionEvent actionEvent) {
-//        loadPage("messengerService.fxml");
-    }
-
-    @FXML
     public void modificarMenuBar(ActionEvent actionEvent) {
         loadPage("modificar.fxml");
     }
@@ -69,10 +64,6 @@ public class HelloController {
         loadPage("anadir.fxml");
     }
 
-    @FXML
-    public void buscarMenuBar(ActionEvent actionEvent) {
-//        loadPage("messengerService.fxml");
-    }
 
     @FXML
     public void inicio(ActionEvent actionEvent) {
@@ -88,5 +79,25 @@ public class HelloController {
     @FXML
     public void anadirPatronMenuBar(ActionEvent actionEvent) {
         loadPage("anadirPatron.fxml");
+    }
+
+    @FXML
+    public void buscarClasificacion(ActionEvent actionEvent) {
+        loadPage("BuscarClasificacion.fxml");
+    }
+
+    @FXML
+    public void buscarPatron(ActionEvent actionEvent) {
+        loadPage("BuscarPatron.fxml");
+    }
+
+    @FXML
+    public void eliminarPatron(ActionEvent actionEvent) {
+        loadPage("BorrarClasificacion.fxml");
+    }
+
+    @FXML
+    public void eliminarClasificacion(ActionEvent actionEvent) {
+        loadPage("BorrarPatron.fxml");
     }
 }
