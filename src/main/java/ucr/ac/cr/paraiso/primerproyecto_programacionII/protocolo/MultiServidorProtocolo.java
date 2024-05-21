@@ -20,12 +20,12 @@ public class MultiServidorProtocolo {
             return "Escriba 'Patron 1', 'Patron 2' o 'Patron 3' para obtener información sobre algún patron.";
         }
 
-        switch (entrada) {
-            case "Patron 1":
+        switch (entrada.toLowerCase()) {
+            case  "patron 1":
                 return patrones.get(0).toString();
-            case "Patron 2":
+            case "patron 2":
                 return patrones.get(1).toString();
-            case "Patron 3":
+            case "patron 3":
                 return patrones.get(2).toString();
             default:
                 return "Entrada no reconocida. Escriba 'Patron 1', 'Patron 2' o 'Patron 3'.";
