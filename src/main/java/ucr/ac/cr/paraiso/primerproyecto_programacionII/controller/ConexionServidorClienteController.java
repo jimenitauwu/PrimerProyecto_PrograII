@@ -16,7 +16,8 @@ public class ConexionServidorClienteController
     private Button btn_enviar;
 
     MultiServidorProtocolo protocolo= new MultiServidorProtocolo();
-
+    @javafx.fxml.FXML
+    private Button btn_Salir;
 
 
     @javafx.fxml.FXML
@@ -35,5 +36,10 @@ public class ConexionServidorClienteController
 
         textField_Cliente.clear();
 
+    }
+
+    @javafx.fxml.FXML
+    public void SalirOnAction(ActionEvent actionEvent) {
+        System.exit(0);
     }
 }
