@@ -34,7 +34,7 @@ public class MultiServidorHilo extends Thread{
             while ((entrada = reader.readLine()) != null) {
                 salida = protocolo.procesarEntrada(entrada);
                 writer.println(salida);
-                if (salida.equals("Chao!"))
+                if (salida.equals("Adios."))
                     break;
             }// while
             writer.close();
@@ -46,6 +46,7 @@ public class MultiServidorHilo extends Thread{
         }
 
     }// run
+
 
 
     public void InsertarInformacion(String nombre, String informacion) {
