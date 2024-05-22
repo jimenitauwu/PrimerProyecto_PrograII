@@ -1,6 +1,7 @@
 package ucr.ac.cr.paraiso.primerproyecto_programacionII.servidor;
 
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.cliente.Cliente;
+import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.protocolo.MultiServidorProtocolo;
 
 import java.io.BufferedReader;
@@ -14,20 +15,21 @@ public class MultiServidorHilo extends Thread{
 
     private List<Cliente> clientes;
     private Socket socket;
+    private PatronXMLData patronXMLData; // Add this attribute
 
-    public MultiServidorHilo(Socket socket) {
+    public MultiServidorHilo(Socket socket, PatronXMLData patronXMLData) { // Modify the constructor
         super("MultiServidorHilo");
         this.socket = socket;
+        this.patronXMLData = patronXMLData; // Assign the provided PatronXMLData object
     }
 
     public void run() {
-
         PrintWriter writer;
         try {
             writer = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     socket.getInputStream()));
-            MultiServidorProtocolo protocolo = new MultiServidorProtocolo();
+            MultiServidorProtocolo protocolo = new MultiServidorProtocolo(patronXMLData); // Pass the PatronXMLData object
             String salida = protocolo.procesarEntrada(null);
             writer.println(salida);
             String entrada = null;
@@ -41,11 +43,9 @@ public class MultiServidorHilo extends Thread{
             reader.close();
             socket.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-    }// run
+    }// r
 
 
 //
