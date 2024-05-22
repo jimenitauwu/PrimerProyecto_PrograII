@@ -1,38 +1,39 @@
 package ucr.ac.cr.paraiso.primerproyecto_programacionII.domain;
 
 public class Clasificacion {
-    private String name;
-    private String type;
+    private String idClasificacion;
+    private String nameClasificacion;
+
+    public Clasificacion(String idClasificacion, String nameClasificacion) {
+        this.idClasificacion = idClasificacion;
+        this.nameClasificacion = nameClasificacion;
+    }
 
     public Clasificacion() {
     }
 
-    public Clasificacion(String name, String type) {
-        this.name = name;
-        this.type = type;
+
+    public String getNameClasificacion() {
+        return nameClasificacion;
     }
 
-    public String getName() {
-        return name;
+    public void setNameClasificacion(String nameClasificacion) {
+        this.nameClasificacion = nameClasificacion;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getIdClasificacion() {
+        return idClasificacion;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setIdClasificacion(String idClasificacion) {
+        this.idClasificacion = idClasificacion;
     }
 
     @Override
     public String toString() {
         return "Clasificacion{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
+                "name='" + nameClasificacion + '\'' +
+                ", type='" + idClasificacion + '\'' +
                 '}';
     }
 }

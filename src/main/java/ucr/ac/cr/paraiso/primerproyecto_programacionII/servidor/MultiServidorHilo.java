@@ -48,38 +48,38 @@ public class MultiServidorHilo extends Thread{
     }// run
 
 
-
-    public void InsertarInformacion(String nombre, String informacion) {
-
-    }
-
-    public String ConsultarInformacion(String nombre) {
-
-        return "Cliente no encontrado";
-    }
-
-    public void ModificarInformacion(String nombre, String nuevaInformacion) {
-
-    }
-
-    public String BuscarInformacion(String nombre) {
-        return ConsultarInformacion(nombre);
-    }
-
-    public void CrearInformacion(String nombre, String informacion) {
-        InsertarInformacion(nombre, informacion);
-    }
-
-    public void ActualizarInformacion(String nombre, String nuevaInformacion) {
-        ModificarInformacion(nombre, nuevaInformacion);
-    }
-
-    public List<Cliente> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(List<Cliente> clientes) {
-        this.clientes = clientes;
-    }
+//
+//    public void InsertarInformacion(String nombre, String informacion) {
+//
+//    }
+//
+//    public String ConsultarInformacion(String nombre) {
+//
+//        return "Cliente no encontrado";
+//    }
+//
+//    public void ModificarInformacion(String nombre, String nuevaInformacion) {
+//
+//    }
+//
+//    public String BuscarInformacion(String nombre) {
+//        return ConsultarInformacion(nombre);
+//    }
+//
+//    public void CrearInformacion(String nombre, String informacion) {
+//        InsertarInformacion(nombre, informacion);
+//    }
+//
+//    public void ActualizarInformacion(String nombre, String nuevaInformacion) {
+//        ModificarInformacion(nombre, nuevaInformacion);
+//    }
+//
+//    public List<Cliente> getClientes() {
+//        return clientes;
+//    }
+//
+//    public void setClientes(List<Cliente> clientes) {
+//        this.clientes = clientes;
+//    }
 
 }

@@ -4,23 +4,41 @@ import java.util.List;
 
 public class Patron {
     private String idPatron;
+    private String name;
     private String contextoPatron;
     private String problemaPatron;
     private String solucionPatron;
-    private List<String> ejemplosPatron;
-    private String clasificacion;
+    private String ejemplosPatron;
+    private String idClasificacion;
 
-    public Patron() {
-    }
-
-    public Patron(String idPatron, String contextoPatron, String problemaPatron, String solucionPatron,
-                  List<String> ejemplosPatron, String clasificacion) {
+    public Patron(String idPatron, String name, String contextoPatron, String problemaPatron, String solucionPatron, String ejemplosPatron, String idClasificacion) {
         this.idPatron = idPatron;
+        this.name = name;
         this.contextoPatron = contextoPatron;
         this.problemaPatron = problemaPatron;
         this.solucionPatron = solucionPatron;
         this.ejemplosPatron = ejemplosPatron;
-        this.clasificacion = clasificacion;
+        this.idClasificacion = idClasificacion;
+    }
+
+    public Patron() {
+    }
+
+
+    public String getIdClasificacion() {
+        return idClasificacion;
+    }
+
+    public void setIdClasificacion(String idClasificacion) {
+        this.idClasificacion = idClasificacion;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getProblemaPatron() {
@@ -55,19 +73,12 @@ public class Patron {
         this.solucionPatron = solucionPatron;
     }
 
-    public String getClasificacion() {
-        return clasificacion;
-    }
 
-    public void setClasificacion(String clasificacion) {
-        this.clasificacion = clasificacion;
-    }
-
-    public List<String> getEjemplosPatron() {
+    public String getEjemplosPatron() {
         return ejemplosPatron;
     }
 
-    public void setEjemplosPatron(List<String> ejemplosPatron) {
+    public void setEjemplosPatron(String ejemplosPatron) {
         this.ejemplosPatron = ejemplosPatron;
     }
 
@@ -76,11 +87,12 @@ public class Patron {
     public String toString() {
         return "Patron{" +
                 "idPatron='" + idPatron + '\'' +
+                ", name='" + name + '\'' +
                 ", contextoPatron='" + contextoPatron + '\'' +
                 ", problemaPatron='" + problemaPatron + '\'' +
                 ", solucionPatron='" + solucionPatron + '\'' +
-                ", ejemplosPatron=" + ejemplosPatron +
-                ", clasificacion='" + clasificacion + '\'' +
+                ", ejemplosPatron='" + ejemplosPatron + '\'' +
+                ", clasificacion='" + idClasificacion + '\'' +
                 '}';
     }
 }

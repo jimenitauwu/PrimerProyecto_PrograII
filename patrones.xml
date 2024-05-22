@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<patrones>
+  <patron idPatron="1">
+    <name>Estrategia</name>
+    <contextoPatron>Define una familia de algoritmos.</contextoPatron>
+    <problemaPatron>Descripción del problema para Estrategia</problemaPatron>
+    <solucionPatron>Descripción de la solución para Estrategia</solucionPatron>
+    <ejemploPatron>Descripción del ejemplo para Estrategia</ejemploPatron>
+    <clasificacion>Comportamiento</clasificacion>
+  </patron>
+  <patron idPatron="2">
+    <name>Singleton</name>
+    <contextoPatron>Garantiza que una clase solo tenga una instancia.</contextoPatron>
+    <problemaPatron>Descripción del problema para Singleton</problemaPatron>
+    <solucionPatron>Descripción de la solución para Singleton</solucionPatron>
+    <ejemploPatron>Descripción del ejemplo para Singleton</ejemploPatron>
+    <clasificacion>Creacional</clasificacion>
+  </patron>
+  <patron idPatron="3">
+    <name>Adaptador</name>
+    <contextoPatron>Convierte la interfaz de una clase en otra interfaz que los clientes esperan.</contextoPatron>
+    <problemaPatron>Descripción del problema para Adaptador</problemaPatron>
+    <solucionPatron>Descripción de la solución para Adaptador</solucionPatron>
+    <ejemploPatron>Descripción del ejemplo para Adaptador</ejemploPatron>
+    <clasificacion>Estructural</clasificacion>
+  </patron>
+</patrones>

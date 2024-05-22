@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<clasificaciones>
+  <clasificacion>
+    <idClasificacion>1</idClasificacion>
+    <nameClasificacion>Comportamiento</nameClasificacion>
+  </clasificacion>
+  <clasificacion>
+    <idClasificacion>2</idClasificacion>
+    <nameClasificacion>Creacional</nameClasificacion>
+  </clasificacion>
+  <clasificacion>
+    <idClasificacion>3</idClasificacion>
+    <nameClasificacion>Estructural</nameClasificacion>
+  </clasificacion>
+</clasificaciones>

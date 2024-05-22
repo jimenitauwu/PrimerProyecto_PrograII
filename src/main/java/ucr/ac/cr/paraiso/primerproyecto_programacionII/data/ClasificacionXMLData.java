@@ -1,5 +1,11 @@
 package ucr.ac.cr.paraiso.primerproyecto_programacionII.data;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -7,10 +13,6 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ClasificacionXMLData {
 
@@ -43,14 +45,14 @@ public class ClasificacionXMLData {
     public void insertarClasificacion(Clasificacion clasificacion) throws IOException {
         Element eClasificacion = new Element("clasificacion");
 
-        Element eName = new Element("name");
-        eName.addContent(clasificacion.getName());
+        Element idClasificacion = new Element("idClasificacion");
+        idClasificacion.addContent(clasificacion.getIdClasificacion());
 
-        Element eType = new Element("type");
-        eType.addContent(clasificacion.getType());
+        Element eNameClasificacion = new Element("nameClasificacion");
+        eNameClasificacion.addContent(clasificacion.getNameClasificacion());
 
-        eClasificacion.addContent(eName);
-        eClasificacion.addContent(eType);
+        eClasificacion.addContent(idClasificacion);
+        eClasificacion.addContent(eNameClasificacion);
 
         raiz.addContent(eClasificacion);
         guardar();
@@ -64,14 +66,13 @@ public class ClasificacionXMLData {
         List<Element> clasificacionElements = rootElement.getChildren("clasificacion");
 
         for (Element eClasificacion : clasificacionElements) {
-            String name = eClasificacion.getChildText("name");
-            String type = eClasificacion.getChildText("type");
+            String idClasificacion = eClasificacion.getChildText("idClasificacion");
+            String nameClasificacion = eClasificacion.getChildText("nameClasificacion");
 
-            Clasificacion clasificacion = new Clasificacion(name, type);
+            Clasificacion clasificacion = new Clasificacion(idClasificacion, nameClasificacion);
             clasificaciones.add(clasificacion);
         }
 
         return clasificaciones;
     }
-
 }
