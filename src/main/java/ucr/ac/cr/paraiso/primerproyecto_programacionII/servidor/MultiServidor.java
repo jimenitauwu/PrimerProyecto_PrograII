@@ -23,8 +23,8 @@ public class MultiServidor {
             serverSocket = new ServerSocket(9999);
             System.out.println("Servidor activo");
             while(escuchando) {
-                // Provide both ServerSocket and PatronXMLData objects when creating MultiServidorHilo
-                MultiServidorHilo hilo = new MultiServidorHilo(serverSocket.accept(), patronXMLData);
+                // Provide both ServerSocket, PatronXMLData, and ClasificacionXMLData objects when creating MultiServidorHilo
+                MultiServidorHilo hilo = new MultiServidorHilo(serverSocket.accept(), patronXMLData, clasificacionXMLData);
                 hilo.start();
             }
             serverSocket.close();
@@ -36,3 +36,4 @@ public class MultiServidor {
         }
     }
 }
+

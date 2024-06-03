@@ -1,6 +1,7 @@
 package ucr.ac.cr.paraiso.primerproyecto_programacionII.servidor;
 
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.cliente.Cliente;
+import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.protocolo.MultiServidorProtocolo;
 
@@ -11,75 +12,46 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 
-public class MultiServidorHilo extends Thread{
-
-    private List<Cliente> clientes;
+public class MultiServidorHilo extends Thread {
     private Socket socket;
-    private PatronXMLData patronXMLData; // Add this attribute
+    private PatronXMLData patronXMLData;
+    private ClasificacionXMLData clasificacionXMLData;
 
-    public MultiServidorHilo(Socket socket, PatronXMLData patronXMLData) { // Modify the constructor
+    public MultiServidorHilo(Socket socket, PatronXMLData patronXMLData, ClasificacionXMLData clasificacionXMLData) {
         super("MultiServidorHilo");
         this.socket = socket;
-        this.patronXMLData = patronXMLData; // Assign the provided PatronXMLData object
+        this.patronXMLData = patronXMLData;
+        this.clasificacionXMLData = clasificacionXMLData;
     }
 
     public void run() {
-        PrintWriter writer;
+        PrintWriter writer = null;
+        BufferedReader reader = null;
         try {
             writer = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    socket.getInputStream()));
-            MultiServidorProtocolo protocolo = new MultiServidorProtocolo(patronXMLData); // Pass the PatronXMLData object
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            MultiServidorProtocolo protocolo = new MultiServidorProtocolo(patronXMLData, clasificacionXMLData);
             String salida = protocolo.procesarEntrada(null);
             writer.println(salida);
-            String entrada = null;
+            String entrada;
             while ((entrada = reader.readLine()) != null) {
                 salida = protocolo.procesarEntrada(entrada);
                 writer.println(salida);
                 if (salida.equals("Adios."))
                     break;
-            }// while
-            writer.close();
-            reader.close();
-            socket.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) writer.close();
+                if (reader != null) reader.close();
+                if (socket != null) socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-    }// r
-
-
-//
-//    public void InsertarInformacion(String nombre, String informacion) {
-//
-//    }
-//
-//    public String ConsultarInformacion(String nombre) {
-//
-//        return "Cliente no encontrado";
-//    }
-//
-//    public void ModificarInformacion(String nombre, String nuevaInformacion) {
-//
-//    }
-//
-//    public String BuscarInformacion(String nombre) {
-//        return ConsultarInformacion(nombre);
-//    }
-//
-//    public void CrearInformacion(String nombre, String informacion) {
-//        InsertarInformacion(nombre, informacion);
-//    }
-//
-//    public void ActualizarInformacion(String nombre, String nuevaInformacion) {
-//        ModificarInformacion(nombre, nuevaInformacion);
-//    }
-//
-//    public List<Cliente> getClientes() {
-//        return clientes;
-//    }
-//
-//    public void setClientes(List<Cliente> clientes) {
-//        this.clientes = clientes;
-//    }
-
+    }
 }
+
+

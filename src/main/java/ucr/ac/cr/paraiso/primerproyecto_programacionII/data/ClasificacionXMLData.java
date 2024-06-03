@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jdom2.Document;
@@ -15,7 +16,6 @@ import org.jdom2.output.XMLOutputter;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 
 public class ClasificacionXMLData {
-
     private String rutaDocumento;
     private Element raiz;
     private Document documento;
@@ -37,9 +37,10 @@ public class ClasificacionXMLData {
     }
 
     private void guardar() throws IOException {
+        // Ordenar clasificaciones antes de guardar
+        ordenarClasificaciones();
         XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
         xmlOutputter.output(this.documento, new PrintWriter(this.rutaDocumento));
-        xmlOutputter.output(this.documento, System.out);
     }
 
     public void insertarClasificacion(Clasificacion clasificacion) throws IOException {
@@ -58,12 +59,31 @@ public class ClasificacionXMLData {
         guardar();
     }
 
-    public List<Clasificacion> obtenerClasificaciones() throws IOException, JDOMException {
+    public void modificarClasificacion(Clasificacion clasificacion) throws IOException {
+        List<Element> clasificacionElements = raiz.getChildren("clasificacion");
+        for (Element eClasificacion : clasificacionElements) {
+            if (eClasificacion.getChildText("idClasificacion").equals(clasificacion.getIdClasificacion())) {
+                eClasificacion.getChild("nameClasificacion").setText(clasificacion.getNameClasificacion());
+                guardar();
+                return;
+            }
+        }
+    }
+
+    public void eliminarClasificacion(String idClasificacion) throws IOException {
+        List<Element> clasificacionElements = raiz.getChildren("clasificacion");
+        for (Element eClasificacion : clasificacionElements) {
+            if (eClasificacion.getChildText("idClasificacion").equals(idClasificacion)) {
+                raiz.removeContent(eClasificacion);
+                guardar();
+                return;
+            }
+        }
+    }
+
+    public List<Clasificacion> obtenerClasificaciones() {
         List<Clasificacion> clasificaciones = new ArrayList<>();
-        SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new File(rutaDocumento));
-        Element rootElement = document.getRootElement();
-        List<Element> clasificacionElements = rootElement.getChildren("clasificacion");
+        List<Element> clasificacionElements = raiz.getChildren("clasificacion");
 
         for (Element eClasificacion : clasificacionElements) {
             String idClasificacion = eClasificacion.getChildText("idClasificacion");
@@ -75,4 +95,17 @@ public class ClasificacionXMLData {
 
         return clasificaciones;
     }
+
+    private void ordenarClasificaciones() {
+        List<Element> clasificacionElements = new ArrayList<>(raiz.getChildren("clasificacion"));
+        clasificacionElements.sort(Comparator.comparing(e -> e.getChildText("nameClasificacion")));
+        raiz.removeChildren("clasificacion");
+        raiz.addContent(clasificacionElements);
+    }
+
+    public String generarNuevoIdClasificacion() {
+        List<Clasificacion> clasificaciones = obtenerClasificaciones();
+        return String.valueOf(clasificaciones.size() + 1);
+    }
 }
+

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jdom2.Document;
@@ -16,7 +17,6 @@ import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 
 public class PatronXMLData {
-
     private String rutaDocumento;
     private Element raiz;
     private Document documento;
@@ -40,9 +40,10 @@ public class PatronXMLData {
     }
 
     private void guardar() throws IOException {
+        // Ordenar patrones antes de guardar
+        ordenarPatrones();
         XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
         xmlOutputter.output(this.documento, new PrintWriter(this.rutaDocumento));
-        xmlOutputter.output(this.documento, System.out);
     }
 
     public void insertarPatron(Patron patron) throws IOException, JDOMException {
@@ -64,7 +65,6 @@ public class PatronXMLData {
         Element eEjemplos = new Element("ejemploPatron");
         eEjemplos.addContent(patron.getEjemplosPatron());
 
-        // Obtener el nombre de la clasificación por id desde ClasificacionXMLData
         String nombreClasificacion = obtenerNombreClasificacionPorId(patron.getIdClasificacion());
 
         Element eClasificacion = new Element("clasificacion");
@@ -81,6 +81,36 @@ public class PatronXMLData {
         guardar();
     }
 
+    public void modificarPatron(Patron patron) throws IOException, JDOMException {
+        List<Element> patronElements = raiz.getChildren("patron");
+        for (Element ePatron : patronElements) {
+            if (ePatron.getAttributeValue("idPatron").equals(patron.getIdPatron())) {
+                ePatron.getChild("name").setText(patron.getName());
+                ePatron.getChild("contextoPatron").setText(patron.getContextoPatron());
+                ePatron.getChild("problemaPatron").setText(patron.getProblemaPatron());
+                ePatron.getChild("solucionPatron").setText(patron.getSolucionPatron());
+                ePatron.getChild("ejemploPatron").setText(patron.getEjemplosPatron());
+
+                String nombreClasificacion = obtenerNombreClasificacionPorId(patron.getIdClasificacion());
+                ePatron.getChild("clasificacion").setText(nombreClasificacion);
+
+                guardar();
+                return;
+            }
+        }
+    }
+
+    public void eliminarPatron(String idPatron) throws IOException {
+        List<Element> patronElements = raiz.getChildren("patron");
+        for (Element ePatron : patronElements) {
+            if (ePatron.getAttributeValue("idPatron").equals(idPatron)) {
+                raiz.removeContent(ePatron);
+                guardar();
+                return;
+            }
+        }
+    }
+
     private String obtenerNombreClasificacionPorId(String idClasificacion) throws IOException, JDOMException {
         List<Clasificacion> clasificaciones = clasificacionData.obtenerClasificaciones();
         for (Clasificacion clasificacion : clasificaciones) {
@@ -91,12 +121,9 @@ public class PatronXMLData {
         return "";
     }
 
-    public List<Patron> obtenerPatrones() throws IOException, JDOMException {
+    public List<Patron> obtenerPatrones() {
         List<Patron> patrones = new ArrayList<>();
-        SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new File(rutaDocumento));
-        Element rootElement = document.getRootElement();
-        List<Element> patronElements = rootElement.getChildren("patron");
+        List<Element> patronElements = raiz.getChildren("patron");
 
         for (Element ePatron : patronElements) {
             String idPatron = ePatron.getAttributeValue("idPatron");
@@ -114,28 +141,15 @@ public class PatronXMLData {
         return patrones;
     }
 
-    public static void main(String[] args) throws IOException, JDOMException {
-        ClasificacionXMLData clasificacionXMLData = new ClasificacionXMLData("clasificaciones.xml");
-        PatronXMLData patronXMLData = new PatronXMLData("patrones.xml", clasificacionXMLData);
+    private void ordenarPatrones() {
+        List<Element> patronElements = new ArrayList<>(raiz.getChildren("patron"));
+        patronElements.sort(Comparator.comparing(e -> e.getChildText("name")));
+        raiz.removeChildren("patron");
+        raiz.addContent(patronElements);
+    }
 
-        // Insertar nuevas clasificaciones
-        clasificacionXMLData.insertarClasificacion(new Clasificacion("1", "Comportamiento"));
-        clasificacionXMLData.insertarClasificacion(new Clasificacion("2", "Creacional"));
-        clasificacionXMLData.insertarClasificacion(new Clasificacion("3", "Estructural"));
-
-        // Insertar patrones
-        Patron patron1 = new Patron("1", "Estrategia", "Define una familia de algoritmos.", "Descripción del problema para Estrategia", "Descripción de la solución para Estrategia", "Descripción del ejemplo para Estrategia", "1");
-        Patron patron2 = new Patron("2", "Singleton", "Garantiza que una clase solo tenga una instancia.", "Descripción del problema para Singleton", "Descripción de la solución para Singleton", "Descripción del ejemplo para Singleton", "2");
-        Patron patron3 = new Patron("3", "Adaptador", "Convierte la interfaz de una clase en otra interfaz que los clientes esperan.", "Descripción del problema para Adaptador", "Descripción de la solución para Adaptador", "Descripción del ejemplo para Adaptador", "3");
-
-        patronXMLData.insertarPatron(patron1);
-        patronXMLData.insertarPatron(patron2);
-        patronXMLData.insertarPatron(patron3);
-
-        // Obtener patrones
-        List<Patron> patrones = patronXMLData.obtenerPatrones();
-        for (Patron p : patrones) {
-            System.out.println("Patrón: " + p.getName() + ", Clasificación: " + p.getIdClasificacion());
-        }
+    public String generarNuevoIdPatron() {
+        List<Patron> patrones = obtenerPatrones();
+        return String.valueOf(patrones.size() + 1);
     }
 }

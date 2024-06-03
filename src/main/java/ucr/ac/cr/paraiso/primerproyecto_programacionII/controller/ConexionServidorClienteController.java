@@ -50,7 +50,7 @@ public class ConexionServidorClienteController
         }
 
         // Create an instance of MultiServidorProtocolo with PatronXMLData
-        protocolo = new MultiServidorProtocolo(patronXMLData);
+        protocolo = new MultiServidorProtocolo(patronXMLData, clasificacionXMLData);
     }
 
     @javafx.fxml.FXML

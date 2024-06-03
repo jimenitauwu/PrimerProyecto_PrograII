@@ -29,6 +29,14 @@ public class Clasificacion {
         this.idClasificacion = idClasificacion;
     }
 
+
+    public String toXMLString() {
+        return "<clasificacion>\n" +
+                "    <idClasificacion>" + idClasificacion + "</idClasificacion>\n" +
+                "    <nameClasificacion>" + nameClasificacion + "</nameClasificacion>\n" +
+                "</clasificacion>";
+    }
+
     @Override
     public String toString() {
         return "Clasificacion{" +
