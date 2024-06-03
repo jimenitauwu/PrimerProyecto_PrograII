@@ -20,7 +20,7 @@ class MultiServidorProtocoloTest {
 
     @BeforeEach
     public void setUp() throws IOException, JDOMException {
-        // Puedes inicializar tus clases XMLData con archivos temporales para las pruebas
+
         patronXMLData = new PatronXMLData("test_patrones.xml", new ClasificacionXMLData("test_clasificaciones.xml"));
         clasificacionXMLData = new ClasificacionXMLData("test_clasificaciones.xml");
     }
@@ -48,7 +48,7 @@ class MultiServidorProtocoloTest {
 
     @Test
     public void testModificarPatron() throws IOException, JDOMException {
-        // Suponiendo que tienes un método para generar un ID único para los patrones
+
         String idPatron = patronXMLData.generarNuevoIdPatron();
 
         // Crear un patrón de prueba
@@ -72,12 +72,12 @@ class MultiServidorProtocoloTest {
             }
         }
 
-        // Comprobar que el nombre del patrón se ha modificado correctamente
+
         assertEquals("Nuevo nombre de patrón", patronModificado.getName(), "El nombre del patrón no se ha modificado correctamente");
     }
 
     @Test
-    public void testAgregarYBuscarClasificacion() throws IOException, JDOMException {
+    public void testAgregarYBuscarClasificacion() throws IOException {
         Clasificacion nuevaClasificacion = new Clasificacion("1", "Clasificacion de prueba");
 
         // Añadir la nueva clasificación
@@ -98,7 +98,7 @@ class MultiServidorProtocoloTest {
 
     @Test
     public void testEliminarPatron() throws IOException, JDOMException {
-        // Suponiendo que tienes un método para generar un ID único para los patrones
+
         String idPatron = patronXMLData.generarNuevoIdPatron();
 
         // Crear un patrón de prueba
@@ -118,7 +118,7 @@ class MultiServidorProtocoloTest {
 
     @Test
     public void testBuscarClasificacion() throws IOException, JDOMException {
-        // Suponiendo que tienes una clasificación de prueba en tu archivo XML
+
         String idClasificacion = "1";
 
         // Buscar la clasificación
@@ -130,7 +130,7 @@ class MultiServidorProtocoloTest {
 
     @Test
     public void testModificarClasificacion() throws IOException, JDOMException {
-        // Suponiendo que tienes una clasificación de prueba en tu archivo XML
+
         String idClasificacion = "1";
         String nuevoNombre = "Nuevo nombre de clasificación";
 
