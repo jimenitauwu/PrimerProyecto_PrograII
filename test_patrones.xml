@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<patrones>
+  <patron idPatron="1">
+    <name>Nuevo nombre de patrón</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion />
+  </patron>
+  <patron idPatron="3">
+    <name>Nuevo nombre de patrón</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="4">
+    <name>Nuevo nombre de patrón</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="5">
+    <name>Nuevo nombre de patrón</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="1">
+    <name>Patron de prueba</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="1">
+    <name>Patron de prueba</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="1">
+    <name>Patron de prueba</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="1">
+    <name>Patron de prueba</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+</patrones>

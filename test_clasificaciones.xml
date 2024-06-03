@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<clasificaciones>
+  <clasificacion>
+    <idClasificacion>1</idClasificacion>
+    <nameClasificacion>Clasificacion de prueba</nameClasificacion>
+  </clasificacion>
+  <clasificacion>
+    <idClasificacion>1</idClasificacion>
+    <nameClasificacion>Nuevo nombre de clasificación</nameClasificacion>
+  </clasificacion>
+  <clasificacion>
+    <idClasificacion>1</idClasificacion>
+    <nameClasificacion>Nuevo nombre de clasificación</nameClasificacion>
+  </clasificacion>
+  <clasificacion>
+    <idClasificacion>1</idClasificacion>
+    <nameClasificacion>Nuevo nombre de clasificación</nameClasificacion>
+  </clasificacion>
+</clasificaciones>

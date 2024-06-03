@@ -103,9 +103,27 @@ public class ClasificacionXMLData {
         raiz.addContent(clasificacionElements);
     }
 
+    public Clasificacion obtenerClasificacionPorId(String idClasificacion) throws IOException, JDOMException {
+        List<Clasificacion> clasificaciones = obtenerClasificaciones();
+        for (Clasificacion clasificacion : clasificaciones) {
+            if (clasificacion.getIdClasificacion().equals(idClasificacion)) {
+                return clasificacion;
+            }
+        }
+        return null; // Si no se encuentra ninguna clasificación con ese ID
+    }
+
     public String generarNuevoIdClasificacion() {
         List<Clasificacion> clasificaciones = obtenerClasificaciones();
-        return String.valueOf(clasificaciones.size() + 1);
+        int maxId = 0;
+        for (Clasificacion clasificacion : clasificaciones) {
+            int id = Integer.parseInt(clasificacion.getIdClasificacion());
+            if (id > maxId) {
+                maxId = id;
+            }
+        }
+        return String.valueOf(maxId + 1);
     }
+
 }
 

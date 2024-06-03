@@ -141,6 +141,8 @@ public class PatronXMLData {
         return patrones;
     }
 
+
+
     private void ordenarPatrones() {
         List<Element> patronElements = new ArrayList<>(raiz.getChildren("patron"));
         patronElements.sort(Comparator.comparing(e -> e.getChildText("name")));
@@ -150,6 +152,14 @@ public class PatronXMLData {
 
     public String generarNuevoIdPatron() {
         List<Patron> patrones = obtenerPatrones();
-        return String.valueOf(patrones.size() + 1);
+        int maxId = 0;
+        for (Patron patron : patrones) {
+            int id = Integer.parseInt(patron.getIdPatron());
+            if (id > maxId) {
+                maxId = id;
+            }
+        }
+        return String.valueOf(maxId + 1);
     }
+
 }

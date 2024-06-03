@@ -4,6 +4,8 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -88,17 +90,19 @@ public class Patron {
     }
 
     public String toXMLString() {
-        return "<patron idPatron=\"" + idPatron + "\">\n" +
-                "    <name>" + name + "</name>\n" +
-                "    <contextoPatron>" + contextoPatron + "</contextoPatron>\n" +
-                "    <problemaPatron>" + problemaPatron + "</problemaPatron>\n" +
-                "    <solucionPatron>" + solucionPatron + "</solucionPatron>\n" +
-                "    <ejemploPatron>" + ejemplosPatron + "</ejemploPatron>\n" +
-                "    <clasificacion>" + idClasificacion + "</clasificacion>\n" +
-                "</patron>";
+        Element patronElement = new Element("patron");
+        patronElement.setAttribute("idPatron", idPatron);
+        patronElement.addContent(new Element("name").setText(name));
+        patronElement.addContent(new Element("contextoPatron").setText(contextoPatron));
+        patronElement.addContent(new Element("problemaPatron").setText(problemaPatron));
+        patronElement.addContent(new Element("solucionPatron").setText(solucionPatron));
+        patronElement.addContent(new Element("ejemploPatron").setText(ejemplosPatron));
+        patronElement.addContent(new Element("idClasificacion").setText(idClasificacion));
+
+        return new XMLOutputter(Format.getPrettyFormat()).outputString(patronElement);
     }
 
-    public static Patron fromXMLString(String xmlString) throws JDOMException, IOException {
+    public static Patron fromXMLString(String xmlString) throws IOException, JDOMException {
         SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new StringReader(xmlString));
 
@@ -113,6 +117,7 @@ public class Patron {
 
         return new Patron(idPatron, name, contextoPatron, problemaPatron, solucionPatron, ejemplosPatron, idClasificacion);
     }
+
 
 
     @Override

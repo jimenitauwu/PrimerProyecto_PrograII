@@ -103,6 +103,38 @@ public class MultiServidorProtocolo {
             return "<respuesta>Error al eliminar el patrón.</respuesta>";
         }
     }
+
+    private String incluirClasificacion(String datosClasificacion) {
+        try {
+            Clasificacion nuevaClasificacion = Clasificacion.fromXMLString(datosClasificacion);
+            clasificacionXMLData.insertarClasificacion(nuevaClasificacion);
+            return "<respuesta>Clasificación incluida exitosamente.</respuesta>";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "<respuesta>Error al incluir la clasificación.</respuesta>";
+        }
+    }
+
+    private String modificarClasificacion(String datosClasificacion) {
+        try {
+            Clasificacion clasificacionModificada = Clasificacion.fromXMLString(datosClasificacion);
+            clasificacionXMLData.modificarClasificacion(clasificacionModificada);
+            return "<respuesta>Clasificación modificada exitosamente.</respuesta>";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "<respuesta>Error al modificar la clasificación.</respuesta>";
+        }
+    }
+
+    private String eliminarClasificacion(String idClasificacion) {
+        try {
+            clasificacionXMLData.eliminarClasificacion(idClasificacion);
+            return "<respuesta>Clasificación eliminada exitosamente.</respuesta>";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "<respuesta>Error al eliminar la clasificación.</respuesta>";
+        }
+    }
 }
 
 
