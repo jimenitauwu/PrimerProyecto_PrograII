@@ -32,6 +32,46 @@
     <ejemploPatron>Ejemplo de prueba</ejemploPatron>
     <clasificacion>Clasificacion de prueba</clasificacion>
   </patron>
+  <patron idPatron="6">
+    <name>Nuevo nombre de patrón</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="7">
+    <name>Nuevo nombre de patrón</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="8">
+    <name>Nuevo nombre de patrón</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="1">
+    <name>Patron de prueba</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="1">
+    <name>Patron de prueba</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
   <patron idPatron="1">
     <name>Patron de prueba</name>
     <contextoPatron>Contexto de prueba</contextoPatron>
@@ -63,5 +103,61 @@
     <solucionPatron>Solucion de prueba</solucionPatron>
     <ejemploPatron>Ejemplo de prueba</ejemploPatron>
     <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="1">
+    <name>Patron de prueba</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="1">
+    <name>Patron de prueba</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="1">
+    <name>Patron de prueba</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="1">
+    <name>Patron de prueba</name>
+    <contextoPatron>Contexto de prueba</contextoPatron>
+    <problemaPatron>Problema de prueba</problemaPatron>
+    <solucionPatron>Solucion de prueba</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba</ejemploPatron>
+    <clasificacion>Clasificacion de prueba</clasificacion>
+  </patron>
+  <patron idPatron="2">
+    <name>Patron de prueba 2</name>
+    <contextoPatron>Contexto de prueba 2</contextoPatron>
+    <problemaPatron>Problema de prueba 2</problemaPatron>
+    <solucionPatron>Solucion de prueba 2</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba 2</ejemploPatron>
+    <clasificacion />
+  </patron>
+  <patron idPatron="2">
+    <name>Patron de prueba 2</name>
+    <contextoPatron>Contexto de prueba 2</contextoPatron>
+    <problemaPatron>Problema de prueba 2</problemaPatron>
+    <solucionPatron>Solucion de prueba 2</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba 2</ejemploPatron>
+    <clasificacion />
+  </patron>
+  <patron idPatron="2">
+    <name>Patron de prueba 2</name>
+    <contextoPatron>Contexto de prueba 2</contextoPatron>
+    <problemaPatron>Problema de prueba 2</problemaPatron>
+    <solucionPatron>Solucion de prueba 2</solucionPatron>
+    <ejemploPatron>Ejemplo de prueba 2</ejemploPatron>
+    <clasificacion />
   </patron>
 </patrones>

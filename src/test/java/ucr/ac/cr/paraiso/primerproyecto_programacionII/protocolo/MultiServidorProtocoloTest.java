@@ -44,6 +44,22 @@ class MultiServidorProtocoloTest {
         }
 
         assertTrue(encontrado, "El patrón añadido no se encontró en la lista de patrones");
+
+        Patron nuevoPatron2 = new Patron("2", "Patron de prueba 2", "Contexto de prueba 2", "Problema de prueba 2",
+                "Solucion de prueba 2", "Ejemplo de prueba 2", "2");
+
+        patronXMLData.insertarPatron(nuevoPatron2);
+
+
+        boolean encontrado2 = false;
+        for (Patron patron : patrones) {
+            if (patron.getIdPatron().equals(nuevoPatron2.getIdPatron())) {
+                encontrado2 = true;
+                break;
+            }
+        }
+
+        assertTrue(encontrado2, "El patrón añadido no se encontró en la lista de patrones");
     }
 
     @Test
@@ -149,6 +165,61 @@ class MultiServidorProtocoloTest {
             Clasificacion clasificacionModificada = clasificacionXMLData.obtenerClasificacionPorId(idClasificacion);
             assertEquals(nuevoNombre, clasificacionModificada.getNameClasificacion(), "El nombre de la clasificación no se ha modificado correctamente");
         }
+    }
+
+
+    @Test
+    public void testEliminarClasificacion() throws IOException, JDOMException {
+
+        String idClasificacion = clasificacionXMLData.generarNuevoIdClasificacion();
+
+        // Crear una clasificación de prueba
+        Clasificacion nuevaClasificacion = new Clasificacion(idClasificacion, "Clasificacion de prueba");
+
+        // Añadir la clasificación
+        clasificacionXMLData.insertarClasificacion(nuevaClasificacion);
+
+        // Eliminar la clasificación
+        clasificacionXMLData.eliminarClasificacion(idClasificacion);
+
+        // Verificar que la clasificación ha sido eliminada
+        List<Clasificacion> clasificaciones = clasificacionXMLData.obtenerClasificaciones();
+        assertFalse(clasificaciones.stream().anyMatch(clasificacion -> clasificacion.getIdClasificacion().equals(idClasificacion)), "La clasificación no se ha eliminado correctamente");
+    }
+
+
+
+    @Test
+    public void testListaClasificacionesVaciaAlInicio() throws IOException, JDOMException {
+
+        // Obtener las clasificaciones al inicio
+        List<Clasificacion> clasificaciones = clasificacionXMLData.obtenerClasificaciones();
+
+        // Verificar que la lista está vacía
+        assertFalse(clasificaciones.isEmpty(), "La lista de clasificaciones no está vacía al inicio");
+    }
+
+    @Test
+    public void testListaPatronesVaciaAlInicio() throws IOException, JDOMException {
+
+        // Obtener los patrones al inicio
+        List<Patron> patrones = patronXMLData.obtenerPatrones();
+
+        // Verificar que la lista está vacía
+        assertFalse(patrones.isEmpty(), "La lista de patrones no está vacía al inicio");
+    }
+
+
+    @Test
+    public void testBuscarClasificacionInexistentePorId() throws IOException, JDOMException {
+
+        String idClasificacionInexistente = "9999";
+
+        // Buscar la clasificación inexistente
+        Clasificacion clasificacionObtenida = clasificacionXMLData.obtenerClasificacionPorId(idClasificacionInexistente);
+
+        // Verificar que la clasificación no se ha encontrado
+        assertNull(clasificacionObtenida, "Se encontró una clasificación que no debería existir");
     }
 
 
