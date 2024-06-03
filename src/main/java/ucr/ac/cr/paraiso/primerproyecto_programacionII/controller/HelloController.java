@@ -60,7 +60,7 @@ public class HelloController {
 
     @FXML
     public void anadirMenuBar(ActionEvent actionEvent) {
-        loadPage("anadir.fxml");
+        loadPage("anadirClasificacion.fxml");
     }
 
 
