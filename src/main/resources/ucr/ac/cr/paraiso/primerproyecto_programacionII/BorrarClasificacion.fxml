@@ -8,35 +8,36 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucr.ac.cr.paraiso.primerproyecto_programacionII.controller.BorrarClasificacionController">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucr.ac.cr.paraiso.primerproyecto_programacionII.controller.BorrarClasificacionController">
     <center>
-        <AnchorPane prefHeight="421.0" prefWidth="640.0">
+        <AnchorPane prefHeight="421.0" prefWidth="640.0" style="-fx-background-color: #f3daaa;">
             <children>
-                <Label layoutX="7.0" layoutY="133.0" prefHeight="37.0" prefWidth="432.0" text="Ingrese el nombre de la clasificación que desea eliminar:">
+                <Label layoutX="65.0" layoutY="143.0" prefHeight="37.0" prefWidth="510.0" text="Ingrese el ID de la clasificación que desea borrar.">
                     <font>
-                        <Font name="Elephant" size="15.0" />
+                        <Font name="Arial Black" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="textField_Eliminar" layoutX="327.0" layoutY="183.0" prefHeight="37.0" prefWidth="306.0" />
-                <Button fx:id="btn_Borrar" layoutX="270.0" layoutY="283.0" mnemonicParsing="false" onAction="#EliminarOnAction" prefHeight="37.0" prefWidth="114.0" text="Borrar">
+                <TextField fx:id="textField_Eliminar" layoutX="167.0" layoutY="192.0" prefHeight="37.0" prefWidth="306.0" />
+                <Button fx:id="btn_Borrar" layoutX="244.0" layoutY="285.0" mnemonicParsing="false" onAction="#EliminarOnAction" prefHeight="53.0" prefWidth="159.0" style="-fx-background-color: #b7833a;" text="Borrar">
                     <font>
-                        <Font name="Elephant" size="18.0" />
+                        <Font name="Arial Black" size="18.0" />
                     </font>
                 </Button>
                 <Pane layoutY="-1.0" prefHeight="93.0" prefWidth="647.0">
                     <children>
                         <Label alignment="CENTER" layoutX="8.0" layoutY="14.0" prefHeight="63.0" prefWidth="647.0" text="Borrar clasificación del Patrón ">
                             <font>
-                                <Font name="Forte" size="47.0" />
+                                <Font name="Arial Black" size="26.0" />
                             </font>
                         </Label>
                     </children>
                 </Pane>
-                <Label fx:id="message_Eliminado" alignment="CENTER" layoutX="143.0" layoutY="338.0" prefHeight="44.0" prefWidth="361.0" text="¡Se ha borrado exitosamente la clasificación!" textFill="#ee0000">
-                    <font>
-                        <Font name="System Italic" size="14.0" />
-                    </font>
-                </Label>
+            <Label layoutX="45.0" layoutY="237.0" />
+            <Label layoutX="14.0" layoutY="379.0" prefHeight="20.0" prefWidth="316.0" text="*Recuerde que la eliminación es permanente.">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
     </center>

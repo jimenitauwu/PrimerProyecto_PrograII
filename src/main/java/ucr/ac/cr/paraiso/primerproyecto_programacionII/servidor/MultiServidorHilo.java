@@ -1,6 +1,6 @@
 package ucr.ac.cr.paraiso.primerproyecto_programacionII.servidor;
 
-import ucr.ac.cr.paraiso.primerproyecto_programacionII.cliente.Cliente;
+
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.protocolo.MultiServidorProtocolo;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.List;
+
 
 public class MultiServidorHilo extends Thread {
     private Socket socket;

@@ -40,6 +40,12 @@ public class MultiServidorProtocolo {
                     return modificarPatron(argumento);
                 case "eliminar":
                     return eliminarPatron(argumento);
+                case "incluir_clasificacion":
+                    return incluirClasificacion(argumento);
+                case "modificar_clasificacion":
+                    return modificarClasificacion(argumento);
+                case "eliminar_clasificacion":
+                    return eliminarClasificacion(argumento);
                 default:
                     return "<respuesta>Comando no reconocido.</respuesta>";
             }
