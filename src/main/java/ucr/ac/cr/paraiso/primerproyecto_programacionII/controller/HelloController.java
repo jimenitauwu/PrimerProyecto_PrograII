@@ -54,11 +54,6 @@ public class HelloController {
     }
 
     @FXML
-    public void modificarMenuBar(ActionEvent actionEvent) {
-        loadPage("modificar.fxml");
-    }
-
-    @FXML
     public void anadirMenuBar(ActionEvent actionEvent) {
         loadPage("anadirClasificacion.fxml");
     }
@@ -70,10 +65,6 @@ public class HelloController {
         menuBar.setVisible(false);
     }
 
-    @FXML
-    public void modificarPatronMenuBar(ActionEvent actionEvent) {
-        loadPage("modificarPatron.fxml");
-    }
 
     @FXML
     public void anadirPatronMenuBar(ActionEvent actionEvent) {

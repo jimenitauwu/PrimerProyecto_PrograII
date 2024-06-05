@@ -51,7 +51,7 @@ public class BuscarPatronController
         buscarPatron(idPatron);
         if (patronBuscado != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("ucr.ac.cr.paraiso.primerproyecto_programacionII.controller.InformacionPatronController.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("informacionPatron.fxml"));
                 Parent root = loader.load();
                 InformacionPatronController controller = loader.getController();
                 controller.setPatronModelo(patronModelo);

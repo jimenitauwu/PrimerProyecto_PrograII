@@ -82,12 +82,6 @@
                   <MenuItem onAction="#anadirPatronMenuBar" text="Anadir patrón" />
                </items>
             </Menu>
-            <Menu text="Modificar">
-               <items>
-                  <MenuItem onAction="#modificarMenuBar" text="Modificar clasificación" />
-                  <MenuItem onAction="#modificarPatronMenuBar" text="Modificar patrón" />
-               </items>
-            </Menu>
             <Menu text="Eliminar">
                <items>
                   <MenuItem onAction="#eliminarClasificacion" text="Eliminar clasificación" />
