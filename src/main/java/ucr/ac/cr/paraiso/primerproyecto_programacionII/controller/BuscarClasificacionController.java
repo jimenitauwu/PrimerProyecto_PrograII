@@ -10,15 +10,25 @@ public class BuscarClasificacionController
     @javafx.fxml.FXML
     private BorderPane borderPane;
     @javafx.fxml.FXML
-    private Button btn_Buscar;
-    @javafx.fxml.FXML
     private TextField textField_Buscar;
+    @javafx.fxml.FXML
+    private Button btnInformacion;
+    @javafx.fxml.FXML
+    private Button btnModificar;
 
     @javafx.fxml.FXML
     public void initialize() {
     }
 
-    @javafx.fxml.FXML
+    @Deprecated
     public void BuscarOnAction(ActionEvent actionEvent) {
+    }
+
+    @javafx.fxml.FXML
+    public void modificarOnAction(ActionEvent actionEvent) {
+    }
+
+    @javafx.fxml.FXML
+    public void informacionOnAction(ActionEvent actionEvent) {
     }
 }

@@ -8,17 +8,27 @@ import javafx.scene.layout.BorderPane;
 public class BuscarPatronController
 {
     @javafx.fxml.FXML
-    private Button btn_Buscar;
-    @javafx.fxml.FXML
     private TextField textField_Buscar;
     @javafx.fxml.FXML
     private BorderPane borderPane;
+    @javafx.fxml.FXML
+    private Button btn_Informacion;
+    @javafx.fxml.FXML
+    private Button btnModificar;
 
     @javafx.fxml.FXML
     public void initialize() {
     }
 
-    @javafx.fxml.FXML
+    @Deprecated
     public void BuscarOnAction(ActionEvent actionEvent) {
+    }
+
+    @javafx.fxml.FXML
+    public void informacionOnAction(ActionEvent actionEvent) {
+    }
+
+    @javafx.fxml.FXML
+    public void ModificarOnAction(ActionEvent actionEvent) {
     }
 }
