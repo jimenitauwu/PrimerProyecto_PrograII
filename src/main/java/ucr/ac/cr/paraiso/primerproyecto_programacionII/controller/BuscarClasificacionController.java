@@ -20,8 +20,7 @@ public class BuscarClasificacionController
     public void initialize() {
     }
 
-    @Deprecated
-    public void BuscarOnAction(ActionEvent actionEvent) {
+    public void BuscarOnAction(String idClasificacion) {
     }
 
     @javafx.fxml.FXML

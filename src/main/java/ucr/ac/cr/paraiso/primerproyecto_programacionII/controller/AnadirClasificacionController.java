@@ -3,6 +3,7 @@ package ucr.ac.cr.paraiso.primerproyecto_programacionII.controller;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 
 import java.io.BufferedReader;
@@ -11,47 +12,72 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.List;
 
-public class anadirClasificacionController
+public class AnadirClasificacionController
 {
 
     @javafx.fxml.FXML
     private TextField txtFieldNomClasificacion;
     @javafx.fxml.FXML
-    private TextField txtFieldIDClasifiacion;
+    private TextField txtFieldIDClasificacion;
+
+    private ClasificacionXMLData clasificacionData;
 
     @javafx.fxml.FXML
     public void initialize() {
+        try {
+            // Inicializa los datos de clasificaciones
+            clasificacionData = new ClasificacionXMLData("clasificaciones.xml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @javafx.fxml.FXML
     public void cancelarOnAction(ActionEvent actionEvent) {
-        //Limpia los campos del formulario
+        // Limpia los campos del formulario
         txtFieldNomClasificacion.clear();
-        txtFieldIDClasifiacion.clear();
+        txtFieldIDClasificacion.clear();
     }
 
     @javafx.fxml.FXML
     public void anadirOnAction(ActionEvent actionEvent) {
-        //Captura los valores de los campos
-        String idClasificacion = txtFieldIDClasifiacion.getText();
+        // Captura los valores de los campos
+        String idClasificacion = txtFieldIDClasificacion.getText();
         String nombreClasificacion = txtFieldNomClasificacion.getText();
 
-        //Valida los datos ingresados
+        // Valida los datos ingresados
         if (idClasificacion.isEmpty() || nombreClasificacion.isEmpty()) {
             mostrarMensajeError("Todos los campos son obligatorios.");
             return;
         }
 
+        // Verifica si el ID de la clasificación ya existe
+        try {
+            List<Clasificacion> clasificaciones = clasificacionData.obtenerClasificaciones();
+            for (Clasificacion clasificacion : clasificaciones) {
+                if (clasificacion.getIdClasificacion().equals(idClasificacion)) {
+                    mostrarMensajeError("El ID de la clasificación ya existe. Por favor, elige otro ID.");
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarMensajeError("Error al verificar la existencia del ID de la clasificación.");
+            return;
+        }
+
+        // Crea y envía la nueva clasificación al servidor
         Clasificacion nuevaClasificacion = new Clasificacion(idClasificacion, nombreClasificacion);
         String clasificacionXML = nuevaClasificacion.toXMLString();
 
-        //Envia los datos al servidor para incluir una nueva clasificación
+        // Envía los datos al servidor para incluir una nueva clasificación
         try (Socket socket = new Socket(InetAddress.getLocalHost(), 9999);
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-            writer.println("incluir " + clasificacionXML);
+            writer.println(clasificacionXML + "\n" + "incluir_clasificacion");
             String respuesta = reader.readLine();
 
             if (respuesta.contains("exitosamente")) {

@@ -56,7 +56,7 @@ public class ConexionServidorClienteController
     @javafx.fxml.FXML
     public void EnviarOnAction(ActionEvent actionEvent) {
         textArea_Servidor.appendText("Cliente: " + textField_Cliente.getText() + "\n");
-        textArea_Servidor.appendText("Servidor: " + protocolo.procesarEntrada(textField_Cliente.getText()) + "\n");
+//        textArea_Servidor.appendText("Servidor: " + protocolo.procesarEntrada(textField_Cliente.getText()) + "\n");
         textField_Cliente.clear();
     }
 

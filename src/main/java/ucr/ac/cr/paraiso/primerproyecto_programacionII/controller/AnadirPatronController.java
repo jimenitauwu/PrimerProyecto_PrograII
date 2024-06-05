@@ -111,7 +111,7 @@ public class AnadirPatronController
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-            writer.println("incluir " + patronXML);
+            writer.println(patronXML+"\n"+"incluir");//added JG
             String respuesta = reader.readLine();
 
             if (respuesta.contains("exitosamente")) {
@@ -124,6 +124,7 @@ public class AnadirPatronController
             mostrarMensajeError("Error de conexión con el servidor.");
         }
     }
+
 
     private void mostrarMensajeError(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

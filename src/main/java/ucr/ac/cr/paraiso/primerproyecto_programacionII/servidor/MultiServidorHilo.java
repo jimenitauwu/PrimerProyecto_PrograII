@@ -31,12 +31,22 @@ public class MultiServidorHilo extends Thread {
             writer = new PrintWriter(socket.getOutputStream(), true);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             MultiServidorProtocolo protocolo = new MultiServidorProtocolo(patronXMLData, clasificacionXMLData);
-            String salida = protocolo.procesarEntrada(null);
-            writer.println(salida);
+            String salida = "";
             String entrada;
+            StringBuilder temp = new StringBuilder();
+
             while ((entrada = reader.readLine()) != null) {
-                salida = protocolo.procesarEntrada(entrada);
-                writer.println(salida);
+                if (!entrada.equalsIgnoreCase("incluir") && !entrada.equalsIgnoreCase("consultar")
+                        && !entrada.equalsIgnoreCase("modificar") && !entrada.equalsIgnoreCase("eliminar")
+                        && !entrada.equalsIgnoreCase("incluir_clasificacion")
+                        && !entrada.equalsIgnoreCase("modificar_clasificacion")
+                        && !entrada.equalsIgnoreCase("eliminar_clasificacion")) {
+                    temp.append(entrada);
+                } else {
+                    salida = protocolo.procesarEntrada(temp.toString(), entrada.toLowerCase());
+                    writer.println(salida);
+                    temp.setLength(0); // Clear the temp buffer
+                }
                 if (salida.equals("Adios."))
                     break;
             }

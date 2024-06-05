@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class MultiServidorProtocolo {
     private PatronXMLData patronXMLData;
     private ClasificacionXMLData clasificacionXMLData;
@@ -21,31 +20,27 @@ public class MultiServidorProtocolo {
         this.clasificacionXMLData = clasificacionXMLData;
     }
 
-    public String procesarEntrada(String entrada) {
+    public String procesarEntrada(String entrada, String comando) {
         if (entrada == null || entrada.isEmpty()) {
             return "<respuesta>Operación no especificada.</respuesta>";
         }
 
         try {
-            String[] parts = entrada.split(" ", 2);
-            String comando = parts[0].toLowerCase();
-            String argumento = parts.length > 1 ? parts[1] : "";
-
             switch (comando) {
                 case "consultar":
-                    return procesarConsulta(argumento);
+                    return procesarConsulta(entrada);
                 case "incluir":
-                    return incluirPatron(argumento);
+                    return incluirPatron(entrada);
                 case "modificar":
-                    return modificarPatron(argumento);
+                    return modificarPatron(entrada);
                 case "eliminar":
-                    return eliminarPatron(argumento);
+                    return eliminarPatron(entrada);
                 case "incluir_clasificacion":
-                    return incluirClasificacion(argumento);
+                    return incluirClasificacion(entrada);
                 case "modificar_clasificacion":
-                    return modificarClasificacion(argumento);
+                    return modificarClasificacion(entrada);
                 case "eliminar_clasificacion":
-                    return eliminarClasificacion(argumento);
+                    return eliminarClasificacion(entrada);
                 default:
                     return "<respuesta>Comando no reconocido.</respuesta>";
             }
@@ -142,5 +137,6 @@ public class MultiServidorProtocolo {
         }
     }
 }
+
 
 
