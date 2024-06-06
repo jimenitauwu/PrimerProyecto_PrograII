@@ -33,10 +33,8 @@ public class BuscarClasificacionController {
     private ClasificacionXMLData clasificacionXMLData;
     private ObservableList<String> nombresClasificaciones;
 
-    // Añadir un campo para la IP del servidor
     private String serverIP;
 
-    // Crear un método para establecer la IP del servidor
     public void setServerIP(String serverIP) {
         this.serverIP = serverIP;
     }
@@ -56,7 +54,7 @@ public class BuscarClasificacionController {
     }
 
     private void llenarComboBox() {
-        nombresClasificaciones.clear();  // Asegurarse de empezar con una lista limpia
+        nombresClasificaciones.clear();
         if (clasificacionXMLData != null) {
             try {
                 for (Clasificacion clasificacion : clasificacionXMLData.obtenerClasificaciones()) {
@@ -79,7 +77,7 @@ public class BuscarClasificacionController {
         String seleccionado = comboBox.getValue();
         if (seleccionado != null) {
             String[] partes = seleccionado.split(" - ");
-            String idClasificacion = partes[0];  // Asumiendo que el ID está antes del guion
+            String idClasificacion = partes[0];
             buscarClasificacion(idClasificacion);
         } else {
             mostrarMensajeError("Por favor, seleccione una clasificación.");
@@ -97,7 +95,6 @@ public class BuscarClasificacionController {
             if (respuesta.startsWith("Error")) {
                 mostrarMensajeError(respuesta);
             } else {
-                // Parsear la respuesta y mostrar la clasificación
                 String[] partes = respuesta.split(",");
                 String id = partes[0];
                 String nombre = partes[1];

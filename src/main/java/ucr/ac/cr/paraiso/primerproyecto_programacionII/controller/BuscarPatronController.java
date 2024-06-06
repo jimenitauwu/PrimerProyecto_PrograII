@@ -41,10 +41,8 @@ public class BuscarPatronController {
     private PatronXMLData patronXMLData;
     private ClasificacionXMLData clasificacionXMLData;
 
-    // Añadir un campo para la IP del servidor
     private String serverIP;
 
-    // Crear un método para establecer la IP del servidor
     public void setServerIP(String serverIP) {
         this.serverIP = serverIP;
     }
@@ -68,14 +66,15 @@ public class BuscarPatronController {
     }
 
     private void llenarComboBox() {
-        nombresPatrones.clear();  // Asegurarse de empezar con una lista limpia
+        nombresPatrones.clear();
         if (patronXMLData != null) {
             try {
                 for (Patron patron : patronXMLData.obtenerPatrones()) {
                     nombresPatrones.add(patron.getIdPatron() + " - " + patron.getName());
                 }
                 cBoxID.setItems(nombresPatrones);
-            } catch (Exception e) {            mostrarMensajeError("Error al cargar los patrones.");
+            } catch (Exception e) {
+                mostrarMensajeError("Error al cargar los patrones.");
                 e.printStackTrace();
             }
         } else {
@@ -89,7 +88,7 @@ public class BuscarPatronController {
         String seleccionado = cBoxID.getValue();
         if (seleccionado != null) {
             String[] partes = seleccionado.split(" - ");
-            String idPatron = partes[0];  // Asumiendo que el ID está antes del guion
+            String idPatron = partes[0];
             buscarPatron(idPatron);
         } else {
             mostrarMensajeError("Por favor, seleccione un patrón.");
@@ -107,7 +106,6 @@ public class BuscarPatronController {
             if (respuesta.startsWith("Error")) {
                 mostrarMensajeError(respuesta);
             } else {
-                // Parsear la respuesta y mostrar el patrón
                 String[] partes = respuesta.split(",");
                 String nombre = partes[0];
                 String problema = partes[1];

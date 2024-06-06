@@ -13,6 +13,13 @@ import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+
 public class ComportamientoController {
 
     @FXML
@@ -37,6 +44,11 @@ public class ComportamientoController {
     private ObservableList<String> nombresPatrones;
     private PatronXMLData patronXMLData;
     private ClasificacionXMLData clasificacionXMLData;
+    private String serverIP;
+
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
 
     public void setPatronXMLData(PatronXMLData patronXMLData) {
         this.patronXMLData = patronXMLData;
@@ -108,27 +120,40 @@ public class ComportamientoController {
     }
 
     private void buscarPatron(String idPatron) {
-        try {
-            Patron patron = patronXMLData.obtenerPatronPorID(idPatron);
-            if (patron != null) {
-                mostrarPatron(patron);
+        try (Socket socket = new Socket(serverIP, 9999);
+             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+            writer.println(idPatron + "\n" + "buscar");
+            String respuesta = reader.readLine();
+
+            if (respuesta.startsWith("Error")) {
+                mostrarMensajeError(respuesta);
             } else {
-                mostrarMensajeError("Patrón no encontrado.");
+                String[] partes = respuesta.split(",");
+                String nombre = partes[0];
+                String problema = partes[1];
+                String clasificacion = partes[2];
+                String solucion = partes[3];
+                String contexto = partes[4];
+                String ejemplos = partes[5];
+                mostrarPatron(nombre, problema, clasificacion, solucion, contexto, ejemplos);
             }
-        } catch (Exception e) {
-            mostrarMensajeError("Error al buscar el patrón.");
+        } catch (IOException e) {
+            mostrarMensajeError("Error de conexión con el servidor.");
             e.printStackTrace();
         }
     }
 
-    private void mostrarPatron(Patron patron) {
-        txtNombre.setText(patron.getName());
-        txtProblema.setText(patron.getProblemaPatron());
-        txtContexto.setText(patron.getContextoPatron());
-        txtSolucion.setText(patron.getSolucionPatron());
-        txtEjemplos.setText(patron.getEjemplosPatron());
-        txtClasificacion.setText(patron.getIdClasificacion());
+    private void mostrarPatron(String nombre, String problema, String clasificacion, String solucion, String contexto, String ejemplos) {
+        txtNombre.setText(nombre);
+        txtProblema.setText(problema);
+        txtContexto.setText(contexto);
+        txtSolucion.setText(solucion);
+        txtEjemplos.setText(ejemplos);
+        txtClasificacion.setText(clasificacion);
     }
+
 
     private void mostrarMensajeError(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

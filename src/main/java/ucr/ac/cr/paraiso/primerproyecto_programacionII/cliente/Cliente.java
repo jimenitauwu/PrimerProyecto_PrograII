@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
 public class Cliente {
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.out.println("Uso: java Cliente <IP del servidor>");
+            System.out.println("Uso: java Cliente <192.168.18.10>");
             return;
         }
 

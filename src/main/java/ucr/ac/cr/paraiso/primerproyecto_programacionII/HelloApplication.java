@@ -18,7 +18,7 @@ public class HelloApplication extends Application {
 
         // Obtén el controlador y establece la IP del servidor
         HelloController controller = fxmlLoader.getController();
-        String serverIP = "192.168.1.2"; // Establece aquí la IP del servidor
+        String serverIP = "192.168.18.10"; // Establece aquí la IP del servidor
         controller.setServerIP(serverIP);
 
         stage.show();

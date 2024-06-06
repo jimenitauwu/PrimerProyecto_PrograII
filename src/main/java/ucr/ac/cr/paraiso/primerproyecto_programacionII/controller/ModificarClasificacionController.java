@@ -17,49 +17,51 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-
 public class ModificarClasificacionController {
 
     @FXML
-    private TextField txtFieldNomClasificacion;
+    private ComboBox<String> cBox_ID;
     @FXML
-    private TextField txtFieldIDClasificacion;
+    private TextField txt_ID;
     @FXML
-    private Button btnModificar;
+    private TextField txt_Nombre;
     @FXML
-    private Button btnBuscar;
+    private Button btn_Modificar;
     @FXML
-    private ComboBox<String> cbBoxClasif;
+    private Button btn_Buscar;
 
-    private ObservableList<String> clasificaciones;
-    private Clasificacion clasificacionActual;
+    private ObservableList<String> nombresClasificaciones;
     private ClasificacionXMLData clasificacionXMLData;
 
-    // Variable para la IP del servidor
     private String serverIP;
 
-    // Método para establecer la IP del servidor
     public void setServerIP(String serverIP) {
         this.serverIP = serverIP;
     }
 
-    // Método para establecer el objeto ClasificacionXMLData
     public void setClasificacionXMLData(ClasificacionXMLData clasificacionXMLData) {
         this.clasificacionXMLData = clasificacionXMLData;
-        llenarComboBoxClasificaciones();
+        if (this.clasificacionXMLData != null) {
+            llenarComboBox();
+        } else {
+            mostrarMensajeError("Error: no se ha proporcionado el objeto ClasificacionXMLData.");
+        }
     }
 
     @FXML
     public void initialize() {
-        clasificaciones = FXCollections.observableArrayList();
+        nombresClasificaciones = FXCollections.observableArrayList();
     }
 
-    private void llenarComboBoxClasificaciones() {
+    private void llenarComboBox() {
+        nombresClasificaciones.clear();
         if (clasificacionXMLData != null) {
             try {
                 for (Clasificacion clasificacion : clasificacionXMLData.obtenerClasificaciones()) {
-                    cbBoxClasif.getItems().add(clasificacion.getIdClasificacion() + " - " + clasificacion.getNameClasificacion());
+                    String nombreClasificacion = clasificacion.getIdClasificacion() + " - " + clasificacion.getNameClasificacion();
+                    nombresClasificaciones.add(nombreClasificacion);
                 }
+                cBox_ID.setItems(nombresClasificaciones);
             } catch (Exception e) {
                 mostrarMensajeError("Error al cargar las clasificaciones.");
                 e.printStackTrace();
@@ -71,80 +73,73 @@ public class ModificarClasificacionController {
 
     @FXML
     public void buscarOnAction(ActionEvent actionEvent) {
-        String seleccionado = cbBoxClasif.getValue();
+        System.out.println("Buscar acción activada.");
+        String seleccionado = cBox_ID.getValue();
         if (seleccionado != null) {
             String[] partes = seleccionado.split(" - ");
-            String idClasificacion = partes[0];  // Asumiendo que el ID está antes del guion
+            String idClasificacion = partes[0];
             buscarClasificacion(idClasificacion);
         } else {
-            mostrarMensajeError("Por favor, seleccione una Clasificación.");
+            mostrarMensajeError("Por favor, seleccione una clasificación.");
         }
     }
 
     private void buscarClasificacion(String idClasificacion) {
-        try {
-            Clasificacion clasificacion = clasificacionXMLData.obtenerClasificacionPorId(idClasificacion);
-            if (clasificacion != null) {
-                clasificacionActual = clasificacion;
-                mostrarClasificacion(clasificacion);
+        try (Socket socket = new Socket(serverIP, 9999);
+             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+            writer.println(idClasificacion + "\n" + "consultar_clasificacion_por_id");
+            String respuesta = reader.readLine();
+
+            if (respuesta.startsWith("Error")) {
+                mostrarMensajeError(respuesta);
             } else {
-                mostrarMensajeError("Clasificación no encontrada.");
+                String[] partes = respuesta.split(",");
+                String id = partes[0];
+                String nombre = partes[1];
+                mostrarClasificacion(id, nombre);
             }
-        } catch (Exception e) {
-            mostrarMensajeError("Error al buscar la clasificación.");
+        } catch (IOException e) {
+            mostrarMensajeError("Error de conexión con el servidor.");
             e.printStackTrace();
         }
     }
 
-    private void mostrarClasificacion(Clasificacion clasificacion) {
-        txtFieldIDClasificacion.setText(clasificacion.getIdClasificacion()); // Mostrar el ID actual
-        txtFieldIDClasificacion.setEditable(false);
-        txtFieldNomClasificacion.setText(clasificacion.getNameClasificacion());
+    private void mostrarClasificacion(String id, String nombre) {
+        txt_ID.setText(id);
+        txt_Nombre.setText(nombre);
     }
 
     @FXML
     public void modificarOnAction(ActionEvent actionEvent) {
-        if (clasificacionActual == null) {
-            mostrarMensajeError("No hay ninguna clasificación cargada para modificar.");
-            return;
+        System.out.println("Modificar acción activada.");
+        String id = txt_ID.getText();
+        String nombre = txt_Nombre.getText();
+        if (id != null && !id.isEmpty() && nombre != null && !nombre.isEmpty()) {
+            modificarClasificacion(id, nombre);
+        } else {
+            mostrarMensajeError("Por favor, ingrese un ID y un nombre de clasificación.");
         }
+    }
 
-        // Captura el valor del nombre de la clasificación
-        String nombreClasificacion = txtFieldNomClasificacion.getText();
+    private void modificarClasificacion(String id, String nombre) {
+        try (Socket socket = new Socket(serverIP, 9999);
+             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-        // Crear un objeto Clasificacion con el nombre modificado
-        Clasificacion clasificacionModificada = new Clasificacion();
-        clasificacionModificada.setIdClasificacion(clasificacionActual.getIdClasificacion());
-        if (!nombreClasificacion.isEmpty()) {
-            clasificacionModificada.setNameClasificacion(nombreClasificacion);
-        }
+            writer.println(id + "\n" + nombre + "\n" + "modificar_clasificacion");
+            String respuesta = reader.readLine();
 
-        // Enviar los datos modificados al servidor
-        try {
-            clasificacionXMLData.modificarClasificacion(clasificacionActual.getIdClasificacion(), clasificacionModificada);
-
-            // Comunicación con el servidor
-            String clasificacionXML = clasificacionModificada.toXMLString();
-            try (Socket socket = new Socket(serverIP, 9999); // Use the server IP
-                 PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-
-                writer.println("modificar_clasificacion");
-                writer.println(clasificacionXML);
-                String respuesta = reader.readLine();
-
-                if (respuesta.contains("exitosamente")) {
-                    mostrarMensajeExito("Clasificación modificada exitosamente.");
-                } else {
-                    mostrarMensajeError("Error al modificar la Clasificación: " + respuesta);
-                }
+            if (respuesta.startsWith("Error")) {
+                mostrarMensajeError(respuesta);
+            } else {
+                mostrarMensajeExito("Clasificación modificada exitosamente.");
+                llenarComboBox(); // Actualizar la lista de clasificaciones en el ComboBox
             }
         } catch (IOException e) {
-            e.printStackTrace();
             mostrarMensajeError("Error de conexión con el servidor.");
-        } catch (Exception e) {
             e.printStackTrace();
-            mostrarMensajeError("Error al modificar la clasificación.");
         }
     }
 
