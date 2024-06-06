@@ -6,15 +6,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import org.jdom2.Document;
+import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class BuscarPatronController {
@@ -108,16 +108,43 @@ public class BuscarPatronController {
             System.out.println("Solicitud enviada al servidor.");
 
             // Lee la respuesta del servidor
-            String respuesta = reader.readLine();
+            StringBuilder respuestaBuilder = new StringBuilder();
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                respuestaBuilder.append(linea);
+            }
+            String respuesta = respuestaBuilder.toString();
             System.out.println("Respuesta recibida del servidor: " + respuesta);
 
-            // Procesa la respuesta del servidor...
-        } catch (IOException e) {
-            mostrarMensajeError("Error de conexión con el servidor: " + e.getMessage());
+            // Procesa la respuesta del servidor
+            if (respuesta != null && !respuesta.isEmpty()) {
+                // Convierte la respuesta en un documento XML
+                SAXBuilder saxBuilder = new SAXBuilder();
+                Document document = saxBuilder.build(new StringReader(respuesta));
+
+                // Obtén la raíz del documento
+                Element rootElement = document.getRootElement();
+
+                // Extrae los datos del patrón
+                String nombre = rootElement.getChildText("nombre");
+                String problema = rootElement.getChildText("problema");
+                String clasificacion = rootElement.getChildText("clasificacion");
+                String solucion = rootElement.getChildText("solucion");
+                String contexto = rootElement.getChildText("contexto");
+                String ejemplos = rootElement.getChildText("ejemplos");
+
+                // Muestra los datos en los TextArea
+                mostrarPatron(nombre, problema, clasificacion, solucion, contexto, ejemplos);
+            } else {
+                mostrarMensajeError("No se recibió una respuesta válida del servidor.");
+            }
+        } catch (IOException | JDOMException e) {
+            mostrarMensajeError("Error de conexión o de procesamiento del servidor: " + e.getMessage());
             e.printStackTrace();
         }
-
     }
+
+
 
     private void mostrarPatron(String nombre, String problema, String clasificacion, String solucion, String contexto, String ejemplos) {
         txtNombre.setText(nombre);

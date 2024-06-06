@@ -6,15 +6,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class BuscarClasificacionController {
@@ -90,21 +91,31 @@ public class BuscarClasificacionController {
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
             writer.println(idClasificacion + "\n" + "consultar_clasificacion_por_id");
-            String respuesta = reader.readLine();
-
-            if (respuesta.startsWith("Error")) {
-                mostrarMensajeError(respuesta);
-            } else {
-                String[] partes = respuesta.split(",");
-                String id = partes[0];
-                String nombre = partes[1];
-                mostrarClasificacion(id, nombre);
+            StringBuilder respuestaBuilder = new StringBuilder();
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                respuestaBuilder.append(linea);
             }
-        } catch (IOException e) {
-            mostrarMensajeError("Error de conexión con el servidor.");
+            String respuesta = respuestaBuilder.toString();
+
+            if (respuesta != null && !respuesta.isEmpty()) {
+                SAXBuilder saxBuilder = new SAXBuilder();
+                Document document = saxBuilder.build(new StringReader(respuesta));
+
+                Element rootElement = document.getRootElement();
+                String id = rootElement.getChildText("id");
+                String nombre = rootElement.getChildText("nombre");
+
+                mostrarClasificacion(id, nombre);
+            } else {
+                mostrarMensajeError("No se recibió una respuesta válida del servidor.");
+            }
+        } catch (IOException | JDOMException e) {
+            mostrarMensajeError("Error de conexión o de procesamiento del servidor: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
 
     private void mostrarClasificacion(String id, String nombre) {
         txA_ID.setText(id);
