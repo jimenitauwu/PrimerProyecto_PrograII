@@ -100,6 +100,7 @@ public class PatronXMLData {
         }
     }
 
+
     public void eliminarPatron(String idPatron) throws IOException {
         List<Element> patronElements = raiz.getChildren("patron");
         for (Element ePatron : patronElements) {
@@ -139,6 +140,16 @@ public class PatronXMLData {
         }
 
         return patrones;
+    }
+
+    public Patron obtenerPatronPorID(String idPatron) {
+        List<Patron> patrones = obtenerPatrones();
+        for (Patron patron : patrones) {
+            if (patron.getIdPatron().equals(idPatron)) {
+                return patron;
+            }
+        }
+        return null; // Si no se encuentra ningún patrón con el ID especificado
     }
 
 

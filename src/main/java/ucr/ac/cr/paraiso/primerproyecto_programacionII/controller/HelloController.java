@@ -3,12 +3,18 @@ package ucr.ac.cr.paraiso.primerproyecto_programacionII.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.HelloApplication;
+import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
+import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 
 import java.io.IOException;
+
+
+
 
 public class HelloController {
 
@@ -18,11 +24,41 @@ public class HelloController {
     private AnchorPane ap;
     @FXML
     private MenuBar menuBar;
+    private PatronXMLData patronXMLData;
+    private ClasificacionXMLData clasificacionXMLData;
 
-    private void loadPage(String page){
+    @FXML
+    private void initialize() {
+        // Inicializar PatronXMLData con la ruta correcta de tu archivo XML
+        try {
+            this.clasificacionXMLData = new ClasificacionXMLData("clasificaciones.xml");
+            this.patronXMLData = new PatronXMLData("patrones.xml", clasificacionXMLData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Manejar el error apropiadamente, mostrar un mensaje o lo que necesites
+        }
+    }
+
+    private void loadPage(String page) {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(page));
         try {
-            this.bp.setCenter(fxmlLoader.load());
+            Parent root = fxmlLoader.load();
+            Object controller = fxmlLoader.getController();
+            if (controller instanceof BuscarPatronController || controller instanceof ModificarPatronController) {
+                if (patronXMLData != null && clasificacionXMLData != null) {
+                    if (controller instanceof BuscarPatronController) {
+                        ((BuscarPatronController) controller).setPatronXMLData(patronXMLData);
+                        ((BuscarPatronController) controller).setClasificacionXMLData(clasificacionXMLData);
+                    } else if (controller instanceof ModificarPatronController) {
+                        ((ModificarPatronController) controller).setPatronXMLData(patronXMLData);
+                        ((ModificarPatronController) controller).setClasificacionXMLData(clasificacionXMLData);
+                    }
+                } else {
+                    System.err.println("patronXMLData o clasificacionXMLData es nulo.");
+                    // Manejar el error de datos nulos apropiadamente
+                }
+            }
+            this.bp.setCenter(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -33,7 +69,6 @@ public class HelloController {
         loadPage("creacionales.fxml");
         menuBar.setVisible(true);
     }
-
 
     @FXML
     public void comportamiento(ActionEvent actionEvent) {
@@ -50,7 +85,6 @@ public class HelloController {
     @FXML
     public void salir(ActionEvent actionEvent) {
         System.exit(0);
-
     }
 
     @FXML
@@ -58,13 +92,11 @@ public class HelloController {
         loadPage("anadirClasificacion.fxml");
     }
 
-
     @FXML
     public void inicio(ActionEvent actionEvent) {
         bp.setCenter(ap);
         menuBar.setVisible(false);
     }
-
 
     @FXML
     public void anadirPatronMenuBar(ActionEvent actionEvent) {
@@ -82,6 +114,11 @@ public class HelloController {
     }
 
     @FXML
+    public void modificarPatron(ActionEvent actionEvent) {
+        loadPage("modificarPatron.fxml");
+    }
+
+    @FXML
     public void eliminarPatron(ActionEvent actionEvent) {
         loadPage("BorrarClasificacion.fxml");
     }
@@ -89,5 +126,10 @@ public class HelloController {
     @FXML
     public void eliminarClasificacion(ActionEvent actionEvent) {
         loadPage("BorrarPatron.fxml");
+    }
+
+    @FXML
+    public void modificarClasificacion(ActionEvent actionEvent) {
+        // Implementación del método
     }
 }

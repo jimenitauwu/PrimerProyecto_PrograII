@@ -88,10 +88,16 @@
                   <MenuItem onAction="#eliminarPatron" text="Eliminar patrón" />
                </items>
             </Menu>
+            <Menu text="Modificar">
+               <items>
+                  <MenuItem onAction="#modificarClasificacion" text="Modificar clasificación" />
+                  <MenuItem onAction="#modificarPatron" text="Modficar patrón" />
+               </items>
+            </Menu>
             <Menu text="Buscar">
                <items>
-                  <MenuItem onAction="#buscarClasificacion" text="Buscar clasificación" />
                   <MenuItem onAction="#buscarPatron" text="Buscar patrón" />
+                  <MenuItem onAction="#buscarClasificacion" text="Buscar clasificación" />
                </items>
             </Menu>
             <Menu text="Créditos">

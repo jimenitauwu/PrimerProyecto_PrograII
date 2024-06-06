@@ -40,16 +40,19 @@ public class MultiServidorHilo extends Thread {
                         && !entrada.equalsIgnoreCase("modificar") && !entrada.equalsIgnoreCase("eliminar")
                         && !entrada.equalsIgnoreCase("incluir_clasificacion")
                         && !entrada.equalsIgnoreCase("modificar_clasificacion")
-                        && !entrada.equalsIgnoreCase("eliminar_clasificacion")) {
+                        && !entrada.equalsIgnoreCase("eliminar_clasificacion")
+                        && !entrada.equalsIgnoreCase("consultar_patron_por_id")
+                        && !entrada.equalsIgnoreCase("consultar_clasificacion_por_id")) { // Actualiza esto
                     temp.append(entrada);
                 } else {
                     salida = protocolo.procesarEntrada(temp.toString(), entrada.toLowerCase());
                     writer.println(salida);
-                    temp.setLength(0); // Clear the temp buffer
+                    temp.setLength(0); // Limpia el buffer temporal
                 }
                 if (salida.equals("Adios."))
                     break;
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

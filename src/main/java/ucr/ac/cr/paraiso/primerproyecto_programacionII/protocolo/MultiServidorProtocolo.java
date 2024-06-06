@@ -21,6 +21,9 @@ public class MultiServidorProtocolo {
     }
 
     public String procesarEntrada(String entrada, String comando) {
+        System.out.println("Comando recibido: " + comando);
+        System.out.println("Datos recibidos: " + entrada);
+
         if (entrada == null || entrada.isEmpty()) {
             return "<respuesta>Operación no especificada.</respuesta>";
         }
@@ -41,6 +44,10 @@ public class MultiServidorProtocolo {
                     return modificarClasificacion(entrada);
                 case "eliminar_clasificacion":
                     return eliminarClasificacion(entrada);
+                case "consultar_patron_por_id":
+                    return buscarPatronPorId(entrada);
+                case "consultar_clasificacion_por_id":
+                    return buscarClasificacionPorId(entrada);
                 default:
                     return "<respuesta>Comando no reconocido.</respuesta>";
             }
@@ -87,6 +94,7 @@ public class MultiServidorProtocolo {
     private String modificarPatron(String datosPatron) {
         try {
             Patron patronModificado = Patron.fromXMLString(datosPatron);
+            System.out.println("Modificando patrón: " + patronModificado.getIdPatron());
             patronXMLData.modificarPatron(patronModificado);
             return "<respuesta>Patrón modificado exitosamente.</respuesta>";
         } catch (Exception e) {
@@ -94,6 +102,35 @@ public class MultiServidorProtocolo {
             return "<respuesta>Error al modificar el patrón.</respuesta>";
         }
     }
+
+    public String buscarPatronPorId(String id) {
+        try {
+            Patron patron = patronXMLData.obtenerPatronPorID(id);
+            if (patron != null) {
+                return patron.toXMLString();
+            } else {
+                return "<respuesta>Patrón no encontrado.</respuesta>";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "<respuesta>Error al buscar patrón por ID.</respuesta>";
+        }
+    }
+
+    public String buscarClasificacionPorId(String id) {
+        try {
+            Clasificacion clasificacion = clasificacionXMLData.obtenerClasificacionPorId(id);
+            if (clasificacion != null) {
+                return clasificacion.toXMLString();
+            } else {
+                return "<respuesta>Clasificación no encontrada.</respuesta>";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "<respuesta>Error al buscar clasificación por ID.</respuesta>";
+        }
+    }
+
 
     private String eliminarPatron(String idPatron) {
         try {
