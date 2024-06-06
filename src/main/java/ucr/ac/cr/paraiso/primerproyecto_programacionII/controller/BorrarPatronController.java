@@ -1,54 +1,77 @@
 package ucr.ac.cr.paraiso.primerproyecto_programacionII.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import org.jdom2.JDOMException;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
+import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 
 import java.io.IOException;
+import java.util.List;
 
-public class BorrarPatronController
-{
-    private PatronXMLData patronXMLData; // Instancia de PatronXMLData
-
-    @javafx.fxml.FXML
+public class BorrarPatronController {
+    @FXML
+    private ComboBox<String> cbBoxPatron;
+    @FXML
     private Button btn_Borrar;
 
-    @javafx.fxml.FXML
-    private TextField textField_Eliminar;
+    private PatronXMLData patronXMLData;
+    private ObservableList<String> nombresPatrones;
+    private ClasificacionXMLData clasificacionXMLData;
 
-    @javafx.fxml.FXML
-    public void initialize() {
-        try {
-            patronXMLData = new PatronXMLData("patrones.xml", new ClasificacionXMLData("clasificaciones.xml"));
-        } catch (IOException | JDOMException e) {
-            e.printStackTrace();
+    public void setPatronXMLData(PatronXMLData patronXMLData) {
+        this.patronXMLData = patronXMLData;
+        if (this.patronXMLData != null) {
+            llenarComboBox();
+        } else {
+            mostrarMensajeError("Error: no se ha proporcionado el objeto PatronXMLData.");
         }
     }
 
-    @javafx.fxml.FXML
-    public void EliminarOnAction(ActionEvent actionEvent) {
-        //Obtiene el ID del patrón a eliminar desde el campo de texto
-        String idPatron = textField_Eliminar.getText().trim();
+    public void setClasificacionXMLData(ClasificacionXMLData clasificacionXMLData) {
+        this.clasificacionXMLData = clasificacionXMLData;
+    }
 
-        //Verifica si el ID del patrón no está vacío
-        if (!idPatron.isEmpty()) {
+    @FXML
+    public void initialize() {
+        nombresPatrones = FXCollections.observableArrayList();
+    }
+
+    private void llenarComboBox() {
+        nombresPatrones.clear();  // Asegurarse de empezar con una lista limpia
+        if (patronXMLData != null) {
             try {
-                patronXMLData.eliminarPatron(idPatron);
-                mostrarMensajeExito("Patrón eliminado exitosamente.");
-            } catch (IOException e) {
-                mostrarMensajeError("Error al intentar eliminar el patrón.");
+                for (Patron patron : patronXMLData.obtenerPatrones()) {
+                    String nombrePatron = patron.getIdPatron() + " - " + patron.getName();
+                    nombresPatrones.add(nombrePatron);
+                }
+                cbBoxPatron.setItems(nombresPatrones); // Esta línea falta en el código original
+            } catch (Exception e) {
+                mostrarMensajeError("Error al cargar los patrones.");
                 e.printStackTrace();
             }
         } else {
-            mostrarMensajeError("Por favor, ingrese un ID de patrón válido.");
+            mostrarMensajeError("No se ha proporcionado el objeto PatronXMLData.");
         }
     }
 
+
+    @FXML
+    public void EliminarOnAction(ActionEvent actionEvent) {
+        String seleccionado = cbBoxPatron.getValue();
+        if (seleccionado != null) {
+            String[] partes = seleccionado.split(" - ");
+            String idPatron = partes[0];  // Asumiendo que el ID está antes del guion
+            patronXMLData.eliminarPatron(idPatron);
+            mostrarMensajeExito("Patrón eliminado exitosamente.");
+        } else {
+            mostrarMensajeError("Por favor, seleccione un patrón.");
+        }
+    }
 
     private void mostrarMensajeError(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

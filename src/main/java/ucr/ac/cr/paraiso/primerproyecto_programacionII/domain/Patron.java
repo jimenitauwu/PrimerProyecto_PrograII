@@ -10,6 +10,15 @@ import org.jdom2.output.XMLOutputter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+
+import java.io.IOException;
+import java.io.StringReader;
 
 public class Patron {
     private String idPatron;
@@ -99,7 +108,9 @@ public class Patron {
         patronElement.addContent(new Element("ejemploPatron").setText(ejemplosPatron));
         patronElement.addContent(new Element("idClasificacion").setText(idClasificacion));
 
-        return new XMLOutputter(Format.getPrettyFormat()).outputString(patronElement);
+        String xml = new XMLOutputter(Format.getPrettyFormat()).outputString(patronElement);
+        System.out.println("Generated XML: " + xml);
+        return xml;
     }
 
     public static Patron fromXMLString(String xmlString) throws IOException, JDOMException {
@@ -115,10 +126,10 @@ public class Patron {
         String ejemplosPatron = rootElement.getChildText("ejemploPatron");
         String idClasificacion = rootElement.getChildText("idClasificacion");
 
-        return new Patron(idPatron, name, contextoPatron, problemaPatron, solucionPatron, ejemplosPatron, idClasificacion);
+        Patron patron = new Patron(idPatron, name, contextoPatron, problemaPatron, solucionPatron, ejemplosPatron, idClasificacion);
+        System.out.println("Parsed Patron from XML: " + patron);
+        return patron;
     }
-
-
 
     @Override
     public String toString() {

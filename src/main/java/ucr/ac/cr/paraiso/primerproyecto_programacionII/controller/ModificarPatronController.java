@@ -19,8 +19,6 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
-
-
 public class ModificarPatronController {
 
     @FXML
@@ -55,9 +53,10 @@ public class ModificarPatronController {
     private PatronXMLData patronXMLData;
     private ClasificacionXMLData clasificacionXMLData;
 
-    // Método para establecer la instancia PatronXMLData
+    //Método para establecer la instancia PatronXMLData
     public void setPatronXMLData(PatronXMLData patronXMLData) {
         this.patronXMLData = patronXMLData;
+        System.out.println("PatronXMLData set: " + patronXMLData);
         if (this.patronXMLData != null) {
             llenarComboBox();
         } else {
@@ -65,9 +64,10 @@ public class ModificarPatronController {
         }
     }
 
-    // Método para establecer la instancia ClasificacionXMLData
+    //Método para establecer la instancia ClasificacionXMLData
     public void setClasificacionXMLData(ClasificacionXMLData clasificacionXMLData) {
         this.clasificacionXMLData = clasificacionXMLData;
+        System.out.println("ClasificacionXMLData set: " + clasificacionXMLData);
         llenarComboBoxClasificaciones();
     }
 
@@ -77,7 +77,7 @@ public class ModificarPatronController {
     }
 
     private void llenarComboBox() {
-        nombresPatrones.clear();  // Asegurarse de empezar con una lista limpia
+        nombresPatrones.clear();
         if (patronXMLData != null) {
             try {
                 for (Patron patron : patronXMLData.obtenerPatrones()) {
@@ -164,45 +164,54 @@ public class ModificarPatronController {
             return;
         }
 
-        patronActual.setIdPatron(txtID.getText());
-        patronActual.setName(txtFieldNamePatron.getText());
-        patronActual.setProblemaPatron(txtFieldProblema.getText());
-        patronActual.setContextoPatron(txtFieldContexto.getText());
-        patronActual.setSolucionPatron(txtFieldSolucion.getText());
-        patronActual.setEjemplosPatron(txtFieldEjemplos.getText());
-        patronActual.setIdClasificacion(cBoxClasificacionModificada.getValue());
+        //Captura los valores de los campos
+        String namePatron = txtFieldNamePatron.getText();
+        String problema = txtFieldProblema.getText();
+        String contexto = txtFieldContexto.getText();
+        String solucion = txtFieldSolucion.getText();
+        String ejemplos = txtFieldEjemplos.getText();
+        String clasificacion = cBoxClasificacionModificada.getValue();
 
-        System.out.println("Modificando patrón: " + patronActual.toXMLString()); // Agrega este mensaje para depuración
+        //Crea un nuevo objeto Patron con los datos actualizados
+        Patron patronModificado = new Patron();
 
+        patronModificado.setName(namePatron);
+        patronModificado.setProblemaPatron(problema);
+        patronModificado.setContextoPatron(contexto);
+        patronModificado.setSolucionPatron(solucion);
+        patronModificado.setEjemplosPatron(ejemplos);
+        patronModificado.setIdClasificacion(clasificacion);
+
+        //Envía los datos modificados al servidor
         try {
-            // Envía la solicitud al servidor para modificar el patrón
-            enviarModificacionAlServidor(patronActual);
-            mostrarMensajeExito("Patrón modificado exitosamente.");
+            //Llama a modificarPatron con el ID y el objeto Patron modificado
+            patronXMLData.modificarPatron(patronActual.getIdPatron(), patronModificado);
+
+            //Comunicacion con el servidor
+            String patronXML = patronModificado.toXMLString();
+            try (Socket socket = new Socket(InetAddress.getLocalHost(), 9999);
+                 PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+                writer.println("modificar");
+                writer.println(patronXML);
+                String respuesta = reader.readLine();
+
+                if (respuesta.contains("exitosamente")) {
+                    mostrarMensajeExito("Patrón modificado exitosamente.");
+                } else {
+                    mostrarMensajeError("Error al modificar el patrón: " + respuesta);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarMensajeError("Error de conexión con el servidor.");
         } catch (Exception e) {
             e.printStackTrace();
             mostrarMensajeError("Error al modificar el patrón.");
         }
     }
 
-    private void enviarModificacionAlServidor(Patron patron) throws IOException {
-        InetAddress inetAddress = InetAddress.getLocalHost();
-        try (Socket socket = new Socket(inetAddress, 9999);
-             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-
-            String comando = "modificar";
-            String xmlData = patron.toXMLString();
-
-            System.out.println("Enviando comando: " + comando);
-            System.out.println("Enviando datos del patrón: " + xmlData);
-
-            writer.println(comando);
-            writer.println(xmlData);
-
-            String respuesta = reader.readLine();
-            System.out.println("Respuesta del servidor: " + respuesta);
-        }
-    }
 
 
     private void mostrarMensajeError(String mensaje) {
@@ -220,8 +229,6 @@ public class ModificarPatronController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
 }
-
 
 

@@ -53,10 +53,21 @@ public class AnadirPatronController
             }
             // Inicializa los datos de patrones
             patronData = new PatronXMLData("patrones.xml", clasificacionData);
+
+            // Genera un nuevo ID automáticamente
+            String nuevoId = patronData.generarNuevoIdPatron();
+            // Establece el nuevo ID en el campo de texto
+            txtFieldIDPatron.setText(nuevoId);
+
+            // Establece el campo de texto del ID como no editable
+            txtFieldIDPatron.setEditable(false);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
 
     @javafx.fxml.FXML
     public void cancelarOnAction(ActionEvent actionEvent) {

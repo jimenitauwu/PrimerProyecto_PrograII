@@ -1,6 +1,7 @@
 package ucr.ac.cr.paraiso.primerproyecto_programacionII.servidor;
 
 
+import org.jdom2.JDOMException;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.protocolo.MultiServidorProtocolo;
@@ -10,8 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-
 public class MultiServidorHilo extends Thread {
     private Socket socket;
     private PatronXMLData patronXMLData;
@@ -42,15 +41,17 @@ public class MultiServidorHilo extends Thread {
                         && !entrada.equalsIgnoreCase("modificar_clasificacion")
                         && !entrada.equalsIgnoreCase("eliminar_clasificacion")
                         && !entrada.equalsIgnoreCase("consultar_patron_por_id")
-                        && !entrada.equalsIgnoreCase("consultar_clasificacion_por_id")) { // Actualiza esto
+                        && !entrada.equalsIgnoreCase("consultar_clasificacion_por_id")) {
                     temp.append(entrada);
                 } else {
                     salida = protocolo.procesarEntrada(temp.toString(), entrada.toLowerCase());
                     writer.println(salida);
-                    temp.setLength(0); // Limpia el buffer temporal
+                    temp.setLength(0);
                 }
-                if (salida.equals("Adios."))
+
+                if (salida.equals("Adios.")) {
                     break;
+                }
             }
 
         } catch (IOException e) {

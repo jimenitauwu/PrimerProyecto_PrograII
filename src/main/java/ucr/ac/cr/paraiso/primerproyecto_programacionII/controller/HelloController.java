@@ -15,7 +15,6 @@ import java.io.IOException;
 
 
 
-
 public class HelloController {
 
     @FXML
@@ -29,7 +28,7 @@ public class HelloController {
 
     @FXML
     private void initialize() {
-        // Inicializar PatronXMLData con la ruta correcta de tu archivo XML
+        // Inicializar PatronXMLData y ClasificacionXMLData con la ruta correcta de tus archivos XML
         try {
             this.clasificacionXMLData = new ClasificacionXMLData("clasificaciones.xml");
             this.patronXMLData = new PatronXMLData("patrones.xml", clasificacionXMLData);
@@ -44,14 +43,26 @@ public class HelloController {
         try {
             Parent root = fxmlLoader.load();
             Object controller = fxmlLoader.getController();
-            if (controller instanceof BuscarPatronController || controller instanceof ModificarPatronController) {
+            if (controller instanceof BuscarPatronController || controller instanceof ModificarPatronController || controller instanceof BorrarPatronController || controller instanceof BorrarClasificacionController) {
                 if (patronXMLData != null && clasificacionXMLData != null) {
-                    if (controller instanceof BuscarPatronController) {
-                        ((BuscarPatronController) controller).setPatronXMLData(patronXMLData);
-                        ((BuscarPatronController) controller).setClasificacionXMLData(clasificacionXMLData);
-                    } else if (controller instanceof ModificarPatronController) {
-                        ((ModificarPatronController) controller).setPatronXMLData(patronXMLData);
-                        ((ModificarPatronController) controller).setClasificacionXMLData(clasificacionXMLData);
+                    switch (controller) {
+                        case BuscarPatronController buscarPatronController -> {
+                            buscarPatronController.setPatronXMLData(patronXMLData);
+                            buscarPatronController.setClasificacionXMLData(clasificacionXMLData);
+                        }
+                        case ModificarPatronController modificarPatronController -> {
+                            modificarPatronController.setPatronXMLData(patronXMLData);
+                            modificarPatronController.setClasificacionXMLData(clasificacionXMLData);
+                        }
+                        case BorrarPatronController borrarPatronController -> {
+                            borrarPatronController.setPatronXMLData(patronXMLData);
+                            borrarPatronController.setClasificacionXMLData(clasificacionXMLData);
+                        }
+                        case BorrarClasificacionController borrarClasificacionController -> {
+                            borrarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
+                        }
+                        default -> {
+                        }
                     }
                 } else {
                     System.err.println("patronXMLData o clasificacionXMLData es nulo.");
@@ -120,12 +131,12 @@ public class HelloController {
 
     @FXML
     public void eliminarPatron(ActionEvent actionEvent) {
-        loadPage("BorrarClasificacion.fxml");
+        loadPage("BorrarPatron.fxml");
     }
 
     @FXML
     public void eliminarClasificacion(ActionEvent actionEvent) {
-        loadPage("BorrarPatron.fxml");
+        loadPage("BorrarClasificacion.fxml");
     }
 
     @FXML

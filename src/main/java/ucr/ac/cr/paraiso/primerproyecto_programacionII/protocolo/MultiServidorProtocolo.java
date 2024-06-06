@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class MultiServidorProtocolo {
     private PatronXMLData patronXMLData;
     private ClasificacionXMLData clasificacionXMLData;
@@ -94,12 +93,21 @@ public class MultiServidorProtocolo {
     private String modificarPatron(String datosPatron) {
         try {
             Patron patronModificado = Patron.fromXMLString(datosPatron);
-            System.out.println("Modificando patrón: " + patronModificado.getIdPatron());
-            patronXMLData.modificarPatron(patronModificado);
+            patronXMLData.modificarPatron(patronModificado.getIdPatron(), patronModificado);
             return "<respuesta>Patrón modificado exitosamente.</respuesta>";
         } catch (Exception e) {
             e.printStackTrace();
             return "<respuesta>Error al modificar el patrón.</respuesta>";
+        }
+    }
+
+    private String eliminarPatron(String idPatron) {
+        try {
+            patronXMLData.eliminarPatron(idPatron);
+            return "<respuesta>Patrón eliminado exitosamente.</respuesta>";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "<respuesta>Error al eliminar el patrón.</respuesta>";
         }
     }
 
@@ -128,17 +136,6 @@ public class MultiServidorProtocolo {
         } catch (Exception e) {
             e.printStackTrace();
             return "<respuesta>Error al buscar clasificación por ID.</respuesta>";
-        }
-    }
-
-
-    private String eliminarPatron(String idPatron) {
-        try {
-            patronXMLData.eliminarPatron(idPatron);
-            return "<respuesta>Patrón eliminado exitosamente.</respuesta>";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "<respuesta>Error al eliminar el patrón.</respuesta>";
         }
     }
 

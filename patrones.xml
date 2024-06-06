@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <patrones>
   <patron idPatron="3">
-    <name>Adaptador</name>
+    <name>AdaptadorMod</name>
     <contextoPatron>Convierte la interfaz de una clase en otra interfaz que los clientes esperan.</contextoPatron>
     <problemaPatron>Descripción del problema para Adaptador</problemaPatron>
     <solucionPatron>Descripción de la solución para Adaptador</solucionPatron>
@@ -24,68 +24,5 @@
     <ejemploPatron>Descripción del ejemplo para Singleton</ejemploPatron>
     <clasificacion>Creacional</clasificacion>
   </patron>
-  <patron idPatron="1416">
-    <name>Test</name>
-    <contextoPatron>test</contextoPatron>
-    <problemaPatron>Test</problemaPatron>
-    <solucionPatron>test</solucionPatron>
-    <ejemploPatron>test</ejemploPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="240">
-    <name>aaa</name>
-    <contextoPatron>asd</contextoPatron>
-    <problemaPatron>aad</problemaPatron>
-    <solucionPatron>asd</solucionPatron>
-    <ejemploPatron>asd</ejemploPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="4563">
-    <name>aas</name>
-    <contextoPatron>asd</contextoPatron>
-    <problemaPatron>asdad</problemaPatron>
-    <solucionPatron>asd</solucionPatron>
-    <ejemploPatron>asd</ejemploPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="234">
-    <name>asd</name>
-    <contextoPatron>ad</contextoPatron>
-    <problemaPatron>sda</problemaPatron>
-    <solucionPatron>asd</solucionPatron>
-    <ejemploPatron>asd</ejemploPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="909">
-    <name>asd</name>
-    <contextoPatron>ada</contextoPatron>
-    <problemaPatron>asdasd</problemaPatron>
-    <solucionPatron>asdasd</solucionPatron>
-    <ejemploPatron>asda</ejemploPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="55">
-    <name>asd</name>
-    <contextoPatron>asd</contextoPatron>
-    <problemaPatron>ad</problemaPatron>
-    <solucionPatron>asd</solucionPatron>
-    <ejemploPatron>asd</ejemploPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="333">
-    <name>sdf</name>
-    <contextoPatron>sdf</contextoPatron>
-    <problemaPatron>sdf</problemaPatron>
-    <solucionPatron>sdf</solucionPatron>
-    <ejemploPatron>sdf</ejemploPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="999">
-    <name>test</name>
-    <contextoPatron>test</contextoPatron>
-    <problemaPatron>test</problemaPatron>
-    <solucionPatron>test</solucionPatron>
-    <ejemploPatron>test</ejemploPatron>
-    <clasificacion />
-  </patron>
+  
 </patrones>

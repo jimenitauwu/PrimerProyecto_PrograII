@@ -1,6 +1,7 @@
 package ucr.ac.cr.paraiso.primerproyecto_programacionII.data;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,39 +17,37 @@ import org.jdom2.output.XMLOutputter;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 
+
+
+
 public class PatronXMLData {
-    private String rutaDocumento;
+    private String xmlFilePath;
+    private Document document;
     private Element raiz;
-    private Document documento;
     private ClasificacionXMLData clasificacionData;
 
-    public PatronXMLData(String rutaDocumento, ClasificacionXMLData clasificacionData) throws IOException, JDOMException {
+    public PatronXMLData(String xmlFilePath, ClasificacionXMLData clasificacionData) throws JDOMException, IOException {
+        this.xmlFilePath = xmlFilePath;
         this.clasificacionData = clasificacionData;
-        File file = new File(rutaDocumento);
-        if (!file.exists()) {
-            this.rutaDocumento = rutaDocumento;
+
+        SAXBuilder builder = new SAXBuilder();
+        File xmlFile = new File(xmlFilePath);
+        if (!xmlFile.exists()) {
             this.raiz = new Element("patrones");
-            this.documento = new Document(raiz);
-            guardar();
+            this.document = new Document(raiz);
+            saveXML();
         } else {
-            SAXBuilder saxBuilder = new SAXBuilder();
-            saxBuilder.setIgnoringElementContentWhitespace(true);
-            this.documento = saxBuilder.build(new File(rutaDocumento));
-            this.raiz = documento.getRootElement();
-            this.rutaDocumento = rutaDocumento;
+            document = builder.build(xmlFile);
+            raiz = document.getRootElement();
         }
     }
 
-    private void guardar() throws IOException {
-        // Ordenar patrones antes de guardar
-        ordenarPatrones();
-        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-        xmlOutputter.output(this.documento, new PrintWriter(this.rutaDocumento));
-    }
+    public void insertarPatron(Patron patron) {
+        String nuevoId = generarNuevoIdPatron(); // Genera un nuevo ID automáticamente
+        patron.setIdPatron(nuevoId); //Establece el nuevo ID en el patrón
 
-    public void insertarPatron(Patron patron) throws IOException, JDOMException {
         Element ePatron = new Element("patron");
-        ePatron.setAttribute("idPatron", patron.getIdPatron());
+        ePatron.setAttribute("idPatron", nuevoId); //Establece el nuevo ID en el elemento
 
         Element eName = new Element("name");
         eName.addContent(patron.getName());
@@ -78,41 +77,60 @@ public class PatronXMLData {
         ePatron.addContent(eClasificacion);
 
         raiz.addContent(ePatron);
-        guardar();
+        saveXML();
     }
 
-    public void modificarPatron(Patron patron) throws IOException, JDOMException {
+
+    public void modificarPatron(String idPatron, Patron patronModificado) {
+        Element save = null;
         List<Element> patronElements = raiz.getChildren("patron");
         for (Element ePatron : patronElements) {
-            if (ePatron.getAttributeValue("idPatron").equals(patron.getIdPatron())) {
-                ePatron.getChild("name").setText(patron.getName());
-                ePatron.getChild("contextoPatron").setText(patron.getContextoPatron());
-                ePatron.getChild("problemaPatron").setText(patron.getProblemaPatron());
-                ePatron.getChild("solucionPatron").setText(patron.getSolucionPatron());
-                ePatron.getChild("ejemploPatron").setText(patron.getEjemplosPatron());
-
-                String nombreClasificacion = obtenerNombreClasificacionPorId(patron.getIdClasificacion());
-                ePatron.getChild("clasificacion").setText(nombreClasificacion);
-
-                guardar();
-                return;
+            if (ePatron.getAttributeValue("idPatron").equals(idPatron)) {
+                save = ePatron;
+                break;
             }
+        }
+
+        if (save != null) {
+            if (patronModificado.getName() != null) {
+                save.getChild("name").setText(patronModificado.getName());
+            }
+            if (patronModificado.getContextoPatron() != null) {
+                save.getChild("contextoPatron").setText(patronModificado.getContextoPatron());
+            }
+            if (patronModificado.getProblemaPatron() != null) {
+                save.getChild("problemaPatron").setText(patronModificado.getProblemaPatron());
+            }
+            if (patronModificado.getSolucionPatron() != null) {
+                save.getChild("solucionPatron").setText(patronModificado.getSolucionPatron());
+            }
+            if (patronModificado.getEjemplosPatron() != null) {
+                save.getChild("ejemploPatron").setText(patronModificado.getEjemplosPatron());
+            }
+            if (patronModificado.getIdClasificacion() != null) {
+                String nombreClasificacion = obtenerNombreClasificacionPorId(patronModificado.getIdClasificacion());
+                save.getChild("clasificacion").setText(nombreClasificacion);
+            }
+
+            saveXML();
         }
     }
 
 
-    public void eliminarPatron(String idPatron) throws IOException {
+
+
+    public void eliminarPatron(String idPatron) {
         List<Element> patronElements = raiz.getChildren("patron");
         for (Element ePatron : patronElements) {
             if (ePatron.getAttributeValue("idPatron").equals(idPatron)) {
                 raiz.removeContent(ePatron);
-                guardar();
+                saveXML();
                 return;
             }
         }
     }
 
-    private String obtenerNombreClasificacionPorId(String idClasificacion) throws IOException, JDOMException {
+    private String obtenerNombreClasificacionPorId(String idClasificacion) {
         List<Clasificacion> clasificaciones = clasificacionData.obtenerClasificaciones();
         for (Clasificacion clasificacion : clasificaciones) {
             if (clasificacion.getIdClasificacion().equals(idClasificacion)) {
@@ -149,7 +167,16 @@ public class PatronXMLData {
                 return patron;
             }
         }
-        return null; // Si no se encuentra ningún patrón con el ID especificado
+        return null;
+    }
+
+    private void saveXML() {
+        try {
+            XMLOutputter xmlOutputter = new XMLOutputter();
+            xmlOutputter.output(document, new PrintWriter(new FileWriter(xmlFilePath)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -172,5 +199,4 @@ public class PatronXMLData {
         }
         return String.valueOf(maxId + 1);
     }
-
 }

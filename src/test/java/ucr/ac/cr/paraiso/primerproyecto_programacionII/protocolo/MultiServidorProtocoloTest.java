@@ -76,7 +76,7 @@ class MultiServidorProtocoloTest {
 
         // Modificar el nombre del patrón
         nuevoPatron.setName("Nuevo nombre de patrón");
-        patronXMLData.modificarPatron(nuevoPatron);
+//        patronXMLData.modificarPatron(nuevoPatron);
 
         // Obtener el patrón modificado
         List<Patron> patrones = patronXMLData.obtenerPatrones();

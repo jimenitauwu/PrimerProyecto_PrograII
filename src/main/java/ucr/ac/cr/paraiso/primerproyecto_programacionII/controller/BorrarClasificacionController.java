@@ -1,50 +1,73 @@
 package ucr.ac.cr.paraiso.primerproyecto_programacionII.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import org.jdom2.JDOMException;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
+import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 
 import java.io.IOException;
 
-public class BorrarClasificacionController
-{
-    private ClasificacionXMLData clasificacionXMLData; // Instancia de ClasificacionXMLData
-
-    @javafx.fxml.FXML
+public class BorrarClasificacionController {
+    @FXML
+    private ComboBox<String> cbBoxClasificacion;
+    @FXML
     private Button btn_Borrar;
 
-    @javafx.fxml.FXML
-    private TextField textField_Eliminar;
+    private ClasificacionXMLData clasificacionXMLData;
+    private ObservableList<String> nombresClasificaciones;
 
-    @javafx.fxml.FXML
-    public void initialize() {
-        try {
-            clasificacionXMLData = new ClasificacionXMLData("clasificaciones.xml");
-        } catch (IOException | JDOMException e) {
-            e.printStackTrace();
+    public void setClasificacionXMLData(ClasificacionXMLData clasificacionXMLData) {
+        this.clasificacionXMLData = clasificacionXMLData;
+        if (this.clasificacionXMLData != null) {
+            llenarComboBox();
+        } else {
+            mostrarMensajeError("Error: no se ha proporcionado el objeto ClasificacionXMLData.");
         }
     }
 
-    @javafx.fxml.FXML
-    public void EliminarOnAction(ActionEvent actionEvent) {
-        //Obtiene el ID de la clasificación a eliminar desde el campo de texto
-        String idClasificacion = textField_Eliminar.getText().trim();
+    @FXML
+    public void initialize() {
+        nombresClasificaciones = FXCollections.observableArrayList();
+    }
 
-        //Verifica si el ID de la clasificación no está vacío
-        if (!idClasificacion.isEmpty()) {
+    private void llenarComboBox() {
+        nombresClasificaciones.clear();  // Asegurarse de empezar con una lista limpia
+        if (clasificacionXMLData != null) {
+            try {
+                for (Clasificacion clasificacion : clasificacionXMLData.obtenerClasificaciones()) {
+                    String nombreClasificacion = clasificacion.getIdClasificacion() + " - " + clasificacion.getNameClasificacion();
+                    nombresClasificaciones.add(nombreClasificacion);
+                }
+                cbBoxClasificacion.setItems(nombresClasificaciones);
+            } catch (Exception e) {
+                mostrarMensajeError("Error al cargar las clasificaciones.");
+                e.printStackTrace();
+            }
+        } else {
+            mostrarMensajeError("No se ha proporcionado el objeto ClasificacionXMLData.");
+        }
+    }
+
+    @FXML
+    public void EliminarOnAction(ActionEvent actionEvent) {
+        String seleccionado = cbBoxClasificacion.getValue();
+        if (seleccionado != null) {
+            String[] partes = seleccionado.split(" - ");
+            String idClasificacion = partes[0];  // Asumiendo que el ID está antes del guion
             try {
                 clasificacionXMLData.eliminarClasificacion(idClasificacion);
                 mostrarMensajeExito("Clasificación eliminada exitosamente.");
+                llenarComboBox(); // Actualiza el ComboBox después de eliminar la clasificación
             } catch (IOException e) {
                 mostrarMensajeError("Error al intentar eliminar la clasificación.");
                 e.printStackTrace();
             }
         } else {
-            mostrarMensajeError("Por favor, ingrese un ID de clasificación válido.");
+            mostrarMensajeError("Por favor, seleccione una clasificación.");
         }
     }
 

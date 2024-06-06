@@ -51,7 +51,6 @@ public class BuscarPatronController {
     @FXML
     public void initialize() {
         nombresPatrones = FXCollections.observableArrayList();
-        // El ComboBox se llenará cuando setPatronXMLData sea llamado
     }
 
     private void llenarComboBox() {

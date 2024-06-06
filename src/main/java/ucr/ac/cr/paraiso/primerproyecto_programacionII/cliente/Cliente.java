@@ -26,7 +26,7 @@ public class Cliente {
             lectorTeclado = new BufferedReader(new InputStreamReader(System.in));
             while ((salida = lectorTeclado.readLine()) != null) {
                 writer.println(salida);
-                entrada = reader.readLine(); // Lee lo que viene del servidor
+                entrada = reader.readLine();
                 System.out.println("Servidor:" + entrada);
             }
         } catch (IOException io) {
