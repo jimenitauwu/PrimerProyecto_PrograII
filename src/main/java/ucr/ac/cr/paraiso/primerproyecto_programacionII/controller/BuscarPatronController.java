@@ -84,7 +84,6 @@ public class BuscarPatronController {
 
     @FXML
     public void buscarOnAction(ActionEvent actionEvent) {
-        System.out.println("Buscar acción activada.");
         String seleccionado = cBoxID.getValue();
         if (seleccionado != null) {
             String[] partes = seleccionado.split(" - ");
@@ -96,47 +95,37 @@ public class BuscarPatronController {
     }
 
     private void buscarPatron(String idPatron) {
-        System.out.println("Conectando al servidor en " + serverIP + " en el puerto 9999...");
-        try (Socket socket = new Socket(serverIP, 9999)) {
-            System.out.println("Conexión establecida correctamente.");
+        try (Socket socket = new Socket(serverIP, 9999);
+             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            // Send the request to the server
+            writer.println(idPatron);
+            writer.println("consultar_patron_por_id");
+            writer.flush();
 
-            // Envía la solicitud al servidor
-            writer.println(idPatron + "\n" + "consultar_patron_por_id");
-            System.out.println("Solicitud enviada al servidor.");
-
-            // Lee la respuesta del servidor
+            // Read the response from the server
             StringBuilder respuestaBuilder = new StringBuilder();
             String linea;
             while ((linea = reader.readLine()) != null) {
                 respuestaBuilder.append(linea);
             }
             String respuesta = respuestaBuilder.toString();
-            System.out.println("Respuesta recibida del servidor: " + respuesta);
 
-            // Procesa la respuesta del servidor
+            // Process the server's response
             if (respuesta != null && !respuesta.isEmpty()) {
-                System.out.println("Procesando la respuesta del servidor.");
-                // Convierte la respuesta en un documento XML
                 SAXBuilder saxBuilder = new SAXBuilder();
                 Document document = saxBuilder.build(new StringReader(respuesta));
 
-                // Obtén la raíz del documento
                 Element rootElement = document.getRootElement();
 
-                // Extrae los datos del patrón
-                String nombre = rootElement.getChildText("nombre");
-                String problema = rootElement.getChildText("problema");
+                String nombre = rootElement.getChildText("name");
+                String problema = rootElement.getChildText("problemaPatron");
                 String clasificacion = rootElement.getChildText("clasificacion");
-                String solucion = rootElement.getChildText("solucion");
-                String contexto = rootElement.getChildText("contexto");
-                String ejemplos = rootElement.getChildText("ejemplos");
+                String solucion = rootElement.getChildText("solucionPatron");
+                String contexto = rootElement.getChildText("contextoPatron");
+                String ejemplos = rootElement.getChildText("ejemplosPatron");
 
-                System.out.println("Datos extraídos: nombre=" + nombre + ", problema=" + problema + ", clasificacion=" + clasificacion + ", solucion=" + solucion + ", contexto=" + contexto + ", ejemplos=" + ejemplos);
-
-                // Muestra los datos en los TextArea
                 mostrarPatron(nombre, problema, clasificacion, solucion, contexto, ejemplos);
             } else {
                 mostrarMensajeError("No se recibió una respuesta válida del servidor.");
@@ -146,9 +135,6 @@ public class BuscarPatronController {
             e.printStackTrace();
         }
     }
-
-
-
 
     private void mostrarPatron(String nombre, String problema, String clasificacion, String solucion, String contexto, String ejemplos) {
         txtNombre.setText(nombre);

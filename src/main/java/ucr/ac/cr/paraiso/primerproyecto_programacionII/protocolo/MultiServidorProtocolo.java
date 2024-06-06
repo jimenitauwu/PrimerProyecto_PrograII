@@ -111,7 +111,7 @@ public class MultiServidorProtocolo {
         }
     }
 
-    public String buscarPatronPorId(String id) {
+    private String buscarPatronPorId(String id) {
         try {
             Patron patron = patronXMLData.obtenerPatronPorID(id);
             if (patron != null) {
