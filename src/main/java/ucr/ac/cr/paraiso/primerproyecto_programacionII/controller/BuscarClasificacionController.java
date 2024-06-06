@@ -13,24 +13,21 @@ import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 
 import java.io.IOException;
 
-public class BuscarClasificacionController
-{
-    @javafx.fxml.FXML
+public class BuscarClasificacionController {
+
+    @FXML
     private BorderPane borderPane;
-    @javafx.fxml.FXML
+    @FXML
     private TextArea txA_ID;
-    @javafx.fxml.FXML
+    @FXML
     private TextArea txA_Name;
-    @javafx.fxml.FXML
+    @FXML
     private ComboBox<String> comboBox;
     @FXML
     private Button btn_Buscar;
 
-
-    Clasificacion c= new Clasificacion();
     private ClasificacionXMLData clasificacionXMLData;
     private ObservableList<String> nombresClasificaciones;
-
 
     public void setClasificacionXMLData(ClasificacionXMLData clasificacionXMLData) {
         this.clasificacionXMLData = clasificacionXMLData;
@@ -64,40 +61,37 @@ public class BuscarClasificacionController
         }
     }
 
-
     @FXML
     public void BuscarOnAction(ActionEvent actionEvent) {
         System.out.println("Buscar acción activada.");
         String seleccionado = comboBox.getValue();
         if (seleccionado != null) {
             String[] partes = seleccionado.split(" - ");
-            String idPatron = partes[0];  // Asumiendo que el ID está antes del guion
-            buscarPatron(idPatron);
+            String idClasificacion = partes[0];  // Asumiendo que el ID está antes del guion
+            buscarClasificacion(idClasificacion);
         } else {
-            mostrarMensajeError("Por favor, seleccione un patrón.");
+            mostrarMensajeError("Por favor, seleccione una clasificación.");
         }
     }
 
-    private void buscarPatron(String idPatron) {
+    private void buscarClasificacion(String idClasificacion) {
         try {
-            Clasificacion clasificacion = clasificacionXMLData.obtenerClasificacionPorId(idPatron);
+            Clasificacion clasificacion = clasificacionXMLData.obtenerClasificacionPorId(idClasificacion);
             if (clasificacion != null) {
                 mostrarClasificacion(clasificacion);
             } else {
-                mostrarMensajeError("Patrón no encontrado.");
+                mostrarMensajeError("Clasificación no encontrada.");
             }
         } catch (Exception e) {
-            mostrarMensajeError("Error al buscar el patrón.");
+            mostrarMensajeError("Error al buscar la clasificación.");
             e.printStackTrace();
         }
     }
 
     private void mostrarClasificacion(Clasificacion clasificacion) {
-        txA_ID.setText(c.getIdClasificacion());
-        txA_Name.setText(c.getNameClasificacion());
-
+        txA_ID.setText(clasificacion.getIdClasificacion());
+        txA_Name.setText(clasificacion.getNameClasificacion());
     }
-
 
     private void mostrarMensajeError(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -114,6 +108,4 @@ public class BuscarClasificacionController
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
-
 }

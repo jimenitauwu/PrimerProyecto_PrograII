@@ -38,12 +38,14 @@ public class HelloController {
         }
     }
 
+
+
     private void loadPage(String page) {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(page));
         try {
             Parent root = fxmlLoader.load();
             Object controller = fxmlLoader.getController();
-            if (controller instanceof BuscarPatronController || controller instanceof ModificarPatronController || controller instanceof BorrarPatronController || controller instanceof BorrarClasificacionController) {
+            if (controller instanceof BuscarClasificacionController || controller instanceof BuscarPatronController || controller instanceof ModificarPatronController || controller instanceof BorrarPatronController || controller instanceof BorrarClasificacionController) {
                 if (patronXMLData != null && clasificacionXMLData != null) {
                     switch (controller) {
                         case BuscarPatronController buscarPatronController -> {
@@ -61,8 +63,9 @@ public class HelloController {
                         case BorrarClasificacionController borrarClasificacionController -> {
                             borrarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
                         }
-                        case BuscarClasificacionController buscarClasificacionController ->{
-                            buscarClasificacionController.setClasificacionXMLData(clasificacionXMLData);}
+                        case BuscarClasificacionController buscarClasificacionController -> {
+                            buscarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
+                        }
 
                         default -> {
                         }
@@ -77,6 +80,7 @@ public class HelloController {
             throw new RuntimeException(e);
         }
     }
+
 
     @FXML
     public void creacionales(ActionEvent actionEvent) {
@@ -109,7 +113,7 @@ public class HelloController {
     @FXML
     public void inicio(ActionEvent actionEvent) {
         bp.setCenter(ap);
-        menuBar.setVisible(false);
+        menuBar.setVisible(true);
     }
 
     @FXML
@@ -144,6 +148,8 @@ public class HelloController {
 
     @FXML
     public void modificarClasificacion(ActionEvent actionEvent) {
-        // Implementación del método
+        {
+            loadPage("modificarClasificacion.fxml");
+        }
     }
 }
