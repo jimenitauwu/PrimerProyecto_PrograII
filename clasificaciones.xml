@@ -12,4 +12,8 @@
     <idClasificacion>3</idClasificacion>
     <nameClasificacion>Estructural</nameClasificacion>
   </clasificacion>
+  <clasificacion>
+    <idClasificacion>34</idClasificacion>
+    <nameClasificacion>hola</nameClasificacion>
+  </clasificacion>
 </clasificaciones>

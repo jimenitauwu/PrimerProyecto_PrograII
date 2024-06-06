@@ -7,13 +7,13 @@ import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
-
 public class MultiServidor {
     public static void main(String[] args) {
         ServerSocket serverSocket = null;
         boolean escuchando = true;
 
         try {
+            // Inicializa las clases XMLData según tu implementación
             ClasificacionXMLData clasificacionXMLData = new ClasificacionXMLData("clasificaciones.xml");
             PatronXMLData patronXMLData = new PatronXMLData("patrones.xml", clasificacionXMLData);
 
@@ -21,8 +21,7 @@ public class MultiServidor {
 
             System.out.println("Servidor activo");
             while (escuchando) {
-                MultiServidorHilo hilo = new MultiServidorHilo(serverSocket.accept(), patronXMLData, clasificacionXMLData);
-                hilo.start();
+                new MultiServidorHilo(serverSocket.accept(), patronXMLData, clasificacionXMLData).start();
             }
             serverSocket.close();
         } catch (IOException e) {
@@ -33,3 +32,4 @@ public class MultiServidor {
         }
     }
 }
+

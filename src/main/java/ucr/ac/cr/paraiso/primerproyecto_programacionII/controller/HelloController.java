@@ -32,6 +32,11 @@ public class HelloController {
 
     @FXML
     private void initialize() {
+        loadXMLData();
+    }
+
+    // Método separado para cargar los datos XML
+    private void loadXMLData() {
         try {
             this.clasificacionXMLData = new ClasificacionXMLData("clasificaciones.xml");
             this.patronXMLData = new PatronXMLData("patrones.xml", clasificacionXMLData);
@@ -40,53 +45,69 @@ public class HelloController {
         }
     }
 
+    // Método separado para configurar los datos XML en el controlador
+    private void configureXMLData(Object controller) {
+        if (controller instanceof BuscarPatronController buscarPatronController) {
+            buscarPatronController.setPatronXMLData(patronXMLData);
+            buscarPatronController.setClasificacionXMLData(clasificacionXMLData);
+        } else if (controller instanceof ModificarPatronController modificarPatronController) {
+            modificarPatronController.setPatronXMLData(patronXMLData);
+            modificarPatronController.setClasificacionXMLData(clasificacionXMLData);
+        } else if (controller instanceof BorrarPatronController borrarPatronController) {
+            borrarPatronController.setPatronXMLData(patronXMLData);
+            borrarPatronController.setClasificacionXMLData(clasificacionXMLData);
+        } else if (controller instanceof BorrarClasificacionController borrarClasificacionController) {
+            borrarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
+        } else if (controller instanceof BuscarClasificacionController buscarClasificacionController) {
+            buscarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
+        } else if (controller instanceof ModificarClasificacionController modificarClasificacionController) {
+            modificarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
+        } else if (controller instanceof EstructuralesController estructuralesController) {
+            estructuralesController.setPatronXMLData(patronXMLData);
+            estructuralesController.setClasificacionXMLData(clasificacionXMLData);
+        } else if (controller instanceof ComportamientoController comportamientoController) {
+            comportamientoController.setPatronXMLData(patronXMLData);
+            comportamientoController.setClasificacionXMLData(clasificacionXMLData);
+        } else if (controller instanceof CreacionalesController creacionalesController) {
+            creacionalesController.setPatronXMLData(patronXMLData);
+            creacionalesController.setClasificacionXMLData(clasificacionXMLData);
+        }
+    }
+
+    // Método separado para configurar la IP del servidor en el controlador
+    private void configureServerIP(Object controller) {
+        if (controller instanceof BuscarPatronController buscarPatronController) {
+            buscarPatronController.setServerIP(serverIP);
+        } else if (controller instanceof ModificarPatronController modificarPatronController) {
+            modificarPatronController.setServerIP(serverIP);
+        } else if (controller instanceof BorrarPatronController borrarPatronController) {
+            borrarPatronController.setServerIP(serverIP);
+        } else if (controller instanceof BorrarClasificacionController borrarClasificacionController) {
+            borrarClasificacionController.setServerIP(serverIP);
+        } else if (controller instanceof BuscarClasificacionController buscarClasificacionController) {
+            buscarClasificacionController.setServerIP(serverIP);
+        } else if (controller instanceof ModificarClasificacionController modificarClasificacionController) {
+            modificarClasificacionController.setServerIP(serverIP);
+        } else if (controller instanceof AnadirPatronController anadirPatronController) {
+            anadirPatronController.setServerIP(serverIP);
+        } else if (controller instanceof AnadirClasificacionController anadirClasificacionController) {
+            anadirClasificacionController.setServerIP(serverIP);
+        } else if (controller instanceof EstructuralesController estructuralesController) {
+            estructuralesController.setServerIP(serverIP);
+        } else if (controller instanceof ComportamientoController comportamientoController) {
+            comportamientoController.setServerIP(serverIP);
+        } else if (controller instanceof CreacionalesController creacionalesController) {
+            creacionalesController.setServerIP(serverIP);
+        }
+    }
+
     private void loadPage(String page) {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(page));
         try {
             Parent root = fxmlLoader.load();
             Object controller = fxmlLoader.getController();
-
-            if (controller instanceof BuscarPatronController buscarPatronController) {
-                buscarPatronController.setPatronXMLData(patronXMLData);
-                buscarPatronController.setClasificacionXMLData(clasificacionXMLData);
-                buscarPatronController.setServerIP(serverIP);
-            } else if (controller instanceof ModificarPatronController modificarPatronController) {
-                modificarPatronController.setPatronXMLData(patronXMLData);
-                modificarPatronController.setClasificacionXMLData(clasificacionXMLData);
-                modificarPatronController.setServerIP(serverIP);
-            } else if (controller instanceof BorrarPatronController borrarPatronController) {
-                borrarPatronController.setPatronXMLData(patronXMLData);
-                borrarPatronController.setClasificacionXMLData(clasificacionXMLData);
-                borrarPatronController.setServerIP(serverIP);
-            } else if (controller instanceof BorrarClasificacionController borrarClasificacionController) {
-                borrarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
-                borrarClasificacionController.setServerIP(serverIP);
-            } else if (controller instanceof BuscarClasificacionController buscarClasificacionController) {
-                buscarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
-                buscarClasificacionController.setServerIP(serverIP);
-            } else if (controller instanceof ModificarClasificacionController modificarClasificacionController) {
-                modificarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
-                modificarClasificacionController.setServerIP(serverIP);
-            } else if (controller instanceof AnadirPatronController anadirPatronController) {
-                anadirPatronController.setServerIP(serverIP);
-            } else if (controller instanceof AnadirClasificacionController anadirClasificacionController) {
-                anadirClasificacionController.setServerIP(serverIP);
-            } else if (controller instanceof EstructuralesController estructuralesController) {
-                estructuralesController.setPatronXMLData(patronXMLData);
-                estructuralesController.setClasificacionXMLData(clasificacionXMLData);
-                estructuralesController.setServerIP(serverIP);
-            } else if (controller instanceof ComportamientoController comportamientoController) {
-                comportamientoController.setPatronXMLData(patronXMLData);
-                comportamientoController.setClasificacionXMLData(clasificacionXMLData);
-                comportamientoController.setServerIP(serverIP);
-            } else if (controller instanceof CreacionalesController creacionalesController) {
-                creacionalesController.setPatronXMLData(patronXMLData);
-                creacionalesController.setClasificacionXMLData(clasificacionXMLData);
-                creacionalesController.setServerIP(serverIP);
-            } else {
-                System.err.println("Controller no soportado: " + controller.getClass().getName());
-            }
-
+            configureXMLData(controller);
+            configureServerIP(controller);
             this.bp.setCenter(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -162,6 +183,7 @@ public class HelloController {
         loadPage("modificarClasificacion.fxml");
     }
 }
+
 
 
 

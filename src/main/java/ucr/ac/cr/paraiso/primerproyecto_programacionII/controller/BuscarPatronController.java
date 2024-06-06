@@ -96,29 +96,27 @@ public class BuscarPatronController {
     }
 
     private void buscarPatron(String idPatron) {
-        try (Socket socket = new Socket(serverIP, 9999);
-             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+        System.out.println("Conectando al servidor en " + serverIP + " en el puerto 9999...");
+        try (Socket socket = new Socket(serverIP, 9999)) {
+            System.out.println("Conexión establecida correctamente.");
 
+            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            // Envía la solicitud al servidor
             writer.println(idPatron + "\n" + "buscar");
-            String respuesta = reader.readLine();
+            System.out.println("Solicitud enviada al servidor.");
 
-            if (respuesta.startsWith("Error")) {
-                mostrarMensajeError(respuesta);
-            } else {
-                String[] partes = respuesta.split(",");
-                String nombre = partes[0];
-                String problema = partes[1];
-                String clasificacion = partes[2];
-                String solucion = partes[3];
-                String contexto = partes[4];
-                String ejemplos = partes[5];
-                mostrarPatron(nombre, problema, clasificacion, solucion, contexto, ejemplos);
-            }
+            // Lee la respuesta del servidor
+            String respuesta = reader.readLine();
+            System.out.println("Respuesta recibida del servidor: " + respuesta);
+
+            // Procesa la respuesta del servidor...
         } catch (IOException e) {
-            mostrarMensajeError("Error de conexión con el servidor.");
+            mostrarMensajeError("Error de conexión con el servidor: " + e.getMessage());
             e.printStackTrace();
         }
+
     }
 
     private void mostrarPatron(String nombre, String problema, String clasificacion, String solucion, String contexto, String ejemplos) {

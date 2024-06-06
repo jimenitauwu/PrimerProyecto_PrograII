@@ -64,12 +64,12 @@
     <ejemploPatron>sdf</ejemploPatron>
     <clasificacion />
   </patron>
-  <patron idPatron="666">
-    <name>TestSi</name>
-    <contextoPatron>S</contextoPatron>
-    <problemaPatron>S</problemaPatron>
-    <solucionPatron>S</solucionPatron>
-    <ejemploPatron>S</ejemploPatron>
+  <patron idPatron="910">
+    <name>ws</name>
+    <contextoPatron>ss</contextoPatron>
+    <problemaPatron>ss</problemaPatron>
+    <solucionPatron>ss</solucionPatron>
+    <ejemplosPatron>ss</ejemplosPatron>
     <clasificacion />
   </patron>
 </patrones>
