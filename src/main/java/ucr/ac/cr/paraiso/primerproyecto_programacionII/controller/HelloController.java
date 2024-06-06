@@ -61,6 +61,9 @@ public class HelloController {
                         case BorrarClasificacionController borrarClasificacionController -> {
                             borrarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
                         }
+                        case BuscarClasificacionController buscarClasificacionController ->{
+                            buscarClasificacionController.setClasificacionXMLData(clasificacionXMLData);}
+
                         default -> {
                         }
                     }
