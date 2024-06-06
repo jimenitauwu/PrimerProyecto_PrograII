@@ -17,9 +17,7 @@ import org.jdom2.output.XMLOutputter;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 
-
-
-
+import java.util.Objects;
 public class PatronXMLData {
     private String xmlFilePath;
     private Document document;
@@ -27,27 +25,27 @@ public class PatronXMLData {
     private ClasificacionXMLData clasificacionData;
 
     public PatronXMLData(String xmlFilePath, ClasificacionXMLData clasificacionData) throws JDOMException, IOException {
-        this.xmlFilePath = xmlFilePath;
-        this.clasificacionData = clasificacionData;
+        this.xmlFilePath = Objects.requireNonNull(xmlFilePath);
+        this.clasificacionData = Objects.requireNonNull(clasificacionData);
 
         SAXBuilder builder = new SAXBuilder();
         File xmlFile = new File(xmlFilePath);
         if (!xmlFile.exists()) {
             this.raiz = new Element("patrones");
             this.document = new Document(raiz);
-            saveXML();
+            save();
         } else {
             document = builder.build(xmlFile);
             raiz = document.getRootElement();
         }
     }
 
-    public void insertarPatron(Patron patron) {
+    public void insertarPatron(Patron patron) throws IOException {
         String nuevoId = generarNuevoIdPatron(); // Genera un nuevo ID automáticamente
-        patron.setIdPatron(nuevoId); //Establece el nuevo ID en el patrón
+        patron.setIdPatron(nuevoId); // Establece el nuevo ID en el patrón
 
         Element ePatron = new Element("patron");
-        ePatron.setAttribute("idPatron", nuevoId); //Establece el nuevo ID en el elemento
+        ePatron.setAttribute("idPatron", nuevoId); // Establece el nuevo ID en el elemento
 
         Element eName = new Element("name");
         eName.addContent(patron.getName());
@@ -77,11 +75,10 @@ public class PatronXMLData {
         ePatron.addContent(eClasificacion);
 
         raiz.addContent(ePatron);
-        saveXML();
+        save();
     }
 
-
-    public void modificarPatron(String idPatron, Patron patronModificado) {
+    public void modificarPatron(String idPatron, Patron patronModificado) throws IOException {
         Element save = null;
         List<Element> patronElements = raiz.getChildren("patron");
         for (Element ePatron : patronElements) {
@@ -111,20 +108,17 @@ public class PatronXMLData {
                 String nombreClasificacion = obtenerNombreClasificacionPorId(patronModificado.getIdClasificacion());
                 save.getChild("clasificacion").setText(nombreClasificacion);
             }
-
-            saveXML();
+            save();
         }
     }
 
 
-
-
-    public void eliminarPatron(String idPatron) {
+    public void eliminarPatron(String idPatron) throws IOException {
         List<Element> patronElements = raiz.getChildren("patron");
         for (Element ePatron : patronElements) {
             if (ePatron.getAttributeValue("idPatron").equals(idPatron)) {
                 raiz.removeContent(ePatron);
-                saveXML();
+                save();
                 return;
             }
         }
@@ -170,16 +164,10 @@ public class PatronXMLData {
         return null;
     }
 
-    private void saveXML() {
-        try {
-            XMLOutputter xmlOutputter = new XMLOutputter();
-            xmlOutputter.output(document, new PrintWriter(new FileWriter(xmlFilePath)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void save() throws IOException {
+        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+        xmlOutputter.output(document, new FileWriter(xmlFilePath));
     }
-
-
 
     private void ordenarPatrones() {
         List<Element> patronElements = new ArrayList<>(raiz.getChildren("patron"));
@@ -198,5 +186,15 @@ public class PatronXMLData {
             }
         }
         return String.valueOf(maxId + 1);
+    }
+
+    public void limpiarYGuardarTresPrimerosPatrones() throws IOException {
+        List<Element> patronElements = raiz.getChildren("patron");
+        if (patronElements.size() > 3) {
+            List<Element> tresPrimerosPatrones = new ArrayList<>(patronElements.subList(0, 3));
+            raiz.removeChildren("patron");
+            raiz.addContent(tresPrimerosPatrones);
+            save();
+        }
     }
 }

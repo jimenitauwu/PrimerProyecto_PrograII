@@ -9,16 +9,7 @@ import org.jdom2.output.XMLOutputter;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.List;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
-import java.io.IOException;
-import java.io.StringReader;
 
 public class Patron {
     private String idPatron;
@@ -28,6 +19,15 @@ public class Patron {
     private String solucionPatron;
     private String ejemplosPatron;
     private String idClasificacion;
+
+    public Patron(String name, String contextoPatron, String problemaPatron, String solucionPatron, String ejemplosPatron, String idClasificacion) {
+        this.name = name;
+        this.contextoPatron = contextoPatron;
+        this.problemaPatron = problemaPatron;
+        this.solucionPatron = solucionPatron;
+        this.ejemplosPatron = ejemplosPatron;
+        this.idClasificacion = idClasificacion;
+    }
 
     public Patron(String idPatron, String name, String contextoPatron, String problemaPatron, String solucionPatron, String ejemplosPatron, String idClasificacion) {
         this.idPatron = idPatron;
@@ -39,9 +39,7 @@ public class Patron {
         this.idClasificacion = idClasificacion;
     }
 
-    public Patron() {
-    }
-
+    public Patron() {}
     public String getIdClasificacion() {
         return idClasificacion;
     }
@@ -99,19 +97,38 @@ public class Patron {
     }
 
     public String toXMLString() {
-        Element patronElement = new Element("patron");
-        patronElement.setAttribute("idPatron", idPatron);
-        patronElement.addContent(new Element("name").setText(name));
-        patronElement.addContent(new Element("contextoPatron").setText(contextoPatron));
-        patronElement.addContent(new Element("problemaPatron").setText(problemaPatron));
-        patronElement.addContent(new Element("solucionPatron").setText(solucionPatron));
-        patronElement.addContent(new Element("ejemploPatron").setText(ejemplosPatron));
-        patronElement.addContent(new Element("idClasificacion").setText(idClasificacion));
+        Element patronElement = new Element("Patron");
 
-        String xml = new XMLOutputter(Format.getPrettyFormat()).outputString(patronElement);
-        System.out.println("Generated XML: " + xml);
-        return xml;
+        try {
+            if (idPatron != null) {
+                patronElement.setAttribute("id", idPatron);
+            }
+            if (name != null) {
+                patronElement.addContent(new Element("Name").setText(name));
+            }
+            if (problemaPatron != null) {
+                patronElement.addContent(new Element("Problema").setText(problemaPatron));
+            }
+            if (contextoPatron != null) {
+                patronElement.addContent(new Element("Contexto").setText(contextoPatron));
+            }
+            if (solucionPatron != null) {
+                patronElement.addContent(new Element("Solucion").setText(solucionPatron));
+            }
+            if (ejemplosPatron != null) {
+                patronElement.addContent(new Element("Ejemplos").setText(ejemplosPatron));
+            }
+            if (idClasificacion != null) {
+                patronElement.addContent(new Element("Clasificacion").setText(idClasificacion));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Convertir el Element a XML string
+        return new XMLOutputter().outputString(new Document(patronElement));
     }
+
 
     public static Patron fromXMLString(String xmlString) throws IOException, JDOMException {
         SAXBuilder saxBuilder = new SAXBuilder();

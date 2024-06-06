@@ -66,7 +66,11 @@ public class BorrarPatronController {
         if (seleccionado != null) {
             String[] partes = seleccionado.split(" - ");
             String idPatron = partes[0];  // Asumiendo que el ID está antes del guion
-            patronXMLData.eliminarPatron(idPatron);
+            try {
+                patronXMLData.eliminarPatron(idPatron);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             mostrarMensajeExito("Patrón eliminado exitosamente.");
         } else {
             mostrarMensajeError("Por favor, seleccione un patrón.");

@@ -18,7 +18,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-
 public class ModificarPatronController {
 
     @FXML
@@ -53,7 +52,6 @@ public class ModificarPatronController {
     private PatronXMLData patronXMLData;
     private ClasificacionXMLData clasificacionXMLData;
 
-    //Método para establecer la instancia PatronXMLData
     public void setPatronXMLData(PatronXMLData patronXMLData) {
         this.patronXMLData = patronXMLData;
         System.out.println("PatronXMLData set: " + patronXMLData);
@@ -64,7 +62,6 @@ public class ModificarPatronController {
         }
     }
 
-    //Método para establecer la instancia ClasificacionXMLData
     public void setClasificacionXMLData(ClasificacionXMLData clasificacionXMLData) {
         this.clasificacionXMLData = clasificacionXMLData;
         System.out.println("ClasificacionXMLData set: " + clasificacionXMLData);
@@ -138,6 +135,7 @@ public class ModificarPatronController {
 
     private void mostrarPatron(Patron patron) {
         txtID.setText(patron.getIdPatron()); // Mostrar el ID actual
+        txtID.setEditable(false);
         txtFieldNamePatron.setText(patron.getName());
         txtFieldProblema.setText(patron.getProblemaPatron());
         txtFieldContexto.setText(patron.getContextoPatron());
@@ -148,12 +146,17 @@ public class ModificarPatronController {
 
     @FXML
     public void cancelarOnAction(ActionEvent actionEvent) {
+        limpiarCampos();
+    }
+
+    private void limpiarCampos() {
         txtID.clear();
         txtFieldNamePatron.clear();
         txtFieldProblema.clear();
         txtFieldContexto.clear();
         txtFieldSolucion.clear();
         txtFieldEjemplos.clear();
+        txtClasificacionActual.clear();
         cBoxClasificacionModificada.getSelectionModel().clearSelection();
     }
 
@@ -164,7 +167,7 @@ public class ModificarPatronController {
             return;
         }
 
-        //Captura los valores de los campos
+        // Captura los valores de los campos
         String namePatron = txtFieldNamePatron.getText();
         String problema = txtFieldProblema.getText();
         String contexto = txtFieldContexto.getText();
@@ -172,22 +175,21 @@ public class ModificarPatronController {
         String ejemplos = txtFieldEjemplos.getText();
         String clasificacion = cBoxClasificacionModificada.getValue();
 
-        //Crea un nuevo objeto Patron con los datos actualizados
+        // Crear un objeto Patron con los datos modificados
         Patron patronModificado = new Patron();
 
-        patronModificado.setName(namePatron);
-        patronModificado.setProblemaPatron(problema);
-        patronModificado.setContextoPatron(contexto);
-        patronModificado.setSolucionPatron(solucion);
-        patronModificado.setEjemplosPatron(ejemplos);
-        patronModificado.setIdClasificacion(clasificacion);
+        if (!namePatron.isEmpty()) patronModificado.setName(namePatron);
+        if (!problema.isEmpty()) patronModificado.setProblemaPatron(problema);
+        if (!contexto.isEmpty()) patronModificado.setContextoPatron(contexto);
+        if (!solucion.isEmpty()) patronModificado.setSolucionPatron(solucion);
+        if (!ejemplos.isEmpty()) patronModificado.setEjemplosPatron(ejemplos);
+        if (clasificacion != null) patronModificado.setIdClasificacion(clasificacion);
 
-        //Envía los datos modificados al servidor
+        // Enviar los datos modificados al servidor
         try {
-            //Llama a modificarPatron con el ID y el objeto Patron modificado
             patronXMLData.modificarPatron(patronActual.getIdPatron(), patronModificado);
 
-            //Comunicacion con el servidor
+            // Comunicación con el servidor
             String patronXML = patronModificado.toXMLString();
             try (Socket socket = new Socket(InetAddress.getLocalHost(), 9999);
                  PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
@@ -211,7 +213,6 @@ public class ModificarPatronController {
             mostrarMensajeError("Error al modificar el patrón.");
         }
     }
-
 
 
     private void mostrarMensajeError(String mensaje) {
