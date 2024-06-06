@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 
 public class Cliente {
     public static void main(String[] args) {
-        String serverAddress = "192.168.18.58"; // Dirección IP por defecto
+        String serverAddress = "10.235.13.22"; // Dirección IP por defecto
 
         if (args.length > 0) {
             serverAddress = args[0];

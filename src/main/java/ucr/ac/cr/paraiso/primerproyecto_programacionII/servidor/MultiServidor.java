@@ -17,7 +17,7 @@ public class MultiServidor {
             ClasificacionXMLData clasificacionXMLData = new ClasificacionXMLData("clasificaciones.xml");
             PatronXMLData patronXMLData = new PatronXMLData("patrones.xml", clasificacionXMLData);
 
-            serverSocket = new ServerSocket(9999, 0, InetAddress.getByName("192.168.18.58"));
+            serverSocket = new ServerSocket(9999, 0, InetAddress.getByName("10.235.13.22"));
 
             System.out.println("Servidor activo");
             while (escuchando) {
