@@ -35,12 +35,19 @@ public class ModificarClasificacionController {
     private Clasificacion clasificacionActual;
     private ClasificacionXMLData clasificacionXMLData;
 
+    // Variable para la IP del servidor
+    private String serverIP;
+
+    // Método para establecer la IP del servidor
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
+
     // Método para establecer el objeto ClasificacionXMLData
     public void setClasificacionXMLData(ClasificacionXMLData clasificacionXMLData) {
         this.clasificacionXMLData = clasificacionXMLData;
         llenarComboBoxClasificaciones();
     }
-
 
     @FXML
     public void initialize() {
@@ -61,8 +68,6 @@ public class ModificarClasificacionController {
             mostrarMensajeError("No se ha proporcionado el objeto ClasificacionXMLData.");
         }
     }
-
-
 
     @FXML
     public void buscarOnAction(ActionEvent actionEvent) {
@@ -119,17 +124,17 @@ public class ModificarClasificacionController {
             clasificacionXMLData.modificarClasificacion(clasificacionActual.getIdClasificacion(), clasificacionModificada);
 
             // Comunicación con el servidor
-            String clasficacionXML = clasificacionModificada.toXMLString();
-            try (Socket socket = new Socket(InetAddress.getLocalHost(), 9999);
+            String clasificacionXML = clasificacionModificada.toXMLString();
+            try (Socket socket = new Socket(serverIP, 9999); // Use the server IP
                  PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
                  BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
                 writer.println("modificar_clasificacion");
-                writer.println(clasficacionXML);
+                writer.println(clasificacionXML);
                 String respuesta = reader.readLine();
 
                 if (respuesta.contains("exitosamente")) {
-                    mostrarMensajeExito("Clasificación modificado exitosamente.");
+                    mostrarMensajeExito("Clasificación modificada exitosamente.");
                 } else {
                     mostrarMensajeError("Error al modificar la Clasificación: " + respuesta);
                 }
@@ -142,7 +147,6 @@ public class ModificarClasificacionController {
             mostrarMensajeError("Error al modificar la clasificación.");
         }
     }
-
 
     private void mostrarMensajeError(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

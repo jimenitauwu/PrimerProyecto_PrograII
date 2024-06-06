@@ -15,10 +15,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.List;
-
-
-public class AnadirPatronController
-{
+public class AnadirPatronController {
     @javafx.fxml.FXML
     private ComboBox<String> cBoxClasificacion;
     @javafx.fxml.FXML
@@ -41,6 +38,14 @@ public class AnadirPatronController
     private TextField txtFieldNamePatron;
     private ClasificacionXMLData clasificacionData;
     private PatronXMLData patronData;
+
+    // Añade una variable para la IP del servidor
+    private String serverIP;
+
+    // Añade un método para establecer la IP del servidor
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -66,8 +71,6 @@ public class AnadirPatronController
             e.printStackTrace();
         }
     }
-
-
 
     @javafx.fxml.FXML
     public void cancelarOnAction(ActionEvent actionEvent) {
@@ -118,11 +121,11 @@ public class AnadirPatronController
         String patronXML = nuevoPatron.toXMLString();
 
         // Envía los datos al servidor para incluir un nuevo patrón
-        try (Socket socket = new Socket(InetAddress.getLocalHost(), 9999);
+        try (Socket socket = new Socket(serverIP, 9999);
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-            writer.println(patronXML+"\n"+"incluir");//added JG
+            writer.println(patronXML + "\n" + "incluir"); //added JG
             String respuesta = reader.readLine();
 
             if (respuesta.contains("exitosamente")) {
@@ -135,7 +138,6 @@ public class AnadirPatronController
             mostrarMensajeError("Error de conexión con el servidor.");
         }
     }
-
 
     private void mostrarMensajeError(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

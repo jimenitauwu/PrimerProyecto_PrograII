@@ -13,9 +13,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.List;
-
-public class AnadirClasificacionController
-{
+public class AnadirClasificacionController {
 
     @javafx.fxml.FXML
     private TextField txtFieldNomClasificacion;
@@ -23,6 +21,14 @@ public class AnadirClasificacionController
     private TextField txtFieldIDClasificacion;
 
     private ClasificacionXMLData clasificacionData;
+
+    // Añadir un campo para la IP del servidor
+    private String serverIP;
+
+    // Crear un método para establecer la IP del servidor
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -73,7 +79,7 @@ public class AnadirClasificacionController
         String clasificacionXML = nuevaClasificacion.toXMLString();
 
         // Envía los datos al servidor para incluir una nueva clasificación
-        try (Socket socket = new Socket(InetAddress.getLocalHost(), 9999);
+        try (Socket socket = new Socket(serverIP, 9999);
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 

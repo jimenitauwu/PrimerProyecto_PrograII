@@ -11,7 +11,11 @@ import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 public class BuscarClasificacionController {
 
@@ -28,6 +32,14 @@ public class BuscarClasificacionController {
 
     private ClasificacionXMLData clasificacionXMLData;
     private ObservableList<String> nombresClasificaciones;
+
+    // Añadir un campo para la IP del servidor
+    private String serverIP;
+
+    // Crear un método para establecer la IP del servidor
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
 
     public void setClasificacionXMLData(ClasificacionXMLData clasificacionXMLData) {
         this.clasificacionXMLData = clasificacionXMLData;
@@ -75,22 +87,31 @@ public class BuscarClasificacionController {
     }
 
     private void buscarClasificacion(String idClasificacion) {
-        try {
-            Clasificacion clasificacion = clasificacionXMLData.obtenerClasificacionPorId(idClasificacion);
-            if (clasificacion != null) {
-                mostrarClasificacion(clasificacion);
+        try (Socket socket = new Socket(serverIP, 9999);
+             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+            writer.println(idClasificacion + "\n" + "consultar_clasificacion_por_id");
+            String respuesta = reader.readLine();
+
+            if (respuesta.startsWith("Error")) {
+                mostrarMensajeError(respuesta);
             } else {
-                mostrarMensajeError("Clasificación no encontrada.");
+                // Parsear la respuesta y mostrar la clasificación
+                String[] partes = respuesta.split(",");
+                String id = partes[0];
+                String nombre = partes[1];
+                mostrarClasificacion(id, nombre);
             }
-        } catch (Exception e) {
-            mostrarMensajeError("Error al buscar la clasificación.");
+        } catch (IOException e) {
+            mostrarMensajeError("Error de conexión con el servidor.");
             e.printStackTrace();
         }
     }
 
-    private void mostrarClasificacion(Clasificacion clasificacion) {
-        txA_ID.setText(clasificacion.getIdClasificacion());
-        txA_Name.setText(clasificacion.getNameClasificacion());
+    private void mostrarClasificacion(String id, String nombre) {
+        txA_ID.setText(id);
+        txA_Name.setText(nombre);
     }
 
     private void mostrarMensajeError(String mensaje) {

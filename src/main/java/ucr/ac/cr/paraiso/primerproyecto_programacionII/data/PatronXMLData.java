@@ -41,11 +41,11 @@ public class PatronXMLData {
     }
 
     public void insertarPatron(Patron patron) throws IOException {
-        String nuevoId = generarNuevoIdPatron(); // Genera un nuevo ID automáticamente
-        patron.setIdPatron(nuevoId); // Establece el nuevo ID en el patrón
+        String nuevoId = generarNuevoIdPatron();
+        patron.setIdPatron(nuevoId);
 
         Element ePatron = new Element("patron");
-        ePatron.setAttribute("idPatron", nuevoId); // Establece el nuevo ID en el elemento
+        ePatron.setAttribute("idPatron", nuevoId);
 
         Element eName = new Element("name");
         eName.addContent(patron.getName());
@@ -59,7 +59,7 @@ public class PatronXMLData {
         Element eSolucion = new Element("solucionPatron");
         eSolucion.addContent(patron.getSolucionPatron());
 
-        Element eEjemplos = new Element("ejemploPatron");
+        Element eEjemplos = new Element("ejemplosPatron");
         eEjemplos.addContent(patron.getEjemplosPatron());
 
         String nombreClasificacion = obtenerNombreClasificacionPorId(patron.getIdClasificacion());
@@ -102,7 +102,7 @@ public class PatronXMLData {
                 save.getChild("solucionPatron").setText(patronModificado.getSolucionPatron());
             }
             if (patronModificado.getEjemplosPatron() != null) {
-                save.getChild("ejemploPatron").setText(patronModificado.getEjemplosPatron());
+                save.getChild("ejemplosPatron").setText(patronModificado.getEjemplosPatron());
             }
             if (patronModificado.getIdClasificacion() != null) {
                 String nombreClasificacion = obtenerNombreClasificacionPorId(patronModificado.getIdClasificacion());
@@ -111,7 +111,6 @@ public class PatronXMLData {
             save();
         }
     }
-
 
     public void eliminarPatron(String idPatron) throws IOException {
         List<Element> patronElements = raiz.getChildren("patron");
@@ -144,7 +143,7 @@ public class PatronXMLData {
             String contextoPatron = ePatron.getChildText("contextoPatron");
             String problemaPatron = ePatron.getChildText("problemaPatron");
             String solucionPatron = ePatron.getChildText("solucionPatron");
-            String ejemplosPatron = ePatron.getChildText("ejemploPatron");
+            String ejemplosPatron = ePatron.getChildText("ejemplosPatron");
             String idClasificacion = ePatron.getChildText("clasificacion");
 
             Patron patron = new Patron(idPatron, name, contextoPatron, problemaPatron, solucionPatron, ejemplosPatron, idClasificacion);
@@ -169,13 +168,6 @@ public class PatronXMLData {
         xmlOutputter.output(document, new FileWriter(xmlFilePath));
     }
 
-    private void ordenarPatrones() {
-        List<Element> patronElements = new ArrayList<>(raiz.getChildren("patron"));
-        patronElements.sort(Comparator.comparing(e -> e.getChildText("name")));
-        raiz.removeChildren("patron");
-        raiz.addContent(patronElements);
-    }
-
     public String generarNuevoIdPatron() {
         List<Patron> patrones = obtenerPatrones();
         int maxId = 0;
@@ -188,13 +180,4 @@ public class PatronXMLData {
         return String.valueOf(maxId + 1);
     }
 
-    public void limpiarYGuardarTresPrimerosPatrones() throws IOException {
-        List<Element> patronElements = raiz.getChildren("patron");
-        if (patronElements.size() > 3) {
-            List<Element> tresPrimerosPatrones = new ArrayList<>(patronElements.subList(0, 3));
-            raiz.removeChildren("patron");
-            raiz.addContent(tresPrimerosPatrones);
-            save();
-        }
-    }
 }

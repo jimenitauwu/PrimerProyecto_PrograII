@@ -52,6 +52,14 @@ public class ModificarPatronController {
     private PatronXMLData patronXMLData;
     private ClasificacionXMLData clasificacionXMLData;
 
+    // Variable para la IP del servidor
+    private String serverIP;
+
+    // Método para establecer la IP del servidor
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
+
     public void setPatronXMLData(PatronXMLData patronXMLData) {
         this.patronXMLData = patronXMLData;
         System.out.println("PatronXMLData set: " + patronXMLData);
@@ -191,7 +199,7 @@ public class ModificarPatronController {
 
             // Comunicación con el servidor
             String patronXML = patronModificado.toXMLString();
-            try (Socket socket = new Socket(InetAddress.getLocalHost(), 9999);
+            try (Socket socket = new Socket(serverIP, 9999); // Use the server IP
                  PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
                  BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
@@ -214,7 +222,6 @@ public class ModificarPatronController {
         }
     }
 
-
     private void mostrarMensajeError(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -231,5 +238,3 @@ public class ModificarPatronController {
         alert.showAndWait();
     }
 }
-
-

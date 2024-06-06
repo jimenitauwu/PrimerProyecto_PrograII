@@ -40,6 +40,7 @@ public class Patron {
     }
 
     public Patron() {}
+
     public String getIdClasificacion() {
         return idClasificacion;
     }
@@ -129,19 +130,18 @@ public class Patron {
         return new XMLOutputter().outputString(new Document(patronElement));
     }
 
-
     public static Patron fromXMLString(String xmlString) throws IOException, JDOMException {
         SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new StringReader(xmlString));
 
         Element rootElement = document.getRootElement();
-        String idPatron = rootElement.getAttributeValue("idPatron");
-        String name = rootElement.getChildText("name");
-        String contextoPatron = rootElement.getChildText("contextoPatron");
-        String problemaPatron = rootElement.getChildText("problemaPatron");
-        String solucionPatron = rootElement.getChildText("solucionPatron");
-        String ejemplosPatron = rootElement.getChildText("ejemploPatron");
-        String idClasificacion = rootElement.getChildText("idClasificacion");
+        String idPatron = rootElement.getAttributeValue("id");
+        String name = rootElement.getChildText("Name");
+        String contextoPatron = rootElement.getChildText("Contexto");
+        String problemaPatron = rootElement.getChildText("Problema");
+        String solucionPatron = rootElement.getChildText("Solucion");
+        String ejemplosPatron = rootElement.getChildText("Ejemplos");
+        String idClasificacion = rootElement.getChildText("Clasificacion");
 
         Patron patron = new Patron(idPatron, name, contextoPatron, problemaPatron, solucionPatron, ejemplosPatron, idClasificacion);
         System.out.println("Parsed Patron from XML: " + patron);

@@ -10,9 +10,12 @@ import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.List;
-
 public class BorrarPatronController {
     @FXML
     private ComboBox<String> cbBoxPatron;
@@ -22,6 +25,14 @@ public class BorrarPatronController {
     private PatronXMLData patronXMLData;
     private ObservableList<String> nombresPatrones;
     private ClasificacionXMLData clasificacionXMLData;
+
+    // Añadir un campo para la IP del servidor
+    private String serverIP;
+
+    // Crear un método para establecer la IP del servidor
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
 
     public void setPatronXMLData(PatronXMLData patronXMLData) {
         this.patronXMLData = patronXMLData;
@@ -49,7 +60,7 @@ public class BorrarPatronController {
                     String nombrePatron = patron.getIdPatron() + " - " + patron.getName();
                     nombresPatrones.add(nombrePatron);
                 }
-                cbBoxPatron.setItems(nombresPatrones); // Esta línea falta en el código original
+                cbBoxPatron.setItems(nombresPatrones);
             } catch (Exception e) {
                 mostrarMensajeError("Error al cargar los patrones.");
                 e.printStackTrace();
@@ -59,19 +70,29 @@ public class BorrarPatronController {
         }
     }
 
-
     @FXML
     public void EliminarOnAction(ActionEvent actionEvent) {
         String seleccionado = cbBoxPatron.getValue();
         if (seleccionado != null) {
             String[] partes = seleccionado.split(" - ");
             String idPatron = partes[0];  // Asumiendo que el ID está antes del guion
-            try {
-                patronXMLData.eliminarPatron(idPatron);
+            try (Socket socket = new Socket(serverIP, 9999);
+                 PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+                writer.println(idPatron + "\n" + "eliminar");
+                String respuesta = reader.readLine();
+
+                if (respuesta.contains("exitosamente")) {
+                    mostrarMensajeExito("Patrón eliminado exitosamente.");
+                    llenarComboBox(); // Actualiza el ComboBox después de eliminar el patrón
+                } else {
+                    mostrarMensajeError("Error al eliminar el patrón: " + respuesta);
+                }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                mostrarMensajeError("Error de conexión con el servidor.");
+                e.printStackTrace();
             }
-            mostrarMensajeExito("Patrón eliminado exitosamente.");
         } else {
             mostrarMensajeError("Por favor, seleccione un patrón.");
         }

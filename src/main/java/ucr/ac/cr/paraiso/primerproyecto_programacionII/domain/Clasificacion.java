@@ -23,7 +23,6 @@ public class Clasificacion {
     public Clasificacion() {
     }
 
-
     public String getNameClasificacion() {
         return nameClasificacion;
     }

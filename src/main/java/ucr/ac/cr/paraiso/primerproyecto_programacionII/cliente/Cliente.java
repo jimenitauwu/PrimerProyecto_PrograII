@@ -9,15 +9,22 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Cliente {
-    public static void main(String[] args) throws UnknownHostException {
-        InetAddress inetAddress = InetAddress.getLocalHost();
+    public static void main(String[] args) {
+        if (args.length < 1) {
+            System.out.println("Uso: java Cliente <IP del servidor>");
+            return;
+        }
+
+        String serverAddress = args[0];
+        int serverPort = 9999;
         Socket echoSocket = null;
         PrintWriter writer = null;
         BufferedReader reader = null;
         BufferedReader lectorTeclado = null;
 
         try {
-            echoSocket = new Socket(inetAddress, 9999);
+            InetAddress inetAddress = InetAddress.getByName(serverAddress);
+            echoSocket = new Socket(inetAddress, serverPort);
             writer = new PrintWriter(echoSocket.getOutputStream(), true);
             reader = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
             String entrada = reader.readLine();
@@ -27,7 +34,7 @@ public class Cliente {
             while ((salida = lectorTeclado.readLine()) != null) {
                 writer.println(salida);
                 entrada = reader.readLine();
-                System.out.println("Servidor:" + entrada);
+                System.out.println("Servidor: " + entrada);
             }
         } catch (IOException io) {
             io.printStackTrace();

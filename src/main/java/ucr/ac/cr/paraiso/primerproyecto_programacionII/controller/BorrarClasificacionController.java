@@ -9,7 +9,11 @@ import org.jdom2.JDOMException;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 public class BorrarClasificacionController {
     @FXML
@@ -19,6 +23,14 @@ public class BorrarClasificacionController {
 
     private ClasificacionXMLData clasificacionXMLData;
     private ObservableList<String> nombresClasificaciones;
+
+    // Añadir un campo para la IP del servidor
+    private String serverIP;
+
+    // Crear un método para establecer la IP del servidor
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
 
     public void setClasificacionXMLData(ClasificacionXMLData clasificacionXMLData) {
         this.clasificacionXMLData = clasificacionXMLData;
@@ -58,12 +70,21 @@ public class BorrarClasificacionController {
         if (seleccionado != null) {
             String[] partes = seleccionado.split(" - ");
             String idClasificacion = partes[0];  // Asumiendo que el ID está antes del guion
-            try {
-                clasificacionXMLData.eliminarClasificacion(idClasificacion);
-                mostrarMensajeExito("Clasificación eliminada exitosamente.");
-                llenarComboBox(); // Actualiza el ComboBox después de eliminar la clasificación
+            try (Socket socket = new Socket(serverIP, 9999);
+                 PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+                writer.println(idClasificacion + "\n" + "eliminar_clasificacion");
+                String respuesta = reader.readLine();
+
+                if (respuesta.contains("exitosamente")) {
+                    mostrarMensajeExito("Clasificación eliminada exitosamente.");
+                    llenarComboBox(); // Actualiza el ComboBox después de eliminar la clasificación
+                } else {
+                    mostrarMensajeError("Error al eliminar la clasificación: " + respuesta);
+                }
             } catch (IOException e) {
-                mostrarMensajeError("Error al intentar eliminar la clasificación.");
+                mostrarMensajeError("Error de conexión con el servidor.");
                 e.printStackTrace();
             }
         } else {

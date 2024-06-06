@@ -14,9 +14,7 @@ import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import java.io.IOException;
 
 
-
 public class HelloController {
-
     @FXML
     private BorderPane bp;
     @FXML
@@ -26,63 +24,79 @@ public class HelloController {
     private PatronXMLData patronXMLData;
     private ClasificacionXMLData clasificacionXMLData;
 
+    // Añade una variable para la IP del servidor
+    private String serverIP;
+
+    // Añade un método para establecer la IP del servidor
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
+
     @FXML
     private void initialize() {
-        // Inicializar PatronXMLData y ClasificacionXMLData con la ruta correcta de tus archivos XML
         try {
             this.clasificacionXMLData = new ClasificacionXMLData("clasificaciones.xml");
             this.patronXMLData = new PatronXMLData("patrones.xml", clasificacionXMLData);
         } catch (Exception e) {
             e.printStackTrace();
-            // Manejar el error apropiadamente, mostrar un mensaje o lo que necesites
         }
     }
-
-
 
     private void loadPage(String page) {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(page));
         try {
             Parent root = fxmlLoader.load();
             Object controller = fxmlLoader.getController();
-            if (controller instanceof ModificarClasificacionController ||controller instanceof BuscarClasificacionController || controller instanceof BuscarPatronController || controller instanceof ModificarPatronController || controller instanceof BorrarPatronController || controller instanceof BorrarClasificacionController) {
+
+            if (controller instanceof BuscarPatronController ||
+                    controller instanceof ModificarPatronController ||
+                    controller instanceof BorrarPatronController ||
+                    controller instanceof BorrarClasificacionController ||
+                    controller instanceof BuscarClasificacionController ||
+                    controller instanceof ModificarClasificacionController ||
+                    controller instanceof AnadirPatronController ||
+                    controller instanceof AnadirClasificacionController) {
+
+                // Set the PatronXMLData and ClasificacionXMLData if needed
                 if (patronXMLData != null && clasificacionXMLData != null) {
-                    switch (controller) {
-                        case BuscarPatronController buscarPatronController -> {
-                            buscarPatronController.setPatronXMLData(patronXMLData);
-                            buscarPatronController.setClasificacionXMLData(clasificacionXMLData);
-                        }
-                        case ModificarPatronController modificarPatronController -> {
-                            modificarPatronController.setPatronXMLData(patronXMLData);
-                            modificarPatronController.setClasificacionXMLData(clasificacionXMLData);
-                        }
-                        case BorrarPatronController borrarPatronController -> {
-                            borrarPatronController.setPatronXMLData(patronXMLData);
-                            borrarPatronController.setClasificacionXMLData(clasificacionXMLData);
-                        }
-                        case BorrarClasificacionController borrarClasificacionController -> {
-                            borrarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
-                        }
-                        case BuscarClasificacionController buscarClasificacionController -> {
-                            buscarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
-                        }
-                        case ModificarClasificacionController modificarClasificacionController -> {
-                            modificarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
-                        }
-                        default -> {
-                        }
+                    if (controller instanceof BuscarPatronController buscarPatronController) {
+                        buscarPatronController.setPatronXMLData(patronXMLData);
+                        buscarPatronController.setClasificacionXMLData(clasificacionXMLData);
+                        buscarPatronController.setServerIP(serverIP);
+                    } else if (controller instanceof ModificarPatronController modificarPatronController) {
+                        modificarPatronController.setPatronXMLData(patronXMLData);
+                        modificarPatronController.setClasificacionXMLData(clasificacionXMLData);
+                        modificarPatronController.setServerIP(serverIP);
+                    } else if (controller instanceof BorrarPatronController borrarPatronController) {
+                        borrarPatronController.setPatronXMLData(patronXMLData);
+                        borrarPatronController.setClasificacionXMLData(clasificacionXMLData);
+                        borrarPatronController.setServerIP(serverIP);
+                    } else if (controller instanceof BorrarClasificacionController borrarClasificacionController) {
+                        borrarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
+                        borrarClasificacionController.setServerIP(serverIP);
+                    } else if (controller instanceof BuscarClasificacionController buscarClasificacionController) {
+                        buscarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
+                        buscarClasificacionController.setServerIP(serverIP);
+                    } else if (controller instanceof ModificarClasificacionController modificarClasificacionController) {
+                        modificarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
+                        modificarClasificacionController.setServerIP(serverIP);
                     }
                 } else {
                     System.err.println("patronXMLData o clasificacionXMLData es nulo.");
-                    // Manejar el error de datos nulos apropiadamente
                 }
+            } else if (controller instanceof EstructuralesController estructuralesController) {
+                estructuralesController.setClasificacionXMLData(clasificacionXMLData);
+            } else if (controller instanceof ComportamientoController comportamientoController) {
+                comportamientoController.setClasificacionXMLData(clasificacionXMLData);
+            } else if (controller instanceof CreacionalesController creacionalesController) {
+                creacionalesController.setClasificacionXMLData(clasificacionXMLData);
             }
+
             this.bp.setCenter(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
 
     @FXML
     public void creacionales(ActionEvent actionEvent) {
@@ -150,8 +164,8 @@ public class HelloController {
 
     @FXML
     public void modificarClasificacion(ActionEvent actionEvent) {
-        {
-            loadPage("modificarClasificacion.fxml");
-        }
+        loadPage("modificarClasificacion.fxml");
     }
 }
+
+
