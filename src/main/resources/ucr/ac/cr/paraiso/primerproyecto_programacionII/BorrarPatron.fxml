@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucr.ac.cr.paraiso.primerproyecto_programacionII.controller.BorrarPatronController">
-   <bottom>
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucr.ac.cr.paraiso.primerproyecto_programacionII.controller.BorrarPatronController">
+   <center>
       <AnchorPane prefHeight="421.0" prefWidth="640.0" style="-fx-background-color: #f2d974;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="68.0" layoutY="127.0" prefHeight="37.0" prefWidth="513.0" text="Seleccione el patrón que desea borrar.">
@@ -35,5 +39,5 @@
             <ComboBox fx:id="cbBoxPatron" layoutX="219.0" layoutY="181.0" prefHeight="41.0" prefWidth="210.0" />
          </children>
       </AnchorPane>
-   </bottom>
+   </center>
 </BorderPane>
