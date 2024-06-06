@@ -153,7 +153,7 @@ public class MultiServidorProtocolo {
     private String modificarClasificacion(String datosClasificacion) {
         try {
             Clasificacion clasificacionModificada = Clasificacion.fromXMLString(datosClasificacion);
-            clasificacionXMLData.modificarClasificacion(clasificacionModificada);
+//            clasificacionXMLData.modificarClasificacion(clasificacionModificada);
             return "<respuesta>Clasificación modificada exitosamente.</respuesta>";
         } catch (Exception e) {
             e.printStackTrace();

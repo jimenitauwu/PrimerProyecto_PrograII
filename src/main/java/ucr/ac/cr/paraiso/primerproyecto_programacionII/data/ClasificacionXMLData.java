@@ -1,6 +1,7 @@
 package ucr.ac.cr.paraiso.primerproyecto_programacionII.data;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import org.jdom2.output.XMLOutputter;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 
 public class ClasificacionXMLData {
+    private String xmlFilePath;
+    private Document document;
     private String rutaDocumento;
     private Element raiz;
     private Document documento;
@@ -26,7 +29,7 @@ public class ClasificacionXMLData {
             this.rutaDocumento = rutaDocumento;
             this.raiz = new Element("clasificaciones");
             this.documento = new Document(raiz);
-            guardar();
+            save();
         } else {
             SAXBuilder saxBuilder = new SAXBuilder();
             saxBuilder.setIgnoringElementContentWhitespace(true);
@@ -36,12 +39,7 @@ public class ClasificacionXMLData {
         }
     }
 
-    private void guardar() throws IOException {
-        // Ordenar clasificaciones antes de guardar
-        ordenarClasificaciones();
-        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-        xmlOutputter.output(this.documento, new PrintWriter(this.rutaDocumento));
-    }
+
 
     public void insertarClasificacion(Clasificacion clasificacion) throws IOException {
         Element eClasificacion = new Element("clasificacion");
@@ -56,26 +54,36 @@ public class ClasificacionXMLData {
         eClasificacion.addContent(eNameClasificacion);
 
         raiz.addContent(eClasificacion);
-        guardar();
+        save();
     }
 
-    public void modificarClasificacion(Clasificacion clasificacion) throws IOException {
+    public void modificarClasificacion(String idClasificacion, Clasificacion clasificacionModificada) throws IOException {
+        Element save = null;
         List<Element> clasificacionElements = raiz.getChildren("clasificacion");
+
+        // Buscar la clasificación a modificar por su ID
         for (Element eClasificacion : clasificacionElements) {
-            if (eClasificacion.getChildText("idClasificacion").equals(clasificacion.getIdClasificacion())) {
-                eClasificacion.getChild("nameClasificacion").setText(clasificacion.getNameClasificacion());
-                guardar();
-                return;
+            if (eClasificacion.getChildText("idClasificacion").equals(idClasificacion)) {
+                save = eClasificacion;
+                break;
             }
         }
+
+        if (save != null) {
+            // Modificar el nombre de la clasificación
+            save.getChild("nameClasificacion").setText(clasificacionModificada.getNameClasificacion());
+            save();
+        }
     }
+
+
 
     public void eliminarClasificacion(String idClasificacion) throws IOException {
         List<Element> clasificacionElements = raiz.getChildren("clasificacion");
         for (Element eClasificacion : clasificacionElements) {
             if (eClasificacion.getChildText("idClasificacion").equals(idClasificacion)) {
                 raiz.removeContent(eClasificacion);
-                guardar();
+                save();
                 return;
             }
         }
@@ -111,6 +119,11 @@ public class ClasificacionXMLData {
             }
         }
         return null; // Si no se encuentra ninguna clasificación con ese ID
+    }
+
+    private void save() throws IOException {
+        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+        xmlOutputter.output(document, new FileWriter(xmlFilePath));
     }
 
     public String generarNuevoIdClasificacion() {

@@ -45,7 +45,7 @@ public class HelloController {
         try {
             Parent root = fxmlLoader.load();
             Object controller = fxmlLoader.getController();
-            if (controller instanceof BuscarClasificacionController || controller instanceof BuscarPatronController || controller instanceof ModificarPatronController || controller instanceof BorrarPatronController || controller instanceof BorrarClasificacionController) {
+            if (controller instanceof ModificarClasificacionController ||controller instanceof BuscarClasificacionController || controller instanceof BuscarPatronController || controller instanceof ModificarPatronController || controller instanceof BorrarPatronController || controller instanceof BorrarClasificacionController) {
                 if (patronXMLData != null && clasificacionXMLData != null) {
                     switch (controller) {
                         case BuscarPatronController buscarPatronController -> {
@@ -66,7 +66,9 @@ public class HelloController {
                         case BuscarClasificacionController buscarClasificacionController -> {
                             buscarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
                         }
-
+                        case ModificarClasificacionController modificarClasificacionController -> {
+                            modificarClasificacionController.setClasificacionXMLData(clasificacionXMLData);
+                        }
                         default -> {
                         }
                     }
