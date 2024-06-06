@@ -11,11 +11,13 @@ import java.net.UnknownHostException;
 public class Cliente {
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.out.println("Uso: java Cliente <192.168.18.10>");
+            System.out.println("Uso: java Cliente 192.168.18.58");
             return;
         }
 
-        String serverAddress = args[0];
+        String serverAddress = "192.168.18.58"; // Cambia esta dirección IP por la correcta
+
+
         int serverPort = 9999;
         Socket echoSocket = null;
         PrintWriter writer = null;
