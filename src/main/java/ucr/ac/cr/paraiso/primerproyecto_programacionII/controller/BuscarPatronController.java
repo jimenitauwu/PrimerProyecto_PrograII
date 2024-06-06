@@ -118,6 +118,7 @@ public class BuscarPatronController {
 
             // Procesa la respuesta del servidor
             if (respuesta != null && !respuesta.isEmpty()) {
+                System.out.println("Procesando la respuesta del servidor.");
                 // Convierte la respuesta en un documento XML
                 SAXBuilder saxBuilder = new SAXBuilder();
                 Document document = saxBuilder.build(new StringReader(respuesta));
@@ -133,6 +134,8 @@ public class BuscarPatronController {
                 String contexto = rootElement.getChildText("contexto");
                 String ejemplos = rootElement.getChildText("ejemplos");
 
+                System.out.println("Datos extraídos: nombre=" + nombre + ", problema=" + problema + ", clasificacion=" + clasificacion + ", solucion=" + solucion + ", contexto=" + contexto + ", ejemplos=" + ejemplos);
+
                 // Muestra los datos en los TextArea
                 mostrarPatron(nombre, problema, clasificacion, solucion, contexto, ejemplos);
             } else {
@@ -143,6 +146,7 @@ public class BuscarPatronController {
             e.printStackTrace();
         }
     }
+
 
 
 
