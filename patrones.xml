@@ -72,4 +72,12 @@
     <ejemplosPatron>ss</ejemplosPatron>
     <clasificacion />
   </patron>
+  <patron idPatron="911">
+    <name>HolaValentina</name>
+    <contextoPatron>test</contextoPatron>
+    <problemaPatron>test</problemaPatron>
+    <solucionPatron>test</solucionPatron>
+    <ejemplosPatron>test</ejemplosPatron>
+    <clasificacion />
+  </patron>
 </patrones>

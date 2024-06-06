@@ -14,6 +14,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Proyecto 1");
+        stage.setResizable(true);
         stage.setScene(scene);
 
         // Obtén el controlador y establece la IP del servidor
