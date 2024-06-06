@@ -130,7 +130,7 @@ public class CreacionalesController {
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-            writer.println(idPatron + "\n" + "buscar");
+            writer.println(idPatron + "\n" + "consultar_patron_por_id");
             String respuesta = reader.readLine();
 
             if (respuesta.startsWith("Error")) {

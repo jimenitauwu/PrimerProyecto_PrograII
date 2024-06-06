@@ -104,7 +104,7 @@ public class BuscarPatronController {
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             // Envía la solicitud al servidor
-            writer.println(idPatron + "\n" + "buscar");
+            writer.println(idPatron + "\n" + "consultar_patron_por_id");
             System.out.println("Solicitud enviada al servidor.");
 
             // Lee la respuesta del servidor
