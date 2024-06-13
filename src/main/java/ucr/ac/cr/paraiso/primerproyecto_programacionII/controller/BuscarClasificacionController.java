@@ -18,10 +18,9 @@ import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 import java.io.*;
 import java.net.Socket;
 
+
 public class BuscarClasificacionController {
 
-    @FXML
-    private BorderPane borderPane;
     @FXML
     private TextArea txA_ID;
     @FXML
@@ -31,10 +30,12 @@ public class BuscarClasificacionController {
     @FXML
     private Button btn_Buscar;
 
-    private ClasificacionXMLData clasificacionXMLData;
     private ObservableList<String> nombresClasificaciones;
+    private ClasificacionXMLData clasificacionXMLData;
 
     private String serverIP;
+    @FXML
+    private BorderPane borderPane;
 
     public void setServerIP(String serverIP) {
         this.serverIP = serverIP;
@@ -73,8 +74,7 @@ public class BuscarClasificacionController {
     }
 
     @FXML
-    public void BuscarOnAction(ActionEvent actionEvent) {
-        System.out.println("Buscar acción activada.");
+    public void BuscarOnAction(ActionEvent actionEvent) { // Ensure this matches the FXML file
         String seleccionado = comboBox.getValue();
         if (seleccionado != null) {
             String[] partes = seleccionado.split(" - ");
@@ -91,10 +91,14 @@ public class BuscarClasificacionController {
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
             writer.println(idClasificacion + "\n" + "consultar_clasificacion_por_id");
+            writer.flush();
+
             StringBuilder respuestaBuilder = new StringBuilder();
             String linea;
-            while ((linea = reader.readLine()) != null) {
+            int count = 0;
+            while ((linea = reader.readLine()) != null && count <4 ) {
                 respuestaBuilder.append(linea);
+                count++;
             }
             String respuesta = respuestaBuilder.toString();
 
@@ -103,8 +107,8 @@ public class BuscarClasificacionController {
                 Document document = saxBuilder.build(new StringReader(respuesta));
 
                 Element rootElement = document.getRootElement();
-                String id = rootElement.getChildText("id");
-                String nombre = rootElement.getChildText("nombre");
+                String id = rootElement.getAttributeValue("IDclasificacion");
+                String nombre = rootElement.getChildText("Name");
 
                 mostrarClasificacion(id, nombre);
             } else {
@@ -115,7 +119,6 @@ public class BuscarClasificacionController {
             e.printStackTrace();
         }
     }
-
 
     private void mostrarClasificacion(String id, String nombre) {
         txA_ID.setText(id);
@@ -130,11 +133,4 @@ public class BuscarClasificacionController {
         alert.showAndWait();
     }
 
-    private void mostrarMensajeExito(String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Éxito");
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-    }
 }

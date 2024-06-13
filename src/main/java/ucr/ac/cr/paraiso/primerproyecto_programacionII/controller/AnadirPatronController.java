@@ -3,6 +3,7 @@ package ucr.ac.cr.paraiso.primerproyecto_programacionII.controller;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import org.jdom2.JDOMException;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
@@ -15,6 +16,9 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.List;
+
+
+
 public class AnadirPatronController {
     @javafx.fxml.FXML
     private ComboBox<String> cBoxClasificacion;
@@ -83,7 +87,6 @@ public class AnadirPatronController {
         txtFieldNamePatron.clear();
         cBoxClasificacion.getSelectionModel().clearSelection();
     }
-
     @javafx.fxml.FXML
     public void anadirOnAction(ActionEvent actionEvent) {
         // Captura los valores de los campos
@@ -93,10 +96,13 @@ public class AnadirPatronController {
         String contexto = txtFieldContexto.getText();
         String solucion = txtFieldSolucion.getText();
         String ejemplos = txtFieldEjemplos.getText();
-        String clasificacion = cBoxClasificacion.getValue();
+        String nombreClasificacion = cBoxClasificacion.getValue(); // Asumiendo que este es el nombre
+
+        // Obtén el ID de clasificación basado en el nombre seleccionado
+        String idClasificacion = clasificacionData.obtenerIdClasificacionPorNombre(nombreClasificacion);
 
         // Valida los datos ingresados
-        if (idPatron.isEmpty() || namePatron.isEmpty() || problema.isEmpty() || contexto.isEmpty() || solucion.isEmpty() || clasificacion == null) {
+        if (idPatron.isEmpty() || namePatron.isEmpty() || problema.isEmpty() || contexto.isEmpty() || solucion.isEmpty() || idClasificacion == null) {
             mostrarMensajeError("Todos los campos son obligatorios.");
             return;
         }
@@ -117,7 +123,7 @@ public class AnadirPatronController {
         }
 
         // Crea y envía el nuevo patrón al servidor
-        Patron nuevoPatron = new Patron(idPatron, namePatron, problema, contexto, solucion, ejemplos, clasificacion);
+        Patron nuevoPatron = new Patron(idPatron, namePatron, problema, contexto, solucion, ejemplos, idClasificacion);
         String patronXML = nuevoPatron.toXMLString();
 
         // Envía los datos al servidor para incluir un nuevo patrón
@@ -138,6 +144,7 @@ public class AnadirPatronController {
             mostrarMensajeError("Error de conexión con el servidor.");
         }
     }
+
 
     private void mostrarMensajeError(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

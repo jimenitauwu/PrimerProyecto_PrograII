@@ -6,20 +6,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import org.jdom2.Document;
+import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-public class ModificarPatronController {
 
+
+
+public class ModificarPatronController {
     @FXML
     private TextField txtFieldEjemplos;
     @FXML
@@ -48,37 +50,36 @@ public class ModificarPatronController {
     private TextField txtID;
 
     private ObservableList<String> nombresPatrones;
-    private Patron patronActual;
+    private static Patron patronActual;
     private PatronXMLData patronXMLData;
     private ClasificacionXMLData clasificacionXMLData;
 
-    // Variable para la IP del servidor
     private String serverIP;
 
-    // Método para establecer la IP del servidor
+    public static void setPatronActual(Patron patron) {
+        patronActual = patron;
+    }
+
     public void setServerIP(String serverIP) {
         this.serverIP = serverIP;
     }
 
     public void setPatronXMLData(PatronXMLData patronXMLData) {
         this.patronXMLData = patronXMLData;
-        System.out.println("PatronXMLData set: " + patronXMLData);
-        if (this.patronXMLData != null) {
-            llenarComboBox();
-        } else {
-            mostrarMensajeError("Error: no se ha proporcionado el objeto PatronXMLData.");
-        }
+        llenarComboBox();
     }
 
     public void setClasificacionXMLData(ClasificacionXMLData clasificacionXMLData) {
         this.clasificacionXMLData = clasificacionXMLData;
-        System.out.println("ClasificacionXMLData set: " + clasificacionXMLData);
         llenarComboBoxClasificaciones();
     }
 
     @FXML
     public void initialize() {
         nombresPatrones = FXCollections.observableArrayList();
+        if (patronActual != null) {
+            cargarDatosPatron(patronActual);
+        }
     }
 
     private void llenarComboBox() {
@@ -98,28 +99,12 @@ public class ModificarPatronController {
         }
     }
 
-    private void llenarComboBoxClasificaciones() {
-        if (clasificacionXMLData != null) {
-            try {
-                for (Clasificacion clasificacion : clasificacionXMLData.obtenerClasificaciones()) {
-                    cBoxClasificacionModificada.getItems().add(clasificacion.getNameClasificacion());
-                }
-            } catch (Exception e) {
-                mostrarMensajeError("Error al cargar las clasificaciones.");
-                e.printStackTrace();
-            }
-        } else {
-            mostrarMensajeError("No se ha proporcionado el objeto ClasificacionXMLData.");
-        }
-    }
-
     @FXML
     public void BuscarOnAction(ActionEvent actionEvent) {
-        System.out.println("Buscar acción activada.");
         String seleccionado = cbBoxID.getValue();
         if (seleccionado != null) {
             String[] partes = seleccionado.split(" - ");
-            String idPatron = partes[0];  // Asumiendo que el ID está antes del guion
+            String idPatron = partes[0];
             buscarPatron(idPatron);
         } else {
             mostrarMensajeError("Por favor, seleccione un patrón.");
@@ -127,29 +112,63 @@ public class ModificarPatronController {
     }
 
     private void buscarPatron(String idPatron) {
-        try {
-            Patron patron = patronXMLData.obtenerPatronPorID(idPatron);
-            if (patron != null) {
-                patronActual = patron;
-                mostrarPatron(patron);
-            } else {
-                mostrarMensajeError("Patrón no encontrado.");
+        try (Socket socket = new Socket(serverIP, 9999);
+             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+            writer.println(idPatron + "\n" + "consultar_patron_por_id");
+            writer.flush();
+
+            StringBuilder respuestaBuilder = new StringBuilder();
+            String linea;
+            int count = 0;
+            while ((linea = reader.readLine()) != null && count<2) {//
+                respuestaBuilder.append(linea);
+                count++;
             }
-        } catch (Exception e) {
-            mostrarMensajeError("Error al buscar el patrón.");
+            String respuesta = respuestaBuilder.toString();
+
+            if (respuesta != null && !respuesta.isEmpty()) {
+                SAXBuilder saxBuilder = new SAXBuilder();
+                Document document = saxBuilder.build(new StringReader(respuesta));
+
+                Element rootElement = document.getRootElement();
+                String nombre = rootElement.getChildText("Name");
+                String problema = rootElement.getChildText("Problema");
+                String clasificacion = rootElement.getChildText("Clasificacion");
+                String solucion = rootElement.getChildText("Solucion");
+                String contexto = rootElement.getChildText("Contexto");
+                String ejemplos = rootElement.getChildText("Ejemplos");
+
+                Patron patron = new Patron();
+                patron.setIdPatron(idPatron);
+                patron.setName(nombre);
+                patron.setProblemaPatron(problema);
+                patron.setContextoPatron(contexto);
+                patron.setSolucionPatron(solucion);
+                patron.setEjemplosPatron(ejemplos);
+                patron.setIdClasificacion(clasificacion);
+
+                patronActual = patron;
+                cargarDatosPatron(patron);
+            } else {
+                mostrarMensajeError("No se recibió una respuesta válida del servidor.");
+            }
+        } catch (IOException | JDOMException e) {
+            mostrarMensajeError("Error de conexión o de procesamiento del servidor: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private void mostrarPatron(Patron patron) {
-        txtID.setText(patron.getIdPatron()); // Mostrar el ID actual
+    private void cargarDatosPatron(Patron patron) {
+        txtID.setText(patron.getIdPatron());
         txtID.setEditable(false);
         txtFieldNamePatron.setText(patron.getName());
         txtFieldProblema.setText(patron.getProblemaPatron());
         txtFieldContexto.setText(patron.getContextoPatron());
         txtFieldSolucion.setText(patron.getSolucionPatron());
         txtFieldEjemplos.setText(patron.getEjemplosPatron());
-        txtClasificacionActual.setText(patron.getIdClasificacion());
+        txtClasificacionActual.setText(clasificacionXMLData.obtenerIdClasificacionPorNombre(patron.getIdClasificacion()));
     }
 
     @FXML
@@ -175,36 +194,38 @@ public class ModificarPatronController {
             return;
         }
 
-        // Captura los valores de los campos
         String namePatron = txtFieldNamePatron.getText();
+        String idPatron = txtID.getText();
         String problema = txtFieldProblema.getText();
         String contexto = txtFieldContexto.getText();
         String solucion = txtFieldSolucion.getText();
         String ejemplos = txtFieldEjemplos.getText();
-        String clasificacion = cBoxClasificacionModificada.getValue();
+        String clasificacionActual = txtClasificacionActual.getText();
+        String nuevaClasificacion = cBoxClasificacionModificada.getValue();
 
-        // Crear un objeto Patron con los datos modificados
+        // Obtén el ID de clasificación basado en el nombre seleccionado, si hay una nueva clasificación seleccionada
+        String idClasificacion = (nuevaClasificacion != null && !nuevaClasificacion.isEmpty()) ?
+                clasificacionXMLData.obtenerIdClasificacionPorNombre(nuevaClasificacion) : clasificacionActual;
+
         Patron patronModificado = new Patron();
+        patronModificado.setIdPatron(patronActual.getIdPatron());
 
+        if (!idPatron.isEmpty()) patronModificado.setIdPatron(idPatron);
         if (!namePatron.isEmpty()) patronModificado.setName(namePatron);
         if (!problema.isEmpty()) patronModificado.setProblemaPatron(problema);
         if (!contexto.isEmpty()) patronModificado.setContextoPatron(contexto);
         if (!solucion.isEmpty()) patronModificado.setSolucionPatron(solucion);
         if (!ejemplos.isEmpty()) patronModificado.setEjemplosPatron(ejemplos);
-        if (clasificacion != null) patronModificado.setIdClasificacion(clasificacion);
+        if (idClasificacion != null) patronModificado.setIdClasificacion(idClasificacion);
 
-        // Enviar los datos modificados al servidor
         try {
-            patronXMLData.modificarPatron(patronActual.getIdPatron(), patronModificado);
-
-            // Comunicación con el servidor
             String patronXML = patronModificado.toXMLString();
-            try (Socket socket = new Socket(serverIP, 9999); // Use the server IP
+            try (Socket socket = new Socket(serverIP, 9999);
                  PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
                  BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-                writer.println("modificar");
-                writer.println(patronXML);
+                writer.println(patronXML + "modificar" );
+                writer.flush();
                 String respuesta = reader.readLine();
 
                 if (respuesta.contains("exitosamente")) {
@@ -219,6 +240,21 @@ public class ModificarPatronController {
         } catch (Exception e) {
             e.printStackTrace();
             mostrarMensajeError("Error al modificar el patrón.");
+        }
+    }
+
+    private void llenarComboBoxClasificaciones() {
+        if (clasificacionXMLData != null) {
+            try {
+                for (Clasificacion clasificacion : clasificacionXMLData.obtenerClasificaciones()) {
+                    cBoxClasificacionModificada.getItems().add(clasificacion.getNameClasificacion());
+                }
+            } catch (Exception e) {
+                mostrarMensajeError("Error al cargar las clasificaciones.");
+                e.printStackTrace();
+            }
+        } else {
+            mostrarMensajeError("No se ha proporcionado el objeto ClasificacionXMLData.");
         }
     }
 

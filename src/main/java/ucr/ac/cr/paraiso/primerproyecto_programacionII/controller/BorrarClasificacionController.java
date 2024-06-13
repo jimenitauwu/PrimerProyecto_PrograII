@@ -34,16 +34,15 @@ public class BorrarClasificacionController {
 
     public void setClasificacionXMLData(ClasificacionXMLData clasificacionXMLData) {
         this.clasificacionXMLData = clasificacionXMLData;
-        if (this.clasificacionXMLData != null) {
+        if (this.clasificacionXMLData != null)
             llenarComboBox();
-        } else {
-            mostrarMensajeError("Error: no se ha proporcionado el objeto ClasificacionXMLData.");
-        }
+
     }
 
     @FXML
     public void initialize() {
         nombresClasificaciones = FXCollections.observableArrayList();
+        llenarComboBox(); // Llenar el ComboBox cuando se inicia el controlador
     }
 
     private void llenarComboBox() {
@@ -64,6 +63,14 @@ public class BorrarClasificacionController {
         }
     }
 
+    private void actualizarListaObservable() {
+        // Eliminar la clasificación seleccionada de la lista observable
+        String seleccionado = cbBoxClasificacion.getValue();
+        nombresClasificaciones.remove(seleccionado);
+        // Configurar el ComboBox con la lista actualizada
+        cbBoxClasificacion.setItems(nombresClasificaciones);
+    }
+
     @FXML
     public void EliminarOnAction(ActionEvent actionEvent) {
         String seleccionado = cbBoxClasificacion.getValue();
@@ -78,8 +85,9 @@ public class BorrarClasificacionController {
                 String respuesta = reader.readLine();
 
                 if (respuesta.contains("exitosamente")) {
+                    // Eliminación exitosa, actualiza la lista observable y el ComboBox
+                    actualizarListaObservable();
                     mostrarMensajeExito("Clasificación eliminada exitosamente.");
-                    llenarComboBox(); // Actualiza el ComboBox después de eliminar la clasificación
                 } else {
                     mostrarMensajeError("Error al eliminar la clasificación: " + respuesta);
                 }

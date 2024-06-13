@@ -9,8 +9,6 @@ import org.jdom2.output.XMLOutputter;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
-
 public class Clasificacion {
     private String idClasificacion;
     private String nameClasificacion;
@@ -39,43 +37,44 @@ public class Clasificacion {
         this.idClasificacion = idClasificacion;
     }
 
+    // Método para convertir la instancia de Clasificacion en una representación XML
+    public String toXMLString() {
+        Element clasificacionElement = new Element("Clasificacion");
+
+        try {
+            if (idClasificacion != null) {
+                clasificacionElement.setAttribute("IDclasificacion", idClasificacion);
+            }
+            if (nameClasificacion != null) {
+                clasificacionElement.addContent(new Element("Name").setText(nameClasificacion));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Convertir el Element a XML string
+        return new XMLOutputter(Format.getPrettyFormat()).outputString(new Document(clasificacionElement));
+    }
+
     // Método para convertir una representación XML en una instancia de Clasificacion
     public static Clasificacion fromXMLString(String xmlString) throws JDOMException, IOException {
         SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new StringReader(xmlString));
 
-        Element root = document.getRootElement();
-        String idClasificacion = root.getChildText("idClasificacion");
-        String nameClasificacion = root.getChildText("nameClasificacion");
+        Element rootElement = document.getRootElement();
+        String idClasificacion = rootElement.getAttributeValue("IDclasificacion");
+        String nameClasificacion = rootElement.getChildText("Name");
 
-        return new Clasificacion(idClasificacion, nameClasificacion);
-    }
-
-    // Método para convertir la instancia de Clasificacion en una representación XML
-    public String toXMLString() {
-        Element root = new Element("clasificacion");
-        Element idClasificacionElement = new Element("idClasificacion");
-        idClasificacionElement.setText(this.idClasificacion);
-        Element nameClasificacionElement = new Element("nameClasificacion");
-        nameClasificacionElement.setText(this.nameClasificacion);
-        root.addContent(idClasificacionElement);
-        root.addContent(nameClasificacionElement);
-
-        XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
-        StringWriter stringWriter = new StringWriter();
-        try {
-            xmlOutput.output(new Document(root), stringWriter);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return stringWriter.toString();
+        Clasificacion clasificacion = new Clasificacion(idClasificacion, nameClasificacion);
+        System.out.println("Parsed Clasificacion from XML: " + clasificacion);
+        return clasificacion;
     }
 
     @Override
     public String toString() {
         return "Clasificacion{" +
-                "name='" + nameClasificacion + '\'' +
-                ", type='" + idClasificacion + '\'' +
+                "idClasificacion='" + idClasificacion + '\'' +
+                ", nameClasificacion='" + nameClasificacion + '\'' +
                 '}';
     }
 }

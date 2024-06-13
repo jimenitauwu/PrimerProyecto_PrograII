@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.controller.HelloController;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 public class HelloApplication extends Application {
     @Override
@@ -17,9 +18,12 @@ public class HelloApplication extends Application {
         stage.setResizable(true);
         stage.setScene(scene);
 
-        // Obtén el controlador y establece la IP del servidor
+        // Get the local machine's IP address dynamically
+        String serverIP = InetAddress.getLocalHost().getHostAddress();
+        System.out.println("Local IP Address: " + serverIP);
+
+        // Set the server IP address for the controller
         HelloController controller = fxmlLoader.getController();
-        String serverIP = "10.235.13.22"; // Establece la IP del servidor
         controller.setServerIP(serverIP);
 
         stage.show();

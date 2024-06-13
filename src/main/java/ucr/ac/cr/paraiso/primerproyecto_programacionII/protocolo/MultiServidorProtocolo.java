@@ -90,17 +90,6 @@ public class MultiServidorProtocolo {
         }
     }
 
-    private String modificarPatron(String datosPatron) {
-        try {
-            Patron patronModificado = Patron.fromXMLString(datosPatron);
-            patronXMLData.modificarPatron(patronModificado.getIdPatron(), patronModificado);
-            return "<respuesta>Patrón modificado exitosamente.</respuesta>";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "<respuesta>Error al modificar el patrón.</respuesta>";
-        }
-    }
-
     private String eliminarPatron(String idPatron) {
         try {
             patronXMLData.eliminarPatron(idPatron);
@@ -150,16 +139,28 @@ public class MultiServidorProtocolo {
         }
     }
 
+    private String modificarPatron(String datosPatron) {
+        try {
+            Patron patronModificado = Patron.fromXMLString(datosPatron);
+            patronXMLData.modificarPatron(patronModificado.getIdPatron(), patronModificado);
+            return "<respuesta>Patrón modificado exitosamente.</respuesta>";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "<respuesta>Error al modificar el patrón.</respuesta>";
+        }
+    }
+
     private String modificarClasificacion(String datosClasificacion) {
         try {
             Clasificacion clasificacionModificada = Clasificacion.fromXMLString(datosClasificacion);
-//            clasificacionXMLData.modificarClasificacion(clasificacionModificada);
+            clasificacionXMLData.modificarClasificacion(clasificacionModificada.getIdClasificacion(), clasificacionModificada);
             return "<respuesta>Clasificación modificada exitosamente.</respuesta>";
         } catch (Exception e) {
             e.printStackTrace();
             return "<respuesta>Error al modificar la clasificación.</respuesta>";
         }
     }
+
 
     private String eliminarClasificacion(String idClasificacion) {
         try {

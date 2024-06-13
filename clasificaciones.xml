@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <clasificaciones>
   <clasificacion>
+    <idClasificacion>3</idClasificacion>
+    <nameClasificacion>Estructural</nameClasificacion>
+  </clasificacion>
+  <clasificacion>
     <idClasificacion>1</idClasificacion>
     <nameClasificacion>Comportamiento</nameClasificacion>
   </clasificacion>
@@ -9,11 +13,7 @@
     <nameClasificacion>Creacional</nameClasificacion>
   </clasificacion>
   <clasificacion>
-    <idClasificacion>3</idClasificacion>
-    <nameClasificacion>Estructural</nameClasificacion>
-  </clasificacion>
-  <clasificacion>
-    <idClasificacion>34</idClasificacion>
-    <nameClasificacion>hola</nameClasificacion>
+    <idClasificacion>4</idClasificacion>
+    <nameClasificacion>Test</nameClasificacion>
   </clasificacion>
 </clasificaciones>

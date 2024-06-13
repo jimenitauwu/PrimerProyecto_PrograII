@@ -12,6 +12,9 @@ import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.ClasificacionXMLData
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 
 import java.io.IOException;
+
+
+
 public class HelloController {
     @FXML
     private BorderPane bp;
@@ -114,19 +117,19 @@ public class HelloController {
         }
     }
 
-    @FXML
+    @Deprecated
     public void creacionales(ActionEvent actionEvent) {
         loadPage("creacionales.fxml");
         menuBar.setVisible(true);
     }
 
-    @FXML
+    @Deprecated
     public void comportamiento(ActionEvent actionEvent) {
         loadPage("comportamiento.fxml");
         menuBar.setVisible(true);
     }
 
-    @FXML
+    @Deprecated
     public void estructurales(ActionEvent actionEvent) {
         loadPage("estructurales.fxml");
         menuBar.setVisible(true);
@@ -181,6 +184,11 @@ public class HelloController {
     @FXML
     public void modificarClasificacion(ActionEvent actionEvent) {
         loadPage("modificarClasificacion.fxml");
+    }
+
+    @Deprecated
+    public void testOnAction(ActionEvent actionEvent) {
+        loadPage("testloadPage(\"modificarClasificacion.fxml\");.fxml");
     }
 }
 

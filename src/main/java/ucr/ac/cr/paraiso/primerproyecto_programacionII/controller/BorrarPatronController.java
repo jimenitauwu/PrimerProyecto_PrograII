@@ -84,8 +84,9 @@ public class BorrarPatronController {
                 String respuesta = reader.readLine();
 
                 if (respuesta.contains("exitosamente")) {
+                    // Eliminación exitosa, actualiza la lista observable y el ComboBox
+                    actualizarListaObservable();
                     mostrarMensajeExito("Patrón eliminado exitosamente.");
-                    llenarComboBox(); // Actualiza el ComboBox después de eliminar el patrón
                 } else {
                     mostrarMensajeError("Error al eliminar el patrón: " + respuesta);
                 }
@@ -97,6 +98,15 @@ public class BorrarPatronController {
             mostrarMensajeError("Por favor, seleccione un patrón.");
         }
     }
+
+    private void actualizarListaObservable() {
+        // Eliminar el patrón seleccionado de la lista observable
+        String seleccionado = cbBoxPatron.getValue();
+        nombresPatrones.remove(seleccionado);
+        // Configurar el ComboBox con la lista actualizada
+        cbBoxPatron.setItems(nombresPatrones);
+    }
+
 
     private void mostrarMensajeError(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

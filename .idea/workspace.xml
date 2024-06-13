@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f2feb537-f7d9-4c51-adfa-c306bfdc90ea" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/util/UtilityFx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/clasificaciones.xml" beforeDir="false" afterPath="$PROJECT_DIR$/clasificaciones.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patrones.xml" beforeDir="false" afterPath="$PROJECT_DIR$/patrones.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/cliente/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/AnadirPatronController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/AnadirPatronController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/BorrarClasificacionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/BorrarClasificacionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/BorrarPatronController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/BorrarPatronController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/BuscarClasificacionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/BuscarClasificacionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/BuscarPatronController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/BuscarPatronController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/ModificarClasificacionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/ModificarClasificacionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/ModificarPatronController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/controller/ModificarPatronController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/data/ClasificacionXMLData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/data/ClasificacionXMLData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/data/PatronXMLData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/data/PatronXMLData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/domain/Clasificacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/domain/Clasificacion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/protocolo/MultiServidorProtocolo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/protocolo/MultiServidorProtocolo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/servidor/MultiServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/servidor/MultiServidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/servidor/MultiServidorHilo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ucr/ac/cr/paraiso/primerproyecto_programacionII/servidor/MultiServidorHilo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ucr/ac/cr/paraiso/primerproyecto_programacionII/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ucr/ac/cr/paraiso/primerproyecto_programacionII/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ucr/ac/cr/paraiso/primerproyecto_programacionII/modificarClasificacion.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ucr/ac/cr/paraiso/primerproyecto_programacionII/modificarClasificacion.fxml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2hoNQ0yE80PCMTtP03a7I61mzso" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MultiServidor.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Usuario/Desktop/Proyecto Progra&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Application.HelloApplication">
+    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ucr.ac.cr.paraiso.primerproyecto_programacionII.HelloApplication" />
+      <module name="PrimerProyecto_ProgramacionII" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ucr.ac.cr.paraiso.primerproyecto_programacionII.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MultiServidor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ucr.ac.cr.paraiso.primerproyecto_programacionII.servidor.MultiServidor" />
+      <module name="PrimerProyecto_ProgramacionII" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ucr.ac.cr.paraiso.primerproyecto_programacionII.servidor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.HelloApplication" />
+        <item itemvalue="Application.MultiServidor" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f2feb537-f7d9-4c51-adfa-c306bfdc90ea" name="Changes" comment="" />
+      <created>1718256449482</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1718256449482</updated>
+      <workItem from="1718256450479" duration="9928000" />
+      <workItem from="1718300859623" duration="663000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

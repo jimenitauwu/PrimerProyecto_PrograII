@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <patrones>
   <patron idPatron="3">
-    <name>AdaptadorModificado</name>
+    <name>Adaptador</name>
     <contextoPatron>Convierte la interfaz de una clase en otra interfaz que los clientes esperan.</contextoPatron>
     <problemaPatron>Descripción del problema para Adaptador Modificado</problemaPatron>
     <solucionPatron>Descripción de la solución para Adaptador Modificado</solucionPatron>
-    <ejemploPatron>Descripción del ejemplo para Adaptador</ejemploPatron>
-    <clasificacion />
+    <ejemplosPatron>Test</ejemplosPatron>
+    <clasificacion>Comportamiento</clasificacion>
   </patron>
   <patron idPatron="1">
     <name>Estrategia</name>
     <contextoPatron>Define una familia de algoritmos.</contextoPatron>
     <problemaPatron>Descripción del problema para Estrategia</problemaPatron>
     <solucionPatron>Descripción de la solución para Estrategia</solucionPatron>
-    <ejemploPatron>Descripción del ejemplo para Estrategia</ejemploPatron>
+    <ejemplosPatron>Descripción del ejemplo para Estrategia</ejemplosPatron>
     <clasificacion>Comportamiento</clasificacion>
   </patron>
   <patron idPatron="2">
@@ -21,63 +21,23 @@
     <contextoPatron>Garantiza que una clase solo tenga una instancia.</contextoPatron>
     <problemaPatron>Descripción del problema para Singleton</problemaPatron>
     <solucionPatron>Descripción de la solución para Singleton</solucionPatron>
-    <ejemploPatron>Descripción del ejemplo para Singleton</ejemploPatron>
+    <ejemplosPatron>Descripción del ejemplo para Singleton</ejemplosPatron>
     <clasificacion>Creacional</clasificacion>
   </patron>
-  <patron idPatron="240">
-    <name>aaa</name>
-    <contextoPatron>asd</contextoPatron>
-    <problemaPatron>aad</problemaPatron>
-    <solucionPatron>asd</solucionPatron>
-    <ejemploPatron>asd</ejemploPatron>
-    <clasificacion />
+  <patron idPatron="4">
+    <name>prueba33</name>
+    <contextoPatron>prueba33</contextoPatron>
+    <problemaPatron>prueba3</problemaPatron>
+    <solucionPatron>prueba333</solucionPatron>
+    <ejemplosPatron>prueba3</ejemplosPatron>
+    <clasificacion>Estructural</clasificacion>
   </patron>
-  <patron idPatron="234">
-    <name>asd</name>
-    <contextoPatron>ad</contextoPatron>
-    <problemaPatron>sda</problemaPatron>
-    <solucionPatron>asd</solucionPatron>
-    <ejemploPatron>asd</ejemploPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="909">
-    <name>asd</name>
-    <contextoPatron>ada</contextoPatron>
-    <problemaPatron>asdasd</problemaPatron>
-    <solucionPatron>asdasd</solucionPatron>
-    <ejemploPatron>asda</ejemploPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="55">
-    <name>asd</name>
-    <contextoPatron>asd</contextoPatron>
-    <problemaPatron>ad</problemaPatron>
-    <solucionPatron>asd</solucionPatron>
-    <ejemploPatron>asd</ejemploPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="333">
-    <name>sdf</name>
-    <contextoPatron>sdf</contextoPatron>
-    <problemaPatron>sdf</problemaPatron>
-    <solucionPatron>sdf</solucionPatron>
-    <ejemploPatron>sdf</ejemploPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="910">
-    <name>ws</name>
-    <contextoPatron>ss</contextoPatron>
-    <problemaPatron>ss</problemaPatron>
-    <solucionPatron>ss</solucionPatron>
-    <ejemplosPatron>ss</ejemplosPatron>
-    <clasificacion />
-  </patron>
-  <patron idPatron="911">
-    <name>HolaValentina</name>
-    <contextoPatron>test</contextoPatron>
-    <problemaPatron>test</problemaPatron>
-    <solucionPatron>test</solucionPatron>
-    <ejemplosPatron>test</ejemplosPatron>
-    <clasificacion />
+  <patron idPatron="5">
+    <name>Modtest</name>
+    <contextoPatron>afas</contextoPatron>
+    <problemaPatron>ag</problemaPatron>
+    <solucionPatron>ae</solucionPatron>
+    <ejemplosPatron>ar</ejemplosPatron>
+    <clasificacion>Comportamiento</clasificacion>
   </patron>
 </patrones>

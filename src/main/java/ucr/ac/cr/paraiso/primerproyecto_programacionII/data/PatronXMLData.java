@@ -18,6 +18,8 @@ import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Clasificacion;
 import ucr.ac.cr.paraiso.primerproyecto_programacionII.domain.Patron;
 
 import java.util.Objects;
+
+
 public class PatronXMLData {
     private String xmlFilePath;
     private Document document;
@@ -122,6 +124,7 @@ public class PatronXMLData {
             }
         }
     }
+
 
     private String obtenerNombreClasificacionPorId(String idClasificacion) {
         List<Clasificacion> clasificaciones = clasificacionData.obtenerClasificaciones();

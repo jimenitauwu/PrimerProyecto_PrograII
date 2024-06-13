@@ -7,6 +7,7 @@ import ucr.ac.cr.paraiso.primerproyecto_programacionII.data.PatronXMLData;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+
 public class MultiServidor {
     public static void main(String[] args) {
         ServerSocket serverSocket = null;
@@ -17,7 +18,7 @@ public class MultiServidor {
             ClasificacionXMLData clasificacionXMLData = new ClasificacionXMLData("clasificaciones.xml");
             PatronXMLData patronXMLData = new PatronXMLData("patrones.xml", clasificacionXMLData);
 
-            serverSocket = new ServerSocket(9999, 0, InetAddress.getByName("10.235.13.22"));
+            serverSocket = new ServerSocket(9999, 0, InetAddress.getLocalHost());
 
             System.out.println("Servidor activo");
             while (escuchando) {
@@ -32,4 +33,3 @@ public class MultiServidor {
         }
     }
 }
-

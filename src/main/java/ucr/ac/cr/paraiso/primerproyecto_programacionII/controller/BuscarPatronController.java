@@ -100,15 +100,16 @@ public class BuscarPatronController {
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
             // Send the request to the server
-            writer.println(idPatron);
-            writer.println("consultar_patron_por_id");
+            writer.println(idPatron + "\n" + "consultar_patron_por_id");
             writer.flush();
 
             // Read the response from the server
             StringBuilder respuestaBuilder = new StringBuilder();
             String linea;
-            while ((linea = reader.readLine()) != null) {
+            int count = 0;
+            while ((linea = reader.readLine()) != null && count<2) {//
                 respuestaBuilder.append(linea);
+                count++;
             }
             String respuesta = respuestaBuilder.toString();
 
@@ -119,12 +120,12 @@ public class BuscarPatronController {
 
                 Element rootElement = document.getRootElement();
 
-                String nombre = rootElement.getChildText("name");
-                String problema = rootElement.getChildText("problemaPatron");
-                String clasificacion = rootElement.getChildText("clasificacion");
-                String solucion = rootElement.getChildText("solucionPatron");
-                String contexto = rootElement.getChildText("contextoPatron");
-                String ejemplos = rootElement.getChildText("ejemplosPatron");
+                String nombre = rootElement.getChildText("Name");
+                String problema = rootElement.getChildText("Problema");
+                String clasificacion = rootElement.getChildText("Clasificacion");
+                String solucion = rootElement.getChildText("Solucion");
+                String contexto = rootElement.getChildText("Contexto");
+                String ejemplos = rootElement.getChildText("Ejemplos");
 
                 mostrarPatron(nombre, problema, clasificacion, solucion, contexto, ejemplos);
             } else {

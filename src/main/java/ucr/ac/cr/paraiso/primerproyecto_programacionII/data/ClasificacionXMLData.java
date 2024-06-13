@@ -68,9 +68,15 @@ public class ClasificacionXMLData {
             if (clasificacionModificada.getNameClasificacion() != null) {
                 save.getChild("nameClasificacion").setText(clasificacionModificada.getNameClasificacion());
             }
+            if (clasificacionModificada.getIdClasificacion() != null) {
+                save.getChild("idClasificacion").setText(clasificacionModificada.getIdClasificacion());
+            }
             save();
+        } else {
+            System.out.println("No se encontró la clasificación con ID: " + idClasificacion);
         }
     }
+
 
     public void eliminarClasificacion(String idClasificacion) throws IOException {
         List<Element> clasificacionElements = raiz.getChildren("clasificacion");
@@ -115,10 +121,25 @@ public class ClasificacionXMLData {
         return null;
     }
 
+
+
+    public String obtenerIdClasificacionPorNombre(String nombreClasificacion) {
+        List<Clasificacion> clasificaciones = obtenerClasificaciones();
+        for (Clasificacion clasificacion : clasificaciones) {
+            if (clasificacion.getNameClasificacion().equals(nombreClasificacion)) {
+                return clasificacion.getIdClasificacion();
+            }
+        }
+        return null;
+    }
+
+
     private void save() throws IOException {
         XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
         xmlOutputter.output(documento, new FileWriter(xmlFilePath));
+        System.out.println("Datos guardados en el archivo: " + xmlFilePath); // Debug
     }
+
 
     public String generarNuevoIdClasificacion() {
         List<Clasificacion> clasificaciones = obtenerClasificaciones();

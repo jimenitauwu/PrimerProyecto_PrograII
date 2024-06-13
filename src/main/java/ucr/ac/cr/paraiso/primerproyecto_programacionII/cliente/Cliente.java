@@ -6,16 +6,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class Cliente {
     public static void main(String[] args) {
-        String serverAddress = "10.235.13.22"; // Dirección IP por defecto
-
-        if (args.length > 0) {
-            serverAddress = args[0];
-        }
-
         int serverPort = 9999;
         Socket echoSocket = null;
         PrintWriter writer = null;
@@ -23,7 +16,7 @@ public class Cliente {
         BufferedReader lectorTeclado = null;
 
         try {
-            InetAddress inetAddress = InetAddress.getByName(serverAddress);
+            InetAddress inetAddress = InetAddress.getLocalHost(); // Get local host IP address
             echoSocket = new Socket(inetAddress, serverPort);
             writer = new PrintWriter(echoSocket.getOutputStream(), true);
             reader = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
@@ -50,7 +43,3 @@ public class Cliente {
         }
     }
 }
-
-
-
-
